@@ -83,7 +83,7 @@ function ShowFieldLabel(props: IToolButtonControlled) {
         }
         formFields.then(field => field?.forEach((c) => {
             const controlName = c.getName();
-            const controlNodeLabel = formDocument.querySelector<HTMLElement>(`[data-id="${controlName}"] div:not([fieldlogicalname]) > label, [id="${controlName}"] div:not([fieldlogicalname]) > label`);
+            const controlNodeLabel = formDocument.querySelector<HTMLElement>(`[data-id="${controlName}"] :not([fieldlogicalname]) > label, [id="${controlName}"] :not([fieldlogicalname]) > label`);
             if (controlNodeLabel) {
                 const controlNodeParent = controlNodeLabel?.parentElement ?? null;
                 const controlNode = formDocument.createElement('div');
