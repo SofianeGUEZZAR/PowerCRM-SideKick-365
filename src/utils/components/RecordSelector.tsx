@@ -526,7 +526,7 @@ function GridColDefGenerator(meta: AttributeMetadata): GridColDef {
                             hideable: true,
                             minWidth: 100,
                             type: "dateTime",
-                            valueGetter: ({ value }) => value && new Date(value),
+                            valueGetter: (value) => value && new Date(value),
                         }
                     );
                 case MSDateFormat.DateOnly:
@@ -538,7 +538,7 @@ function GridColDefGenerator(meta: AttributeMetadata): GridColDef {
                             hideable: true,
                             minWidth: 100,
                             type: "date",
-                            valueGetter: ({ value }) => value && new Date(value),
+                            valueGetter: (value) => value && new Date(value),
                         }
                     );
             }
