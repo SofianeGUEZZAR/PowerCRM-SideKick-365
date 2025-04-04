@@ -16,7 +16,7 @@ function BlurFields(props: IToolButtonStandard) {
     useEffect(() => {
         if (blurEnabled) {
             setStyle(formDocument ?? document, "blurFieldsSheet", {
-                '[data-id*="fieldControl"], [role="gridcell"], [data-id="header_title"], [id^=headerControlsList]>div>div:first-child': ['filter: blur(4px)']
+                '[data-id*="fieldControl"], [role="gridcell"], [data-id="header_title"], [id^=headerControlsList]>div>div:first-child, #file-control-href, #image-control-img': ['filter: blur(4px)']
             });
         }
         else {
