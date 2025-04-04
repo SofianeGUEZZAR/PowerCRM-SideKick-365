@@ -82,19 +82,21 @@ function ShowFieldLabel(props: IToolButtonControlled) {
         const newNodes: HTMLDivElement[] = [];
         formFields?.forEach((control) => {
             const controlName = control.getName();
-            const controlNodeLabel = formDocument.querySelector<HTMLElement>(`[data-id="${controlName}"] :not([fieldlogicalname]) > label, [id="${controlName}"] :not([fieldlogicalname]) > label`);
-            if (controlNodeLabel) {
-                const controlNodeParent = controlNodeLabel?.parentElement ?? null;
-                const controlNode = formDocument.createElement('div');
-                controlNode.setAttribute('fieldlogicalname', controlName);
-                controlNodeLabel && controlNode.append(controlNodeLabel);
-                controlNodeParent?.prepend(controlNode);
-                newNodes.push(controlNode);
+
+            const alreadyProcessed = formDocument.querySelector<HTMLDivElement>(`[data-id="${controlName}"] [fieldlogicalname], [id="${controlName}"] [fieldlogicalname]`);
+            if (alreadyProcessed) {
+                newNodes.push(alreadyProcessed);
             }
             else {
-                const alreadyProcessed = formDocument.querySelector<HTMLDivElement>(`[data-id="${controlName}"] [fieldlogicalname], [id="${controlName}"] [fieldlogicalname]`);
-                if (alreadyProcessed)
-                    newNodes.push(alreadyProcessed);
+                const controlNodeLabel = formDocument.querySelector<HTMLElement>(`[data-id="${controlName}"] :not([fieldlogicalname]) > label, [id="${controlName}"] :not([fieldlogicalname]) > label`);
+                if (controlNodeLabel) {
+                    const controlNodeParent = controlNodeLabel?.parentElement ?? null;
+                    const controlNode = formDocument.createElement('div');
+                    controlNode.setAttribute('fieldlogicalname', controlName);
+                    controlNodeLabel && controlNode.append(controlNodeLabel);
+                    controlNodeParent?.prepend(controlNode);
+                    newNodes.push(controlNode);
+                }
             }
         });
         setFieldLabelNodes(newNodes);
@@ -110,18 +112,19 @@ function ShowFieldLabel(props: IToolButtonControlled) {
         const newNodes: HTMLDivElement[] = [];
         grids.forEach((control) => {
             const gridName: string = control.getName();
-            const gridNodeParent: Element | null = formDocument.querySelector(`#dataSetRoot_${gridName} > div:first-child:not(:has(div[gridlogicalname]))`);
 
-            if (gridNodeParent) {
-                const gridNode = formDocument.createElement('div');
-                gridNode.setAttribute('gridlogicalname', gridName);
-                gridNodeParent?.append(gridNode);
-                newNodes.push(gridNode);
+            const alreadyProcessed = formDocument.querySelector<HTMLDivElement>(`#dataSetRoot_${gridName} > div:first-child div[gridlogicalname]`);
+            if (alreadyProcessed) {
+                newNodes.push(alreadyProcessed);
             }
             else {
-                const alreadyProcessed = formDocument.querySelector<HTMLDivElement>(`#dataSetRoot_${gridName} > div:first-child div[gridlogicalname]`);
-                if (alreadyProcessed)
-                    newNodes.push(alreadyProcessed);
+                const gridNodeParent: Element | null = formDocument.querySelector(`#dataSetRoot_${gridName} > div:first-child:not(:has(div[gridlogicalname]))`);
+                if (gridNodeParent) {
+                    const gridNode = formDocument.createElement('div');
+                    gridNode.setAttribute('gridlogicalname', gridName);
+                    gridNodeParent?.append(gridNode);
+                    newNodes.push(gridNode);
+                }
             }
         });
         setGridLabelNodes(newNodes);
