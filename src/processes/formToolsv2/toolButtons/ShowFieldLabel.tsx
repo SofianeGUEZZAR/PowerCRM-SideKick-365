@@ -8,7 +8,6 @@ import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import { LogicalNameTypography } from '../../../utils/components/LogicalNameTypography';
 import { setStyle } from '../../../utils/global/common';
 import { IToolButtonControlled, ToolButton } from '../ToolButton';
-import { useDictionnary } from '../../../utils/hooks/use/useDictionnary';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { FormToolContext } from '../context';
@@ -20,6 +19,9 @@ function ShowFieldLabel(props: IToolButtonControlled) {
 
     const { formContext, formDocument, domUpdated, xrmRoute } = useContext(FormToolContext);
 
+    const [formFields, setFormFields] = useState<Xrm.Controls.Control[] | null>(null);
+    const [grids, setGrids] = useState<Xrm.Controls.GridControl[] | null>(null);
+
     useEffect(() => {
         if (formDocument) {
             setStyle(formDocument, "fieldLabelSheet", {
@@ -28,13 +30,11 @@ function ShowFieldLabel(props: IToolButtonControlled) {
         }
     }, [formDocument]);
 
-    const formFields = useMemo(async () => {
+    useEffect(() => {
         if (formContext) {
             const controls: Xrm.Controls.Control[] = formContext.getControl((c) => {
                 const type = c.getControlType();
-                if (type.startsWith(ControlType.CUSTOMSUBGRID)) {
-                    return false;
-                }
+                if (type.startsWith(ControlType.CUSTOMSUBGRID)) return false;
                 switch (type) {
                     case ControlType.IFRAME:
                     case ControlType.SUBGRID:
@@ -45,44 +45,43 @@ function ShowFieldLabel(props: IToolButtonControlled) {
                     case ControlType.TIMELINE:
                     case ControlType.QUICKFORM:
                         return false;
-                    case ControlType.LOOKUP:
-                    case ControlType.STANDARD:
-                    case ControlType.OPTIONSET:
                     default:
                         return true;
                 }
             });
-
-            return controls;
+            setFormFields(controls);
         }
         else {
-            return null;
+            setFormFields(null);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [domUpdated, formContext]);
 
 
-
-    const grids = useMemo(async () => {
-        if (formContext) {
-            const grids: Xrm.Controls.GridControl[] = formContext.getControl(
-                (c) => c.getControlType() === ControlType.SUBGRID || c.getControlType().startsWith(ControlType.CUSTOMSUBGRID)) as any;
-
-            return grids;
-        }
-        else {
-            return null;
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [domUpdated, formContext]);
-
-    const { values: fieldLabelNodes, setValue: setFieldLabelNode, setDict: setFieldLabelNodeDict } = useDictionnary<HTMLDivElement>({});
     useEffect(() => {
-        if (!formDocument) {
+        if (formContext) {
+            const gridControls = formContext.getControl(
+                (c) =>
+                    c.getControlType() === ControlType.SUBGRID ||
+                    c.getControlType().startsWith(ControlType.CUSTOMSUBGRID)
+            ) as Xrm.Controls.GridControl[];
+            setGrids(gridControls);
+        }
+        else {
+            setGrids(null);
+        }
+    }, [domUpdated, formContext]);
+
+
+    // const { values: fieldLabelNodes, setDict: setFieldLabelNodeDict } = useDictionnary<HTMLDivElement>({});
+    const [fieldLabelNodes, setFieldLabelNodes] = useState<HTMLDivElement[]>([]);
+    useEffect(() => {
+        if (!formDocument || !formFields) {
             return;
         }
-        formFields.then(field => field?.forEach((c) => {
-            const controlName = c.getName();
+
+        const newNodes: HTMLDivElement[] = [];
+        formFields?.forEach((control) => {
+            const controlName = control.getName();
             const controlNodeLabel = formDocument.querySelector<HTMLElement>(`[data-id="${controlName}"] :not([fieldlogicalname]) > label, [id="${controlName}"] :not([fieldlogicalname]) > label`);
             if (controlNodeLabel) {
                 const controlNodeParent = controlNodeLabel?.parentElement ?? null;
@@ -90,58 +89,63 @@ function ShowFieldLabel(props: IToolButtonControlled) {
                 controlNode.setAttribute('fieldlogicalname', controlName);
                 controlNodeLabel && controlNode.append(controlNodeLabel);
                 controlNodeParent?.prepend(controlNode);
-                setFieldLabelNode(controlName, controlNode);
+                newNodes.push(controlNode);
             }
             else {
-                const controlNodeLabelAlreadyProcessed = formDocument.querySelector<HTMLDivElement>(`[data-id="${controlName}"] [fieldlogicalname], [id="${controlName}"] [fieldlogicalname]`);
-                if (controlNodeLabelAlreadyProcessed)
-                    setFieldLabelNode(controlName, controlNodeLabelAlreadyProcessed);
+                const alreadyProcessed = formDocument.querySelector<HTMLDivElement>(`[data-id="${controlName}"] [fieldlogicalname], [id="${controlName}"] [fieldlogicalname]`);
+                if (alreadyProcessed)
+                    newNodes.push(alreadyProcessed);
             }
-        }));
-    }, [domUpdated, formFields, formDocument, setFieldLabelNode]);
+        });
+        setFieldLabelNodes(newNodes);
+    }, [domUpdated, formFields, formDocument, setFieldLabelNodes]);
 
-    const { values: gridLabelNodes, setValue: setGridLabelNode, setDict: setGridLabelNodeDict } = useDictionnary<HTMLDivElement>({});
+    // const { values: gridLabelNodes, setDict: setGridLabelNodeDict } = useDictionnary<HTMLDivElement>({});
+    const [gridLabelNodes, setGridLabelNodes] = useState<HTMLDivElement[]>([]);
     useEffect(() => {
-        if (!formDocument) {
+        if (!formDocument || !grids) {
             return;
         }
-        grids.then(grid => grid?.forEach((c) => {
-            const gridName: string = c.getName();
+
+        const newNodes: HTMLDivElement[] = [];
+        grids.forEach((control) => {
+            const gridName: string = control.getName();
             const gridNodeParent: Element | null = formDocument.querySelector(`#dataSetRoot_${gridName} > div:first-child:not(:has(div[gridlogicalname]))`);
 
             if (gridNodeParent) {
                 const gridNode = formDocument.createElement('div');
                 gridNode.setAttribute('gridlogicalname', gridName);
                 gridNodeParent?.append(gridNode);
-                setGridLabelNode(gridName, gridNode);
+                newNodes.push(gridNode);
             }
             else {
-                const gridNodeAlreadyProcessed = formDocument.querySelector<HTMLDivElement>(`#dataSetRoot_${gridName} > div:first-child div[gridlogicalname]`);
-                if (gridNodeAlreadyProcessed)
-                    setGridLabelNode(gridName, gridNodeAlreadyProcessed);
+                const alreadyProcessed = formDocument.querySelector<HTMLDivElement>(`#dataSetRoot_${gridName} > div:first-child div[gridlogicalname]`);
+                if (alreadyProcessed)
+                    newNodes.push(alreadyProcessed);
             }
-        }));
-    }, [domUpdated, grids, formDocument, setGridLabelNode]);
+        });
+        setGridLabelNodes(newNodes);
+    }, [domUpdated, grids, formDocument, setGridLabelNodes]);
 
     useEffect(() => {
-        setFieldLabelNodeDict({});
-        setGridLabelNodeDict({});
+        setFieldLabelNodes([]);
+        setGridLabelNodes([]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setFieldLabelNodeDict, setGridLabelNodeDict, xrmRoute.current]);
+    }, [setFieldLabelNodes, setGridLabelNodes, xrmRoute.current]);
 
 
     const fieldLabelPortal = useMemo(() => {
         if (!labelDisplayed) {
             return;
         }
-        return fieldLabelNodes?.map(controlNode => {
-            const controlName = controlNode.getAttribute('fieldlogicalname');
-            if (!controlName) {
+        return fieldLabelNodes?.map(fieldLabelNode => {
+            const fieldName = fieldLabelNode.getAttribute('fieldlogicalname');
+            if (!fieldName) {
                 return null;
             }
             return (
-                <Portal container={controlNode}>
-                    <LogicalNameTypography label={controlName} />
+                <Portal key={`fieldlabel_${fieldName}`} container={fieldLabelNode}>
+                    <LogicalNameTypography label={fieldName} />
                 </Portal>
             );
         });
@@ -151,13 +155,13 @@ function ShowFieldLabel(props: IToolButtonControlled) {
         if (!labelDisplayed) {
             return;
         }
-        return gridLabelNodes?.map(controlNode => {
-            const gridName = controlNode.getAttribute('gridlogicalname');
+        return Object.values(gridLabelNodes)?.map(gridLabelNode => {
+            const gridName = gridLabelNode.getAttribute('gridlogicalname');
             if (!gridName) {
                 return null;
             }
             return (
-                <Portal container={controlNode}>
+                <Portal key={`gridlabel_${gridName}`} container={gridLabelNode}>
                     <LogicalNameTypography label={gridName} />
                 </Portal>
             );

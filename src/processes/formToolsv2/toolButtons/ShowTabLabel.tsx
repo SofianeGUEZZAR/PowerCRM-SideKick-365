@@ -1,11 +1,10 @@
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 import { Portal } from '@mui/base';
 import BookIcon from '@mui/icons-material/Book';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import { LogicalNameTypography } from '../../../utils/components/LogicalNameTypography';
 import { IToolButtonControlled, ToolButton } from '../ToolButton';
-import { useDictionnary } from '../../../utils/hooks/use/useDictionnary';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { FormToolContext } from '../context';
@@ -16,39 +15,40 @@ function ShowTabLabel(props: IToolButtonControlled) {
 
     const { formContext, formDocument, domUpdated, xrmRoute } = useContext(FormToolContext);
 
-    const tabControls = useMemo(async () => {
-        if (formContext) {
-            const tabs: Xrm.Controls.Tab[] = formContext.ui.tabs?.get();
+    const [tabControls, setTabControls] = useState<Xrm.Controls.Tab[] | null>(null);
+    const [sectionControls, setSectionControls] = useState<Xrm.Controls.Section[] | null>(null);
 
-            return tabs;
-        }
-        else {
-            return null;
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [domUpdated, formContext]);
-
-    const sectionControls = useMemo(async () => {
-        if (formContext) {
-            const tabs: Xrm.Controls.Tab[] = formContext.ui.tabs?.get();
-            const sections: Xrm.Controls.Section[] = tabs?.flatMap(t => t.sections?.get());
-
-            return sections;
-        }
-        else {
-            return null;
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [domUpdated, formContext]);
-
-
-
-    const { values: tabLabelNodes, setValue: setTabLabelNode, setDict: setTabLabelNodeDict } = useDictionnary<HTMLDivElement>({});
     useEffect(() => {
-        if (!formDocument) {
+        if (formContext) {
+            const tabs: Xrm.Controls.Tab[] = formContext.ui.tabs?.get();
+            setTabControls(tabs);
+        }
+        else {
+            setTabControls(null);
+        }
+    }, [domUpdated, formContext]);
+
+    useEffect(() => {
+        if (formContext) {
+            const tabs: Xrm.Controls.Tab[] = formContext.ui.tabs?.get();
+            const sections: Xrm.Controls.Section[] = tabs?.flatMap(t => t.sections?.get()) || [];
+            setSectionControls(sections);
+        }
+        else {
+            setSectionControls(null);
+        }
+    }, [domUpdated, formContext]);
+
+
+
+    const [tabLabelNodes, setTabLabelNodes] = useState<HTMLDivElement[]>([]);
+    useEffect(() => {
+        if (!formDocument || !tabControls) {
             return;
         }
-        tabControls.then(controls => controls?.forEach((tabControl) => {
+
+        const newNodes: HTMLDivElement[] = [];
+        tabControls.forEach((tabControl) => {
             const tabName: string = tabControl.getName();
             const tabNodeParent = formDocument.querySelector<HTMLElement>(`li[data-id$="tablist-${tabName}"]:not(:has([tablogicalname]))`);
 
@@ -56,22 +56,26 @@ function ShowTabLabel(props: IToolButtonControlled) {
                 const tabNode = formDocument.createElement('div');
                 tabNode.setAttribute('tablogicalname', tabName);
                 tabNodeParent?.insertBefore(tabNode, tabNodeParent.children[0]);
-                setTabLabelNode(tabName, tabNode);
+                newNodes.push(tabNode);
             }
             else {
                 const tabNodeAlreadyProcessed = formDocument.querySelector<HTMLDivElement>(`li[data-id$="tablist-${tabName}"] > div[tablogicalname]`);
                 if (tabNodeAlreadyProcessed)
-                    setTabLabelNode(tabName, tabNodeAlreadyProcessed);
-            }
-        }));
-    }, [domUpdated, tabControls, formDocument, setTabLabelNode]);
+                    newNodes.push(tabNodeAlreadyProcessed);
 
-    const { values: sectionLabelNodes, setValue: setSectionLabelNode, setDict: setSectionLabelNodeDict } = useDictionnary<HTMLDivElement>({});
+            }
+        });
+        setTabLabelNodes(newNodes);
+    }, [domUpdated, tabControls, formDocument, setTabLabelNodes]);
+
+    const [sectionLabelNodes, setSectionLabelNodes] = useState<HTMLDivElement[]>([]);
     useEffect(() => {
-        if (!formDocument) {
+        if (!formDocument || !sectionControls) {
             return;
         }
-        sectionControls.then(controls => controls?.forEach((sectionControl) => {
+
+        const newNodes: HTMLDivElement[] = [];
+        sectionControls.forEach((sectionControl) => {
             const sectionName: string = sectionControl.getName();
             const sectionNodeParent: Element | null = formDocument.querySelector(`section[data-id$="${sectionName}"]:not(:has([sectionlogicalname]))`);
 
@@ -79,21 +83,22 @@ function ShowTabLabel(props: IToolButtonControlled) {
                 const sectionNode = formDocument.createElement('div');
                 sectionNode.setAttribute('sectionlogicalname', sectionName);
                 sectionNodeParent?.prepend(sectionNode);
-                setSectionLabelNode(sectionName, sectionNode);
+                newNodes.push(sectionNode);
             }
             else {
                 const sectionNodeAlreadyProcessed = formDocument.querySelector<HTMLDivElement>(`section[data-id$="${sectionName}"] > div[sectionlogicalname]`);
                 if (sectionNodeAlreadyProcessed)
-                    setSectionLabelNode(sectionName, sectionNodeAlreadyProcessed);
+                    newNodes.push(sectionNodeAlreadyProcessed);
             }
-        }));
-    }, [domUpdated, sectionControls, formDocument, setSectionLabelNode]);
+        });
+        setSectionLabelNodes(newNodes);
+    }, [domUpdated, sectionControls, formDocument, setSectionLabelNodes]);
 
     useEffect(() => {
-        setTabLabelNodeDict({});
-        setSectionLabelNodeDict({});
+        setTabLabelNodes([]);
+        setSectionLabelNodes([]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setTabLabelNodeDict, setSectionLabelNodeDict, xrmRoute.current]);
+    }, [setTabLabelNodes, setSectionLabelNodes, xrmRoute.current]);
 
 
 
@@ -102,13 +107,13 @@ function ShowTabLabel(props: IToolButtonControlled) {
             return;
         }
         return tabLabelNodes?.map(controlNode => {
-            const controlName = controlNode.getAttribute('tablogicalname');
-            if (!controlName) {
+            const tabName = controlNode.getAttribute('tablogicalname');
+            if (!tabName) {
                 return null;
             }
             return (
-                <Portal container={controlNode}>
-                    <LogicalNameTypography label={controlName} />
+                <Portal key={`tabName_${tabName}`} container={controlNode}>
+                    <LogicalNameTypography label={tabName} />
                 </Portal>
             );
         });
@@ -119,13 +124,13 @@ function ShowTabLabel(props: IToolButtonControlled) {
             return;
         }
         return sectionLabelNodes?.map(controlNode => {
-            const controlName = controlNode.getAttribute('sectionlogicalname');
-            if (!controlName) {
+            const sectionName = controlNode.getAttribute('sectionlogicalname');
+            if (!sectionName) {
                 return null;
             }
             return (
-                <Portal container={controlNode}>
-                    <LogicalNameTypography label={controlName} />
+                <Portal key={`sectionName_${sectionName}`} container={controlNode}>
+                    <LogicalNameTypography label={sectionName} />
                 </Portal>
             );
         });
