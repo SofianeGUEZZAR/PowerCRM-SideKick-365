@@ -183,7 +183,7 @@ const FormToolsProcessV2 = forwardRef<ProcessRef, ProcessProps>(
 
                             <ToolButtonContainer
                                 toolList={[
-                                    ShowOptionSetInFields,
+                                    // ShowOptionSetInFields,
                                     FillFields,
                                     CloneRecord,
                                     BlurFields,
