@@ -311,26 +311,29 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
                             }
                         </List>
                     }
-                    <ScriptList
-                        text='Overrided scripts:'
-                        items={overridedFiles}
-                        primaryLabel={(item) => item.name}
-                        primaryAction={selectFile}
-                        secondaryAction={removeScriptOverride}
-                        secondaryIcon={RestoreIcon}
-                        secondaryTitle='Restore file'
-                    />
+
                     <CircularProgressOverflow
                         loading={isFetching}
                         disableShrink
-                        size={60}
+                        size={120}
                     >
-                        <ScriptList
-                            text='Scripts found on this page:'
-                            items={(root && getAllFiles(root)) || []}
-                            primaryLabel={(item) => scriptsOverrided[item.src] ? <strong>{item.name}</strong> : item.name}
-                            primaryAction={selectFile}
-                        />
+                        <Stack direction='column' height='100%' width='100%'>
+                            <ScriptList
+                                text='Overrided scripts:'
+                                items={overridedFiles}
+                                primaryLabel={(item) => item.name}
+                                primaryAction={selectFile}
+                                secondaryAction={removeScriptOverride}
+                                secondaryIcon={RestoreIcon}
+                                secondaryTitle='Restore file'
+                            />
+                            <ScriptList
+                                text='Scripts found on this page:'
+                                items={(root && getAllFiles(root)) || []}
+                                primaryLabel={(item) => scriptsOverrided[item.src] ? <strong>{item.name}</strong> : item.name}
+                                primaryAction={selectFile}
+                            />
+                        </Stack>
                     </CircularProgressOverflow>
                 </Stack >
                 <Dialog
@@ -399,7 +402,6 @@ function ScriptList<T>(props: ScriptListProps<T>) {
     return (
         <List
             sx={{ width: '100%', bgcolor: 'background.paper', overflowX: 'hidden', overflowY: 'auto', flex: '1 1 50%', height: '100%' }}
-            component="nav"
             disablePadding
             subheader={
                 <ListSubheader component="div">

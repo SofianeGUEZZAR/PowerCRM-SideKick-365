@@ -27,9 +27,6 @@ const CircularProgressOverflowTheme = createTheme({
 });
 
 export type CircularProgressOverflowProps = CircularProgressProps & {
-    /**
-     * The content of the component.
-     */
     children?: React.ReactNode
     loading?: boolean
     onClick?: MouseEventHandler<HTMLDivElement> | undefined
@@ -59,7 +56,7 @@ function CircularProgressOverflow(props: CircularProgressOverflowProps) {
                 <ThemeProvider theme={theme ?? {}}>
                     {props.children}
                 </ThemeProvider>
-                {loading && <CircularProgress size={30} {...circularProgressProps} />}
+                {loading && <CircularProgress size={30} {...circularProgressProps} sx={{ zIndex: 10 }} />}
             </Container>
         </ThemeProvider>
     );
