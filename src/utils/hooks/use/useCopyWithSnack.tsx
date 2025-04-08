@@ -16,10 +16,10 @@ function useCopyWithSnack(options: useCopyWithSnackOptions = {}) {
 
     const copy = useCallback((text: string) => {
         if (text) {
+            copytoClipboard(text);
             if (text.length > TEXT_MAX_LENGHT) {
                 text = `${text?.slice(0, TEXT_MAX_LENGHT - 3)}...`;
             }
-            copytoClipboard(text);
             enqueueSnackbar(`${textPrefix} "${text}" copied.`, { variant: 'default' });
         }
         else {
