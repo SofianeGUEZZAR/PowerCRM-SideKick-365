@@ -44,7 +44,7 @@
     ],
     "permissions": [
         "storage",
-        "declarativeNetRequestWithHostAccess"
+        "declarativeNetRequest"
     ],
     "browser_specific_settings": {
         "gecko": {

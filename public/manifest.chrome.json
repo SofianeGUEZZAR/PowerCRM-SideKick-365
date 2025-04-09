@@ -41,6 +41,6 @@
     ],
     "permissions": [
         "storage",
-        "declarativeNetRequestWithHostAccess"
+        "declarativeNetRequest"
     ]
 }
