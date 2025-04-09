@@ -20,3 +20,5 @@ export const MAIN_MENU_ID = 'd365-sidekick-mainmenu';
 
 export const MESSAGE_SOURCE_WebPage = `${PROJECT_PREFIX}-webPage`;
 export const MESSAGE_SOURCE_Content = `${PROJECT_PREFIX}-content`;
+
+export const STORAGE_WebEditorFavFiles = 'webEditorFavFiles';

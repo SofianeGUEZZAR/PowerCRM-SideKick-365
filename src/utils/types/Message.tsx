@@ -7,10 +7,12 @@ export enum MessageType {
     SETCONFIGURATION = 'setConfiguration',
     GETCONFIGURATION = 'getConfiguration',
 
-    ENABLESCRIPTOVERRIDING = 'EnableScriptOverriding',
-    DISABLESCRIPTOVERRIDING = 'DisableScriptOverriding',
-    GETCURRENTSCRIPTOVERRIDING = 'GetCurrentScriptOverriding',
-    ISDEBUGGERATTACHED = 'IsDebuggerAttached',
+    // ENABLESCRIPTOVERRIDING = 'EnableScriptOverriding',
+    // DISABLESCRIPTOVERRIDING = 'DisableScriptOverriding',
+    // GETCURRENTSCRIPTOVERRIDING = 'GetCurrentScriptOverriding',
+    // ISDEBUGGERATTACHED = 'IsDebuggerAttached',
+    ADDWEBEDITORFAVFILES = 'addWebEditorFavFiles',
+    REMOVEWEBEDITORFAVFILES = 'removeWebEditorFavFiles',
 
     OPENOPTIONS = 'OpenOptions',
 }

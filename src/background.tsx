@@ -1,7 +1,7 @@
 
 import {  manageImpersonation } from "./processes/impersonation/background";
 import { getExtensionConfiguration, setExtensionConfiguration } from "./processes/setConfiguration/background";
-import { debuggerAttached, disableScriptOverride, enableScriptOverride as enableScriptOverriding, getScriptOverride as getScriptOverriding } from "./processes/webResourceEditor/background";
+// import { debuggerAttached, disableScriptOverride, enableScriptOverride as enableScriptOverriding, getScriptOverride as getScriptOverriding } from "./processes/webResourceEditor/background";
 import { getSessionRules } from "./utils/global/DeclarativeNetRequestManager";
 import { MessageType } from "./utils/types/Message";
 
@@ -24,28 +24,31 @@ function messagesStation(message: { type: string, data: any }, sender: chrome.ru
             return true;
 
         case MessageType.SETCONFIGURATION:
-            setExtensionConfiguration(message.data)
+            setExtensionConfiguration(message.data);
             return false;
         case MessageType.GETCONFIGURATION:
             getExtensionConfiguration(message.data).then(sendResponse);
             return true;
 
-        case MessageType.ENABLESCRIPTOVERRIDING:
-            enableScriptOverriding(message.data, sender);
-            return false;
-        case MessageType.DISABLESCRIPTOVERRIDING:
-            disableScriptOverride(sender);
-            return false;
-        case MessageType.GETCURRENTSCRIPTOVERRIDING:
-            getScriptOverriding(sender).then(sendResponse);
-            return true;
-        case MessageType.ISDEBUGGERATTACHED:
-            debuggerAttached(sender).then(sendResponse);
-            return true;
+        // case MessageType.ENABLESCRIPTOVERRIDING:
+        //     enableScriptOverriding(message.data, sender);
+        //     return false;
+        // case MessageType.DISABLESCRIPTOVERRIDING:
+        //     disableScriptOverride(sender);
+        //     return false;
+        // case MessageType.GETCURRENTSCRIPTOVERRIDING:
+        //     getScriptOverriding(sender).then(sendResponse);
+        //     return true;
+        // case MessageType.ISDEBUGGERATTACHED:
+        //     debuggerAttached(sender).then(sendResponse);
+        //     return true;
 
         case MessageType.OPENOPTIONS:
             chrome.action.openPopup();
             return false;
+
+        default:
+            break;
     }
 
     return false;

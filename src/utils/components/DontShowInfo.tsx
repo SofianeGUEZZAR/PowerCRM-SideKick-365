@@ -1,4 +1,4 @@
-import { Alert, Stack, FormControlLabel, Checkbox, Button } from "@mui/material";
+import { Alert, Stack, FormControlLabel, Checkbox, Button, AlertProps } from "@mui/material";
 import OpenOptionsButton from "./OpenOptionsButton";
 import { PropsWithChildren, useState } from "react";
 import { MessageType } from "../types/Message";
@@ -14,9 +14,10 @@ import { debugLog } from "../global/common";
 interface DontShowInfoProps {
     storageName: string;
     displayOpenOptionButton?: boolean;
+    severity?: AlertProps['severity'];
 }
 function DontShowInfo(props: DontShowInfoProps & PropsWithChildren) {
-    const { storageName, displayOpenOptionButton = false, children } = props;
+    const { storageName, displayOpenOptionButton = false, severity, children } = props;
 
     const { isDebug } = useSpDevTools();
 
@@ -51,7 +52,7 @@ function DontShowInfo(props: DontShowInfoProps & PropsWithChildren) {
     return (
         !closeInfo ?
 
-            <Alert severity='info'>
+            <Alert severity={severity ?? 'info'} key={`${storageName}alert`}>
                 <Stack direction='column' spacing={0.5}>
                     {children}
                     <Stack direction='row' justifyContent='space-between'>

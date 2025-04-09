@@ -28,10 +28,16 @@ import { buildFileTree, getAllFiles, getFiles } from '../../utils/components/Cod
 import { debugLog, waitForElmList } from '../../utils/global/common';
 import { MessageType } from '../../utils/types/Message';
 import { useXrmUpdated } from '../../utils/hooks/use/useXrmUpdated';
-import { ScriptOverride, ScriptOverrideContent } from '../../utils/types/ScriptOverride';
+import { ScriptOverrideContent } from '../../utils/types/ScriptOverride';
 import { useBoolean } from 'usehooks-ts';
 import CircularProgressOverflow from '../../utils/components/CircularProgressOverflow';
 import MessageManager from '../../utils/global/MessageManager';
+import { STORAGE_WebEditorFavFiles } from '../../utils/global/var';
+import GradeIcon from '@mui/icons-material/Grade';
+import GradeOutlinedIcon from '@mui/icons-material/GradeOutlined';
+import DontShowInfo from '../../utils/components/DontShowInfo';
+import { Alert } from '@mui/material';
+import SplitDropDownButtonGroup from '../../utils/components/SplitDropDownButtonGroup';
 
 const separationOfUrlAndFileName = 'webresources/';
 
@@ -41,7 +47,7 @@ class WebResourceEditor extends ProcessButton {
             'webresourceeditor',
             'WebResources Editor',
             <CodeIcon />,
-            300
+            350
         );
         this.process = WebResourceEditorProcess;
         this.description = <>
@@ -69,16 +75,46 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
         const [root, setRoot] = useState<CodeEditorDirectory | undefined>();
         const [editorOpen, setEditorOpen] = useState(false);
         const { value: confirmPublishOpen, setTrue: openConfirmPublish, setFalse: closeConfirmPublish } = useBoolean(false);
+        const [refreshAfterPublishing, setRefreshAfterPublishing] = useState(false);
+
+
+        const [favFiles, setFavFiles] = useState<string[]>([]);
+
+        const toggleFavFile = useCallback((fileId: string) => {
+            setFavFiles(old => {
+                const index = old.indexOf(fileId);
+                if (index !== -1) {
+                    const copy = [...old];
+                    const _ = copy.splice(index, 1);
+                    return copy;
+                }
+                return [...old, fileId];
+            });
+        }, []);
+
 
         useEffect(() => {
-            MessageManager.sendMessage(MessageType.GETCURRENTSCRIPTOVERRIDING).then(
-                function (response: ScriptOverride | null) {
-                    if (response) {
-                        setScriptsOverride(response);
-                    }
+            MessageManager.sendMessage(MessageType.GETCONFIGURATION, { key: STORAGE_WebEditorFavFiles }).then(
+                function (response: string[] | null) {
+                    setFavFiles(response ?? []);
                 }
             );
-        }, [setScriptsOverride]);
+        }, []);
+        useEffect(() => {
+            MessageManager.sendMessage(MessageType.SETCONFIGURATION, { key: STORAGE_WebEditorFavFiles, configurations: favFiles });
+        }, [favFiles]);
+
+
+
+        // useEffect(() => {
+        //     MessageManager.sendMessage(MessageType.GETCURRENTSCRIPTOVERRIDING).then(
+        //         function (response: ScriptOverride | null) {
+        //             if (response) {
+        //                 setScriptsOverride(response);
+        //             }
+        //         }
+        //     );
+        // }, [setScriptsOverride]);
 
 
         useEffect(() => {
@@ -173,7 +209,8 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
                 Xrm.Utility.showProgressIndicator(`Updating Webresource: ${scriptNodeContent?.find(s => s.srcRegex === scriptSrc)?.fileName}.`);
 
                 const record = {
-                    content: btoa(unescape(encodeURIComponent(scriptsOverrided[scriptSrc].modified)))
+                    // content: btoa(unescape(encodeURIComponent(scriptsOverrided[scriptSrc].modified)))
+                    content: btoa(String.fromCharCode(...new TextEncoder().encode(scriptsOverrided[scriptSrc].modified))),
                 };
 
                 Xrm.WebApi.updateRecord("webresource", scriptsOverrided[scriptSrc].webresourceid, record).then(
@@ -204,14 +241,19 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
             Xrm.Utility.showProgressIndicator(`Publishing updated webresources`);
             Xrm.WebApi.online.execute(execute_PublishXml_Request).then(
                 function success(response) {
-                    if (response.ok) { debugLog("Publish Done"); }
+                    if (response.ok) {
+                        debugLog("Publish Done");
+                        if (refreshAfterPublishing) {
+                            MessageManager.sendMessage(MessageType.REFRESHBYPASSCACHE);
+                        }
+                    }
                     Xrm.Utility.closeProgressIndicator();
                 }
             ).catch(function (error) {
                 console.error(`Error when attempt to publish webressources ${error.message}`);
                 Xrm.Utility.closeProgressIndicator();
             });
-        }, [scriptsOverridedSrc, scriptNodeContent, scriptsOverrided, closeConfirmPublish]);
+        }, [closeConfirmPublish, scriptsOverridedSrc, scriptNodeContent, scriptsOverrided, refreshAfterPublishing]);
 
 
         const publishChanges = useCallback(() => {
@@ -219,11 +261,20 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
             openConfirmPublish();
         }, [openConfirmPublish, scriptsOverridedSrc]);
 
+        const activateRefreshAfterPublishing = useCallback(() => {
+            setRefreshAfterPublishing(true);
+            // publishChanges();
+        }, []);
 
-        const launchLiveTest = useCallback(() => {
-            MessageManager.sendMessage(MessageType.ENABLESCRIPTOVERRIDING, scriptsOverrided);
-            MessageManager.sendMessage(MessageType.REFRESHBYPASSCACHE);
-        }, [scriptsOverrided]);
+        const deactivateRefreshAfterPublishing = useCallback(() => {
+            setRefreshAfterPublishing(false);
+            // publishChanges();
+        }, []);
+
+        // const launchLiveTest = useCallback(() => {
+        //     MessageManager.sendMessage(MessageType.ENABLESCRIPTOVERRIDING, scriptsOverrided);
+        //     MessageManager.sendMessage(MessageType.REFRESHBYPASSCACHE);
+        // }, [scriptsOverrided]);
 
 
         const codeEditorRef = useRef<CodeEditorForwardRef>(null);
@@ -248,12 +299,39 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
             removeScriptOverrideItem(selectedFile.src);
         }, [scriptsOverrided, removeScriptOverrideItem]);
 
+        const allFiles = useMemo(() => root &&
+            getAllFiles(root).sort((file1, file2) => {
+                const isFile1Fav = favFiles.includes(file1.crmId);
+                const isFile2Fav = favFiles.includes(file2.crmId);
+                if (isFile1Fav === isFile2Fav) {
+                    return 0;
+                }
+                if (isFile1Fav && !isFile2Fav) {
+                    return -1;
+                }
+                if (!isFile1Fav && isFile2Fav) {
+                    return 1;
+                }
+                return 0;
+            }), [favFiles, root]);
+
+
         return (
             <>
                 <Stack spacing={1} height='calc(100% - 10px)' padding='10px' alignItems='center'>
 
+
+                    <Alert key='webresourceWarnEnv' severity='warning'>
+                        <Typography variant='body2' fontSize='unset' lineHeight='unset'>Make sure to verify the environment you are modifying before publishing your changes.</Typography>
+                    </Alert>
+
+                    <DontShowInfo storageName={`${props.id}-maininfo`}>
+                        <Typography variant='body2' fontSize='unset' lineHeight='unset'><i>Live debugging is no longer available.</i></Typography>
+                        <Typography variant='body2' fontSize='unset' lineHeight='unset'>You can favorite files to display them at the top of the list.</Typography>
+                    </DontShowInfo>
+
                     <Stack width='100%' direction='column'>
-                        <ButtonGroup variant="contained" fullWidth>
+                        {/* <ButtonGroup variant="contained" fullWidth>
 
                             <Button
                                 sx={{
@@ -264,15 +342,46 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
                                 Send scripts & Launch LiveTest
                             </Button>
 
-                        </ButtonGroup>
-                        <ButtonGroup variant='outlined' fullWidth>
+                        </ButtonGroup> */}
+                        {/* <ButtonGroup variant='outlined' fullWidth> */}
 
-                            <Button
+                        {/* <Button
+                                onClick={() => {
+                                    setEditorOpen(prev => !prev);
+                                }}
+                            >
+                                Open Editor
+                            </Button> */}
+
+                        {/* <Button
+                                variant='contained'
                                 onClick={publishChanges}
                             >
                                 Publish
-                            </Button>
+                            </Button> */}
 
+                        <SplitDropDownButtonGroup
+                            options={[
+                                {
+                                    title: "Publish & Reload",
+                                    action: publishChanges,
+                                    onSelect: activateRefreshAfterPublishing,
+                                },
+                                {
+                                    title: "Publish",
+                                    action: publishChanges,
+                                    onSelect: deactivateRefreshAfterPublishing,
+                                },
+                            ]}
+                            defaultActionIndex={0}
+                            variant='outlined'
+                            splitButtonProps={{
+                                variant: 'contained',
+                                sx: {
+                                    whiteSpace: 'nowrap',
+                                }
+                            }}
+                        >
                             <Button
                                 onClick={() => {
                                     setEditorOpen(prev => !prev);
@@ -280,11 +389,13 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
                             >
                                 Open Editor
                             </Button>
+                        </SplitDropDownButtonGroup>
 
-                        </ButtonGroup>
+                        {/* </ButtonGroup> */}
                     </Stack>
                     {
-                        unloadOverridedFiles?.length > 0 && <List
+                        unloadOverridedFiles?.length > 0 &&
+                        <List
                             sx={{ width: '100%', bgcolor: 'background.paper', overflowX: 'hidden', overflowY: 'auto', flex: '0.5' }}
                             component="nav"
                             disablePadding
@@ -316,6 +427,7 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
                         loading={isFetching}
                         disableShrink
                         size={120}
+                        sx={{ minHeight: 0 }}
                     >
                         <Stack direction='column' height='100%' width='100%'>
                             <ScriptList
@@ -326,16 +438,21 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
                                 secondaryAction={removeScriptOverride}
                                 secondaryIcon={RestoreIcon}
                                 secondaryTitle='Restore file'
+                                favFiles={favFiles}
+                                toggleFavFile={toggleFavFile}
                             />
                             <ScriptList
                                 text='Scripts found on this page:'
-                                items={(root && getAllFiles(root)) || []}
+                                items={allFiles || []}
                                 primaryLabel={(item) => scriptsOverrided[item.src] ? <strong>{item.name}</strong> : item.name}
                                 primaryAction={selectFile}
+                                favFiles={favFiles}
+                                toggleFavFile={toggleFavFile}
                             />
                         </Stack>
                     </CircularProgressOverflow>
                 </Stack >
+
                 <Dialog
                     fullScreen
                     open={editorOpen}
@@ -389,16 +506,18 @@ const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(
     }
 );
 
-type ScriptListProps<T> = {
+type ScriptListProps = {
     text: string,
-    items: T[],
-    primaryLabel: (item: T) => React.ReactNode,
-    primaryAction: (item: T) => void,
-    secondaryAction?: (item: T) => void,
+    items: CodeEditorFile[],
+    primaryLabel: (item: CodeEditorFile) => React.ReactNode,
+    primaryAction: (item: CodeEditorFile) => void,
+    secondaryAction?: (item: CodeEditorFile) => void,
     secondaryIcon?: SvgIconComponent,
     secondaryTitle?: string,
+    favFiles: string[],
+    toggleFavFile: (value: string) => void
 }
-function ScriptList<T>(props: ScriptListProps<T>) {
+function ScriptList(props: ScriptListProps) {
     return (
         <List
             sx={{ width: '100%', bgcolor: 'background.paper', overflowX: 'hidden', overflowY: 'auto', flex: '1 1 50%', height: '100%' }}
@@ -421,8 +540,12 @@ function ScriptList<T>(props: ScriptListProps<T>) {
                         }
                         disablePadding
                     >
-                        <ListItemButton dense onClick={() => props.primaryAction(item)}>
+                        <ListItemButton dense onClick={() => props.primaryAction(item)} sx={{ pl: 0.5 }}>
+                            <IconButton title='Add this file to favorite' onClick={(e) => { props.toggleFavFile(item.crmId); e.stopPropagation(); }} size='small' >
+                                {props.favFiles.includes(item.crmId) ? <GradeIcon sx={{ color: '#FDCC0D' }} /> : <GradeOutlinedIcon />}
+                            </IconButton>
                             <ListItemText
+                                sx={{ pl: 0.5 }}
                                 primary={props.primaryLabel(item)}
                                 primaryTypographyProps={{
                                     fontSize: '0.85rem',

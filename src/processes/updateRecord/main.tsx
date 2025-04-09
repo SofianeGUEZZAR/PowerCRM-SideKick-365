@@ -41,7 +41,7 @@ import RecordSearchBar from '../../utils/components/RecordSearchBar';
 import RestoreIcon from '@mui/icons-material/Restore';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import { NoMaxWidthTooltip } from '../../utils/components/NoMaxWidthTooltip';
-import SplittedDropDownButton from '../../utils/components/SplittedDropDownButton';
+import SplitDropDownButtonGroup from '../../utils/components/SplitDropDownButtonGroup';
 import { useUpdateEffect } from '@custom-react-hooks/all';
 import { useSnackbar } from 'notistack';
 import { useSpDevTools } from '../../utils/global/spContext';
@@ -770,7 +770,7 @@ function NavTopBar(props: NavBarProps) {
                         </Button>
                     </ButtonGroup>
                 </Stack>
-                <SplittedDropDownButton
+                <SplitDropDownButtonGroup
                     options={[
                         {
                             title: <Stack direction='row' spacing={2}><RocketLaunchIcon /> <div>Launch Create</div></Stack>,
@@ -784,6 +784,7 @@ function NavTopBar(props: NavBarProps) {
                         },
                     ]}
                     actionIndex={props.recordsIds.length === 0 ? 0 : 1}
+                    variant='contained'
                 />
             </Stack>
         </Stack>

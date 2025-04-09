@@ -4,7 +4,7 @@ import { StorageConfiguration } from '../utils/types/StorageConfiguration';
 import impersonation from './impersonation/main';
 import createConfiguration from './setConfiguration/main';
 import updateRecord from './updateRecord/main';
-// import webResourceEditor from './webResourceEditor/main';
+import webResourceEditor from './webResourceEditor/main';
 import allFields from './allFields/main';
 import relatedRecords from './relatedRecords/main';
 import commandDebugger from './commandDebugger/main';
@@ -15,8 +15,9 @@ import optionSetTable from './optionSetTable/main';
 import entitiesList from './entitiesList/main';
 import metadataBrowser from './metadataBrowser/main';
 import formToolsV2 from './formToolsv2/main';
+import ExtensionTarget from '../utils/types/ExtensionTarget';
 
-// const target = process.env.REACT_APP_TARGET;
+const TARGET = process.env.REACT_APP_TARGET;
 
 const Processes: ProcessButton[] = [
     formToolsV2,
@@ -27,7 +28,7 @@ const Processes: ProcessButton[] = [
     relatedRecords,
     entitiesList,
     impersonation,
-    // ...(target === 'chrome' ? [webResourceEditor] : []),
+    ...(TARGET === ExtensionTarget.Chrome ? [webResourceEditor] : []),
     pluginTraceLogsExplorer,
     metadataBrowser,
     navigation,
@@ -53,3 +54,4 @@ export default Processes;
 //! related records: errors during retreiving (Account - OneToMany)
 //! metadata: actions menu don't close on clickaway
 //! dirty: oldValue issue on complex email fields
+//? formtool: label not displayed in sub form (lookup control)

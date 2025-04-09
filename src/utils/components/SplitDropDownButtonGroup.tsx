@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { Button, ButtonGroup, ClickAwayListener, Grow, Menu, MenuItem, MenuList, Paper, Popper } from "@mui/material";
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react'
+import { Button, ButtonGroup, ButtonGroupProps, ButtonProps, ClickAwayListener, Grow, Menu, MenuItem, MenuList, Paper, Popper } from "@mui/material";
 import React from 'react';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
@@ -11,16 +11,17 @@ interface SplitButtonAction {
     onSelect?: () => void
 }
 
-interface SplittedDropDownButtonProps {
+interface SplitDropDownButtonGroupProps {
     options: SplitButtonAction[];
     defaultActionIndex?: number;
     actionIndex?: number;
+    splitButtonProps?: ButtonProps
 }
-function SplittedDropDownButton(props: SplittedDropDownButtonProps) {
-    const { options, defaultActionIndex, actionIndex } = props;
+function SplitDropDownButtonGroup(props: SplitDropDownButtonGroupProps & Omit<ButtonGroupProps, 'onClick' | 'ref' | 'sx'> & PropsWithChildren) {
+    const { options, defaultActionIndex, actionIndex, children, splitButtonProps, ...buttonGroupProps } = props;
 
     const [open, setOpen] = useState(false);
-    const anchorRef = useRef<HTMLDivElement>(null);
+    const anchorRef = useRef<HTMLButtonElement>(null);
     const [selectedIndex, setSelectedIndex] = useState(defaultActionIndex ?? 0);
 
 
@@ -39,7 +40,7 @@ function SplittedDropDownButton(props: SplittedDropDownButtonProps) {
     useEffect(() => {
         options[selectedIndex]?.onSelect?.();
     }, [options, selectedIndex]);
-    
+
 
     const handleMenuItemClick = (
         index: number,
@@ -66,15 +67,23 @@ function SplittedDropDownButton(props: SplittedDropDownButtonProps) {
     return (
         <>
             <ButtonGroup
-                variant="contained"
-                ref={anchorRef}
                 fullWidth
+                {...buttonGroupProps}
             >
-                <Button onClick={options[selectedIndex].action}>{options[selectedIndex].title}</Button>
+                {children}
                 <Button
-                    size="small"
+                    onClick={options[selectedIndex].action}
+                    {...splitButtonProps}
+                    variant={splitButtonProps?.variant ?? buttonGroupProps.variant}
+                >
+                    {options[selectedIndex].title}
+                </Button>
+                <Button
+                    ref={anchorRef}
                     onClick={handleToggle}
-                    sx={{ width: 40 }}
+                    sx={{  width: 40, ...splitButtonProps?.sx }}
+                    {...splitButtonProps}
+                    variant={splitButtonProps?.variant ?? buttonGroupProps.variant}
                 >
                     <ArrowDropDownIcon />
                 </Button>
@@ -117,4 +126,4 @@ function SplittedDropDownButton(props: SplittedDropDownButtonProps) {
     );
 }
 
-export default SplittedDropDownButton;
+export default SplitDropDownButtonGroup;
