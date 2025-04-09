@@ -2,7 +2,7 @@ import { Stack, ThemeProvider, createTheme } from "@mui/material";
 import CodeEditorHeader, { ChangeLanguage, ContextualMenuAction, DiffEditorAction } from './components/Header';
 import CodeEditorWindow from './components/Window';
 import { CodeEditorProps, CodeEditorFile, CodeEditorDirectory, CodeEditorCommon, Type, CodeEditorForwardRef } from './utils/types';
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { editor } from 'monaco-editor';
 import FileTree from "./components/FileTree";
 import { getDirectories, getFiles, getLanguageByExtension } from "./utils/fileManagement";
@@ -58,14 +58,6 @@ const CodeEditorComponent = forwardRef<CodeEditorForwardRef, CodeEditorProps>((p
     const [fileTreeWidth, setFileTreeWidth] = useState<number>(250);
     const fileTreeZoom = 0.8;
 
-
-    useEffect(() => {
-        if (selectedTreeElement && selectedTreeElement.type === Type.FILE) {
-            OnFileSelect(selectedTreeElement as CodeEditorFile);
-        }
-    }, [selectedTreeElement])
-
-
     useEffect(() => {
         if (root) {
             setOpenFiles(old => {
@@ -82,6 +74,13 @@ const CodeEditorComponent = forwardRef<CodeEditorForwardRef, CodeEditorProps>((p
         });
         setSelectedFile(selectedFile);
     }
+
+    const setSelectedFileFromFileTree = useCallback((file: CodeEditorCommon) => {
+        if (file && file.type === Type.FILE) {
+            OnFileSelect(file as CodeEditorFile);
+            setSelectedTreeElement(file);
+        }
+    }, []);
 
     const OnFileClose = async (closedFile: CodeEditorFile) => {
         if (closedFile.previousContent !== closedFile.modifiedContent) {
@@ -256,7 +255,7 @@ const CodeEditorComponent = forwardRef<CodeEditorForwardRef, CodeEditorProps>((p
                     <FileTree
                         directory={root}
                         selectedFile={selectedFile}
-                        onSelect={setSelectedTreeElement}
+                        onSelect={setSelectedFileFromFileTree}
                         theme={theme}
                         fileTreeWidth={fileTreeWidth}
                         fileTreeZoom={fileTreeZoom}
