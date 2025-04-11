@@ -81,8 +81,8 @@ function SplitDropDownButtonGroup(props: SplitDropDownButtonGroupProps & Omit<Bu
                 <Button
                     ref={anchorRef}
                     onClick={handleToggle}
-                    sx={{  width: 40, ...splitButtonProps?.sx }}
                     {...splitButtonProps}
+                    style={{ width: 40 }}
                     variant={splitButtonProps?.variant ?? buttonGroupProps.variant}
                 >
                     <ArrowDropDownIcon />
