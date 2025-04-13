@@ -168,17 +168,14 @@ Clicking an item opens the entity list with its existing views.
 ## 8\. WebResources Editor
 <img align="right" src="screenshots/jpg/7.WebResourcesEditor.jpg">
 
-THIS TOOL HAS BEEN DEACTIVATED. We are working on it.
+Edit and publish - all within your browser!
 
-Edit, test, and publish - all within your browser!
-
-This tool adds an editor directly to your browser, allowing you to modify web resources with ease. No more tedious updates and publishing. You can test your changes live locally, seeing the results instantly.
+This tool adds an editor directly to your browser, allowing you to modify web resources with ease. No more tedious updates and publishing.
 
 Here are the key features:
 
 1. **Edit**: `Modify any loaded file on the current page using the Monaco Editor, the same robust code editor that powers VS Code.`
-2. **Live Test**: `After saving your changes, enable live testing. This reloads your page in debug mode, allowing your edited scripts to override the originals.`
-3. **Publish**: `Once you're satisfied with your modifications, publish the files to make them permanent.`
+2. **Publish**: `Once you're satisfied with your modifications, publish the files to make them permanent.`
 
 <img height="640px" width="0px">
 

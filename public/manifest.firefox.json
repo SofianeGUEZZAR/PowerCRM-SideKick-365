@@ -1,6 +1,6 @@
 {
     "name": "Dynamics SideKick",
-    "description": "Enhance your Dynamics 365 experience with Dynamics SideKick — a custom side panel packed with utilities for form editing, record updates, attribute browsing, and log analysis.",
+    "description": "Enhance your Dynamics 365 experience with Dynamics SideKick — a custom side panel.",
     "version": "{PACKAGE_VERSION}",
     "manifest_version": 3,
     "background": {
