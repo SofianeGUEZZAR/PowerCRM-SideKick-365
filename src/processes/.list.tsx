@@ -15,9 +15,9 @@ import optionSetTable from './optionSetTable/main';
 import entitiesList from './entitiesList/main';
 import metadataBrowser from './metadataBrowser/main';
 import formToolsV2 from './formToolsv2/main';
-import ExtensionTarget from '../utils/types/ExtensionTarget';
+// import ExtensionTarget from '../utils/types/ExtensionTarget';
 
-const TARGET = process.env.REACT_APP_TARGET;
+// const TARGET = process.env.REACT_APP_TARGET;
 
 const Processes: ProcessButton[] = [
     formToolsV2,
