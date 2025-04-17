@@ -42,6 +42,7 @@
     },
     "scripts": {
         "start": "craco start",
+        "build": "craco build",
         "build:chrome": "cross-env REACT_APP_TARGET=chrome craco build",
         "build:firefox": "cross-env REACT_APP_TARGET=firefox craco build",
         "test": "react-scripts test",
@@ -97,16 +98,17 @@
         "customize-cra": "^1.0.0",
         "fork-ts-checker-webpack-plugin": "^8.0.0",
         "husky": "^8.0.3",
-        "node-sass": "^8.0.0",
         "prettier": "^2.8.4",
         "react-app-rewired": "^2.2.1",
         "react-scripts": "^5.0.1",
+        "sass": "^1.86.3",
         "simple-progress-webpack-plugin": "^2.0.0",
         "speed-measure-webpack-plugin": "^1.5.0",
         "standard-version": "^9.5.0",
         "ts-loader": "^9.4.2",
         "typescript": "^4.9.5",
         "url": "^0.11.0",
+        "webpack-bundle-analyzer": "^4.10.2",
         "worker-loader": "^3.0.8",
         "yarn-upgrade-all": "^0.7.2"
     }

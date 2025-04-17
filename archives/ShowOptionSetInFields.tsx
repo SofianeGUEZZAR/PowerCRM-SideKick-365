@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo, useContext } from 'react';
 
-import { ControlType } from '../../../utils/types/ControlType';
+import { ControlType } from '../src/utils/types/ControlType';
 import StyleIcon from '@mui/icons-material/Style';
 import StyleOutlinedIcon from '@mui/icons-material/StyleOutlined';
-import { OptionSetValue } from '../../../utils/types/OptionSetValue';
-import { IToolButtonStandard, ToolButton } from '../ToolButton';
-import { FormToolContext } from '../context';
+import { OptionSetValue } from '../src/utils/types/OptionSetValue';
+import { IToolButtonStandard, ToolButton } from '../src/processes/formToolsv2/ToolButton';
+import { FormToolContext } from '../src/processes/formToolsv2/context';
 
 
 function ShowOptionSetInFields(props: IToolButtonStandard) {

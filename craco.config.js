@@ -3,6 +3,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 // const smp = new SpeedMeasurePlugin()
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
@@ -84,7 +85,7 @@ module.exports = {
                         webpackConfig.module.rules[1]
                     ]
                 },
-                plugins: [...webpackConfig.plugins, new ForkTsCheckerWebpackPlugin(), copyWebpackPlugin].filter(
+                plugins: [...webpackConfig.plugins, new ForkTsCheckerWebpackPlugin(), copyWebpackPlugin, new BundleAnalyzerPlugin()].filter(
                     Boolean
                 ),
                 entry: {
@@ -99,12 +100,13 @@ module.exports = {
                 output: {
                     ...webpackConfig.output,
                     filename: 'static/js/[name].js',
-                    asyncChunks: true
+                    asyncChunks: false
                 },
                 optimization: {
                     ...webpackConfig.optimization,
-                    runtimeChunk: false
-                    // minimize: false,
+                    runtimeChunk: false,
+                    // splitChunks: false,
+                    minimize: true,
                 }
             }
 

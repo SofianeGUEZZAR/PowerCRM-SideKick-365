@@ -36,7 +36,7 @@ import { STORAGE_WebEditorFavFiles } from '../../utils/global/var';
 import GradeIcon from '@mui/icons-material/Grade';
 import GradeOutlinedIcon from '@mui/icons-material/GradeOutlined';
 import DontShowInfo from '../../utils/components/DontShowInfo';
-import { Alert } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import SplitDropDownButtonGroup from '../../utils/components/SplitDropDownButtonGroup';
 
 const separationOfUrlAndFileName = 'webresources/';
