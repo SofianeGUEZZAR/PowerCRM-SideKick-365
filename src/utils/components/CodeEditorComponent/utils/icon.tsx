@@ -3,7 +3,6 @@ import { SiHtml5, SiCss3, SiJavascript, SiTypescript, SiJson } from "react-icons
 import { FcPicture, FcFile } from "react-icons/fc";
 import { FaChevronRight, FaChevronDown } from "react-icons/fa";
 import { AiFillFileText } from "react-icons/ai";
-import React from 'react';
 
 function getIconHelper() {
     const cache = new Map<string, ReactNode>();

@@ -7,8 +7,8 @@ import { RetrieveAttributesMetaData } from '../hooks/XrmApi/RetrieveAttributesMe
 import { useBoolean } from 'usehooks-ts'
 import { Stack, Button, Dialog, DialogContent, DialogTitle, IconButton, InputAdornment, TextField, Pagination, Chip, Box, Paper, ListItem, Theme, Tooltip, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { DataGrid, FooterPropsOverrides, GridCellCheckboxRenderer, GridColDef, GridColumnHeaderParams, GridColumnVisibilityModel, GridFilterModel, gridPageCountSelector, gridPageSelector, gridPageSizeSelector, gridPaginatedVisibleSortedGridRowEntriesSelector, GridPaginationModel, GridRenderCellParams, gridRowCountSelector, GridSortModel, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton, GRID_BOOLEAN_COL_DEF, selectedIdsLookupSelector, useGridApiContext, useGridSelector, gridPaginationRowRangeSelector, GridValueGetter } from '@mui/x-data-grid';
-import { DialogActions, LinearProgress } from '@material-ui/core'
+import { DataGrid, FooterPropsOverrides, GridColDef, GridColumnVisibilityModel, GridFilterModel, gridPageSelector, gridPageSizeSelector, GridPaginationModel, GridRenderCellParams, gridRowCountSelector, GridSortModel, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
+import { DialogActions, LinearProgress } from '@mui/material'
 import { RecordsDisplayNamesResponse, RetrieveRecordsDisplayNames } from '../hooks/XrmApi/RetrieveRecordsDisplayNames';
 import ClearIcon from '@mui/icons-material/Clear';
 import '../global/extensions';

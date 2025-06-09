@@ -1,7 +1,4 @@
-import { Theme } from '@mui/material';
 import { EditorLanguage } from 'monaco-editor/esm/metadata';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-import { ReactElement, ReactNode } from 'react';
 
 export type MonacoTheme =
     | 'vs-dark'

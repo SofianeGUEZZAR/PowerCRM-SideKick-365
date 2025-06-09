@@ -23,7 +23,7 @@ import { useCurrentRecord } from '../../utils/hooks/use/useCurrentRecord';
 import StyleIcon from '@mui/icons-material/Style';
 import { MSType } from '../../utils/types/requestsType';
 import { PickListOption, RetrievePicklistValues } from '../../utils/hooks/XrmApi/RetrievePicklistValues';
-import { TableCellProps } from '@material-ui/core';
+import { TableCellProps } from '@mui/material';
 import { useCopyToClipboard } from 'usehooks-ts';
 import LightTooltip from '../../utils/components/LightTooltip';
 import EntitySelector from '../../utils/components/EntitySelector';

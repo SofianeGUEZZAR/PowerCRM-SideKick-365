@@ -3,7 +3,7 @@ import React from "react"
 import EntitySelector from "./EntitySelector"
 import RecordSelector from "./RecordSelector"
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
-import { IconButton } from "@material-ui/core"
+import { IconButton } from "@mui/material"
 
 type RecordSearchBarProps = {
     setEntityName: (str: string) => void,
