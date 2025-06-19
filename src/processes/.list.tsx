@@ -52,6 +52,9 @@ export default Processes;
 
 
 //* Workflow Activities Explorer
+//* pluginTrace: add filtering on step name
+//! update: lookups with multiple targets use only one for the grid explorer
+//! update: lookups with multiple targers cannot create/update because it miss the target in the logicalname
 //! related records: errors during retreiving (Account - OneToMany)
 //! metadata: actions menu don't close on clickaway
 //! dirty: oldValue issue on complex email fields
