@@ -52,7 +52,7 @@ export default Processes;
 
 
 //* Workflow Activities Explorer
-//* pluginTrace: add filtering on step name
+//* pluginTrace: add filtering on step name (maybe add an accordeon navigation bar containing all filtering options)
 //! update: lookups with multiple targets use only one for the grid explorer
 //! update: lookups with multiple targers cannot create/update because it miss the target in the logicalname
 //! related records: errors during retreiving (Account - OneToMany)
