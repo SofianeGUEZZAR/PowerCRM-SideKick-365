@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Stack from '@mui/system/Stack';
+import Stack from '@mui/material/Stack';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { SubProcessProps } from '../main';

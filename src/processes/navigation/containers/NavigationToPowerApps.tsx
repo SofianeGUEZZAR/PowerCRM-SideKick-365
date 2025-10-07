@@ -1,9 +1,5 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 
 import { NavigationButton } from '../../../utils/types/NavigationButton';
-import { Textfit } from 'react-textfit';
 import { PowerAppsIcon } from '../icons';
 import DirectNavigationButton from '../components/NavigationButton';
 

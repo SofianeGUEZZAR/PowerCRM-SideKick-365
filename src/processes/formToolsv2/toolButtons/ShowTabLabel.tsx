@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
-import { Portal } from '@mui/base';
+import { Portal } from '@mui/material';
 import BookIcon from '@mui/icons-material/Book';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import { LogicalNameTypography } from '../../../utils/components/LogicalNameTypography';
