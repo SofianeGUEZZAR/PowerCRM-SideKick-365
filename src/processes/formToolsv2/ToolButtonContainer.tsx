@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Stack from '@mui/system/Stack';
+import Stack from '@mui/material/Stack';
 import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 
 import { SvgIconProps } from '@mui/material/SvgIcon';

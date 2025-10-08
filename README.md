@@ -39,7 +39,7 @@ A configuration tool is available to customize the extension's loading settings.
 
 The main menu can be opened or closed by clicking on the magic wand. The displayed button are used to open the corresponding tools describes below.
 
-<img height="500px" width="0px">
+<img height="500px" width="10px">
 
 
 
@@ -71,7 +71,7 @@ This tool provide functionnalities used on records form. Each button are reversi
 7. Clone the current record: `Open a dialog with a record duplicating the data of the current record. The open record is not saved at this state`
 8. Blur data: `Blur fields and grids data. This button can be used on Homepage grids.`
 
-<img height="250px" width="0px">
+<img height="250px" width="10px">
 
 
 
@@ -90,7 +90,7 @@ To remove a field from the update list, click the trash bin icon.
 
 Each field type has a matching input type, such as a text box for text fields or a date picker for date fields. Input fields have an icon that you can click to open a tool that helps with data entry.
 
-<img height="220px" width="0px">
+<img height="220px" width="10px">
 
 
 
@@ -105,7 +105,7 @@ It displays all the fields and values of the currently open records.
 
 Expand the box to reveal additional values from the WebApi, such as the _FormattedValue_.
 
-<img height="570px" width="0px">
+<img height="570px" width="10px">
 
 
 
@@ -120,7 +120,7 @@ Each table displays all option labels and values for every available option set 
 
 You can copy labels or values by simply clicking on them. Alternatively, you can copy the entire table to your clipboard.
 
-<img height="540px" width="0px">
+<img height="540px" width="10px">
 
 
 
@@ -135,7 +135,7 @@ By clicking on the box, you can trigger the focus of the fields on the form. Thi
 
 You can also enable an option to display a red box around the field controls on the form, making them visually stand out.
 
-<img height="240px" width="0px">
+<img height="240px" width="10px">
 
 
 
@@ -148,7 +148,7 @@ This tool displays all relationships associated with the selected entity. It als
 
 To view a record in detail, click on it to open a dialog. Alternatively, you can access a contextual menu (right-click) for other opening options.
 
-<img height="530px" width="0px">
+<img height="530px" width="10px">
 
 
 
@@ -161,7 +161,7 @@ This tool shows all entities in your environment.
 
 Clicking an item opens the entity list with its existing views.
 
-<img height="500px" width="0px">
+<img height="500px" width="10px">
 
 
 
@@ -177,7 +177,7 @@ Here are the key features:
 1. **Edit**: `Modify any loaded file on the current page using the Monaco Editor, the same robust code editor that powers VS Code.`
 2. **Publish**: `Once you're satisfied with your modifications, publish the files to make them permanent.`
 
-<img height="640px" width="0px">
+<img height="680px" width="10px">
 
 
 
@@ -194,7 +194,7 @@ You can filter the list by name, email address and even with security roles.
 
 You can also check each user's security by hovering over their entry in the list.
 
-<img height="210px" width="0px">
+<img height="210px" width="10px">
 
 
 
@@ -208,7 +208,7 @@ The Plugin Trace Logs Explorer provides a streamlined way to view and analyze lo
 * **Efficient Filtering**: `Quickly find the logs by filtering by involved entity, message name, and date range.`
 * **Log Correlation**: `After selecting a log, explore the correlation — a view of all related processes, both before and after the selected log.`
 
-<img height="430px" width="0px">
+<img height="430px" width="10px">
 
 
 
@@ -221,7 +221,7 @@ This tool lets you see all metadata in this environment.
 
 Not all columns are displayed by default, but they are available.
 
-<img height="280px" width="0px">
+<img height="280px" width="10px">
 
 
 
@@ -240,7 +240,7 @@ This tool provides quick access to various essential resources:
 * **Azure Portal**: `Opens the tenant's Azure portal.`
 * **Security**: `Opens the classic interface security page of the advanced settings.`
 
-<img height="220px" width="0px">
+<img height="220px" width="10px">
 
 
 
@@ -249,7 +249,7 @@ This tool provides quick access to various essential resources:
 
 This button enable or disable the debugger for model-app ribbons.
 
-<img height="250px" width="0px">
+<img height="250px" width="10px">
 
 
 
@@ -262,7 +262,7 @@ This tool lets you select which tools automatically open when a page loads. You 
 
 A "foreground" option is available to disable automatic width adjustments of the main Dynamics screen.
 
-<img height="850px" width="0px">
+<img height="850px" width="10px">
 
 
 

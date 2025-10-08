@@ -1,10 +1,6 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { NavigationButton } from '../../../utils/types/NavigationButton';
-import { Textfit } from 'react-textfit';
 import DirectNavigationButton from '../components/NavigationButton';
 
 function AdvancedFind(props: NavigationButton) {

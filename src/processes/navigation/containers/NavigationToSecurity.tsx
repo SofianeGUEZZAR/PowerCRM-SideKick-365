@@ -1,4 +1,3 @@
-import Tooltip from '@mui/material/Tooltip';
 
 import { NavigationButton } from '../../../utils/types/NavigationButton';
 import D365NavBarIcon from '../../../utils/components/D365NavBarIcon';

@@ -1,9 +1,5 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 
 import { AzurePortalIcon, EntraIcon, Microsoft365AdminCenterIcon } from '../icons';
-import { Textfit } from 'react-textfit';
 import { NavigationButton } from '../../../utils/types/NavigationButton';
 import DirectNavigationButton from '../components/NavigationButton';
 

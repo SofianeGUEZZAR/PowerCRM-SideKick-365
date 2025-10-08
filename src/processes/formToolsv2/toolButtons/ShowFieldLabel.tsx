@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
-import { Portal } from '@mui/base';
+import { Portal } from '@mui/material';
 import { ControlType } from '../../../utils/types/ControlType';
 
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
