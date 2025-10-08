@@ -59,6 +59,9 @@ export default Processes;
 //! related records: errors during retreiving (Account - OneToMany)
 //! metadata: actions menu don't close on clickaway
 //! dirty: oldValue issue on complex email fields
+//! Apps overlay to much shift (shifting by main bar width 2 times)
 //? formtool: label not displayed in sub form (lookup control)
 //? options: add version to option
 //? configuration: add delay option
+//? allow to choose the notifications location
+//? allow to close every notifications
