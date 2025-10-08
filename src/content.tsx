@@ -92,6 +92,7 @@ setTimeout(async () => {
 
         if (window.top && window.top.window === window) {
             var loading = setInterval(() => {
+                console.log("Check xrm");
                 if (!!window.top.Xrm) {
                     clearInterval(loading);
                     initExtension();
@@ -122,4 +123,4 @@ ClassNameGenerator.configure(
     (componentName) => `${PROJECT_PREFIX}${componentName.replace('Mui', '')}`,
 );
 
-export default <></>;
+export default (() => null);

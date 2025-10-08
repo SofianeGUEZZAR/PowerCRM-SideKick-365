@@ -2,18 +2,12 @@
     "name": "dynamics-sidekick",
     "displayName": "Dynamics SideKick",
     "version": "1.2",
-    "description": "A basic Plasmo extension.",
-    "author": "Plasmo Corp. <foss@plasmo.com>",
+    "description": "Enhance your Dynamics 365 experience with Dynamics SideKick — a custom side panel.",
+    "author": "Sofiane GUEZZAR <sofiane.guezzar@gmail.com>",
     "scripts": {
         "dev": "plasmo dev",
         "build": "plasmo build",
         "package": "plasmo package"
-    },
-    "overrides": {
-        "@parcel/watcher": "2.1.0"
-    },
-    "@parcel/resolver-default": {
-        "packageExports": true
     },
     "dependencies": {
         "@custom-react-hooks/all": "^2.0.8",
