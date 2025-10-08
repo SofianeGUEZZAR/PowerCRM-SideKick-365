@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button, { ButtonProps } from '@mui/material/Button';
+import Button, { type ButtonProps } from '@mui/material/Button';
 import { useGridApiContext, useGridRootProps } from '@mui/x-data-grid';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';

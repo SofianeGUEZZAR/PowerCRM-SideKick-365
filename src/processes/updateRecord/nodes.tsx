@@ -5,7 +5,7 @@ import '../../utils/global/extensions';
 
 import dayjs, { Dayjs } from 'dayjs';
 import React, {
-    ReactNode, useEffect,
+    type ReactNode, useEffect,
     useMemo, useState
 } from 'react';
 
@@ -24,7 +24,7 @@ import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import ListSubheader from '@mui/material/ListSubheader';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, { type SelectChangeEvent } from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
@@ -34,13 +34,13 @@ import NumericInput from '../../utils/components/NumericInput';
 import RecordSelector from '../../utils/components/RecordSelector';
 import { getCurrentDynamics365DateTimeFormat, groupBy, isArraysEquals } from '../../utils/global/common';
 import {
-    AttributeMetadata, MSDateFormat, MSType
+    type AttributeMetadata, MSDateFormat, MSType
 } from '../../utils/types/requestsType';
 import {
-    PickListOption, RetrievePicklistValues
+    type PickListOption, RetrievePicklistValues
 } from '../../utils/hooks/XrmApi/RetrievePicklistValues';
 import { RetrieveSetName } from '../../utils/hooks/XrmApi/RetrieveSetName';
-import { createSvgIcon, Theme } from '@mui/material';
+import { createSvgIcon, type Theme } from '@mui/material';
 import { useUpdateEffect } from '@custom-react-hooks/all';
 
 
@@ -1161,7 +1161,7 @@ export function MultiplePicklistNode(props: AttributeProps & { entityname: strin
         }
     }, [props.attributeToUpdateManager, props.remove]);
 
-    const onChange = (event: SelectChangeEvent<number[]>) => {
+    const onChange = (event: SelectChangeEvent<any>) => {
         const newValue = typeof event.target.value == 'string' ? [] : event.target.value
         setValue(newValue)
         setDirty(newValue)

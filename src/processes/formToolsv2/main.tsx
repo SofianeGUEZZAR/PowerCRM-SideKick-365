@@ -1,57 +1,74 @@
-import createTheme from '@mui/material/styles/createTheme';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import Stack from '@mui/material/Stack';
-import { forwardRef, useContext, useMemo, useRef } from 'react';
-import { ProcessProps, ProcessButton, ProcessRef } from '../../utils/global/.processClass';
-import HandymanIcon from '@mui/icons-material/Handyman';
+import HandymanIcon from "@mui/icons-material/Handyman";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import LabelIcon from "@mui/icons-material/Label";
+import LabelOutlinedIcon from "@mui/icons-material/LabelOutlined";
+import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
+import TipsAndUpdatesOutlinedIcon from "@mui/icons-material/TipsAndUpdatesOutlined";
+import WifiIcon from "@mui/icons-material/Wifi";
+import WifiOffIcon from "@mui/icons-material/WifiOff";
+import Stack from "@mui/material/Stack";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { forwardRef, useContext, useMemo, useRef } from "react";
 
-import LabelIcon from '@mui/icons-material/Label';
-import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
-
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useWindowSize } from 'usehooks-ts';
-import { ToggableToolButtonContainer, ToolButtonContainer } from './ToolButtonContainer';
-import ShowFieldLabel from './toolButtons/ShowFieldLabel';
-import VisibleMode from './toolButtons/VisibleMode';
-
-import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlined';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-
-import WifiIcon from '@mui/icons-material/Wifi';
-import WifiOffIcon from '@mui/icons-material/WifiOff';
-import ShowTabLabel from './toolButtons/ShowTabLabel';
-import { OptionalMode } from './toolButtons/OptionalMode';
-import { EnableMode } from './toolButtons/EnableMode';
-import RefreshRibbon from './toolButtons/RefreshRibbon';
-import RefreshForm from './toolButtons/RefreshForm';
-import FormToolContextProvider, { FormToolContext } from './context';
-import FillFields from './toolButtons/FillFields';
+import {
+    ProcessButton,
+    type ProcessProps,
+    type ProcessRef
+} from "../../utils/global/.processClass";
+import { useSpDevTools } from "../../utils/global/spContext";
+import FormToolContextProvider, { FormToolContext } from "./context";
+import {
+    ToggableToolButtonContainer,
+    ToolButtonContainer
+} from "./ToolButtonContainer";
+import BlurFields from "./toolButtons/BlurFields";
 // import ShowOptionSetInFields from './toolButtons/ShowOptionSetInFields';
-import CloneRecord from './toolButtons/CloneRecord';
-import BlurFields from './toolButtons/BlurFields';
-import { useSpDevTools } from '../../utils/global/spContext';
-
+import CloneRecord from "./toolButtons/CloneRecord";
+import { EnableMode } from "./toolButtons/EnableMode";
+import FillFields from "./toolButtons/FillFields";
+import { OptionalMode } from "./toolButtons/OptionalMode";
+import RefreshForm from "./toolButtons/RefreshForm";
+import RefreshRibbon from "./toolButtons/RefreshRibbon";
+import ShowFieldLabel from "./toolButtons/ShowFieldLabel";
+import ShowTabLabel from "./toolButtons/ShowTabLabel";
+import VisibleMode from "./toolButtons/VisibleMode";
 
 class FormToolsButtonV2 extends ProcessButton {
     constructor() {
-        super(
-            'formtoolsv2',
-            'Form Tools',
-            <HandymanIcon />,
-            56
-        );
+        super("formtoolsv2", "Form Tools", <HandymanIcon />, 56);
         this.process = FormToolsProcessV2;
-        this.description = <>
-            <Typography><i>Randomize, visualize, and master your data.</i></Typography>
-            <Typography>This tool provide functionnalities used on records form.</Typography>
-            <Typography>You will be able to <b>display logical names</b>, <b>manage field controls</b>, refresh data, <b>fill fields</b> with random data, <b>clone your records</b> and <b>blur sensitive informations</b>.</Typography>
-            <Typography><u>Some buttons are reversible</u>: it can be activated or deactivated without refreshing the page.</Typography>
-        </>
+        this.description = (
+            <>
+                <Typography>
+                    <i>Randomize, visualize, and master your data.</i>
+                </Typography>
+                <Typography>
+                    This tool provide functionnalities used on records form.
+                </Typography>
+                <Typography>
+                    You will be able to <b>display logical names</b>,{" "}
+                    <b>manage field controls</b>, refresh data,{" "}
+                    <b>fill fields</b> with random data,{" "}
+                    <b>clone your records</b> and{" "}
+                    <b>blur sensitive informations</b>.
+                </Typography>
+                <Typography>
+                    <u>Some buttons are reversible</u>: it can be activated or
+                    deactivated without refreshing the page.
+                </Typography>
+            </>
+        );
     }
 
-    reStyleSidePane(sidePane: HTMLElement | null, sidePaneContent?: HTMLElement | null, header?: HTMLElement | null, title?: HTMLElement | null, closeButton?: HTMLElement | null): void {
+    reStyleSidePane(
+        sidePane: HTMLElement | null,
+        sidePaneContent?: HTMLElement | null,
+        header?: HTMLElement | null,
+        title?: HTMLElement | null,
+        closeButton?: HTMLElement | null
+    ): void {
         if (title) {
             title.style.alignSelf = "unset";
             title.style.maxHeight = "none";
@@ -75,110 +92,126 @@ const theme = createTheme({
                     marginLeft: 0,
                     marginRight: 0
                 }
-            },
+            }
         },
         MuiTooltip: {
             styleOverrides: {
                 tooltip: {
-                    fontSize: '1em'
+                    fontSize: "1em"
                 }
             }
         }
-    },
+    }
 });
-
 
 function DebugIndicator() {
     const { formContext, isRefreshing } = useContext(FormToolContext);
 
     return (
-        <Tooltip title={formContext ? `Context found for ${formContext?.data?.entity?.getEntityName()}` : 'Context not found.'} disableInteractive arrow>
-            <Stack alignItems='center' pr='25%'>
-                {formContext ? <WifiIcon color='success' /> : <WifiOffIcon color='error' />}
-                <Typography
-                    fontSize='0.6em'
-                    variant='caption'
-                    lineHeight={1}
-                >
-                    {formContext ? 'Active' : 'Inactive'}
+        <Tooltip
+            title={
+                formContext
+                    ? `Context found for ${formContext?.data?.entity?.getEntityName()}`
+                    : "Context not found."
+            }
+            disableInteractive
+            arrow>
+            <Stack alignItems="center" pr="25%">
+                {formContext ? (
+                    <WifiIcon color="success" />
+                ) : (
+                    <WifiOffIcon color="error" />
+                )}
+                <Typography fontSize="0.6em" variant="caption" lineHeight={1}>
+                    {formContext ? "Active" : "Inactive"}
+                </Typography>
+                <Typography fontSize="0.6em" variant="caption" lineHeight={1}>
+                    {formContext
+                        ? formContext.data?.entity?.getEntityName() ?? "unfound"
+                        : "none"}
                 </Typography>
                 <Typography
-                    fontSize='0.6em'
-                    variant='caption'
+                    fontSize="0.6em"
+                    variant="caption"
                     lineHeight={1}
-                >
-                    {formContext ? (formContext.data?.entity?.getEntityName() ?? 'unfound') : 'none'}
-                </Typography>
-                <Typography
-                    fontSize='0.6em'
-                    variant='caption'
-                    lineHeight={1}
-                    whiteSpace='nowrap'
-                >
-                    {isRefreshing ? 'Retrieving' : 'Stand By'}
+                    whiteSpace="nowrap">
+                    {isRefreshing ? "Retrieving" : "Stand By"}
                 </Typography>
             </Stack>
         </Tooltip>
-    )
+    );
 }
 
 const FormToolsProcessV2 = forwardRef<ProcessRef, ProcessProps>(
     function FormToolsProcessV2(props: ProcessProps, ref) {
-
         const { isDebug } = useSpDevTools();
 
         const mainStackRef = useRef<HTMLDivElement>(null);
         // const { height, width } = useWindowSize();
-        const isScollEnable = useMemo(() => mainStackRef.current && mainStackRef.current.scrollHeight > mainStackRef.current.clientHeight, [mainStackRef]);
-
+        const isScollEnable = useMemo(
+            () =>
+                mainStackRef.current &&
+                mainStackRef.current.scrollHeight >
+                    mainStackRef.current.clientHeight,
+            [mainStackRef]
+        );
 
         return (
             <ThemeProvider theme={theme}>
-                <Stack height='100%' justifyContent='space-between'>
-
+                <Stack height="100%" justifyContent="space-between">
                     <Stack
-                        width='100%'
-                        alignItems='center'
+                        width="100%"
+                        alignItems="center"
                         sx={{
-                            visibility: isScollEnable ? 'visible' : 'hidden',
+                            visibility: isScollEnable ? "visible" : "hidden",
                             // visibility: isScollEnable && !isScollTop ? 'visible' : 'hidden',
-                            rotate: '180deg',
-                        }}
-                    >
+                            rotate: "180deg"
+                        }}>
                         <KeyboardArrowDownIcon />
                     </Stack>
 
                     <FormToolContextProvider>
-
-                        <Stack ref={mainStackRef} spacing={3} height='calc(100% - 10px)' p='10px' pr={0} alignItems='center' sx={{ overflowY: 'auto', scrollbarWidth: 'none' }}>
-
+                        <Stack
+                            ref={mainStackRef}
+                            spacing={3}
+                            height="calc(100% - 10px)"
+                            p="10px"
+                            pr={0}
+                            alignItems="center"
+                            sx={{ overflowY: "auto", scrollbarWidth: "none" }}>
                             {isDebug.value && <DebugIndicator />}
 
                             <ToggableToolButtonContainer
-                                title='Label Tools'
-                                icons={{ enabled: <LabelIcon fontSize='large' />, disabled: <LabelOutlinedIcon fontSize='large' /> }}
-                                toolList={[
-                                    ShowTabLabel,
-                                    ShowFieldLabel,
-                                ]}
+                                title="Label Tools"
+                                icons={{
+                                    enabled: <LabelIcon fontSize="large" />,
+                                    disabled: (
+                                        <LabelOutlinedIcon fontSize="large" />
+                                    )
+                                }}
+                                toolList={[ShowTabLabel, ShowFieldLabel]}
                             />
 
                             <ToggableToolButtonContainer
-                                title='God Mode'
-                                icons={{ enabled: <TipsAndUpdatesIcon fontSize='large' />, disabled: <TipsAndUpdatesOutlinedIcon fontSize='large' /> }}
+                                title="God Mode"
+                                icons={{
+                                    enabled: (
+                                        <TipsAndUpdatesIcon fontSize="large" />
+                                    ),
+                                    disabled: (
+                                        <TipsAndUpdatesOutlinedIcon fontSize="large" />
+                                    )
+                                }}
                                 toolList={[
                                     OptionalMode,
                                     EnableMode,
-                                    VisibleMode,
+                                    VisibleMode
                                 ]}
                             />
 
                             <ToolButtonContainer
-                                title='Refresh'
-                                toolList={[
-                                    RefreshRibbon,
-                                    RefreshForm,
-                                ]}
+                                title="Refresh"
+                                toolList={[RefreshRibbon, RefreshForm]}
                             />
 
                             <ToolButtonContainer
@@ -186,21 +219,19 @@ const FormToolsProcessV2 = forwardRef<ProcessRef, ProcessProps>(
                                     // ShowOptionSetInFields,
                                     FillFields,
                                     CloneRecord,
-                                    BlurFields,
+                                    BlurFields
                                 ]}
                             />
-
                         </Stack>
                     </FormToolContextProvider>
 
                     <Stack
-                        width='100%'
-                        alignItems='center'
+                        width="100%"
+                        alignItems="center"
                         sx={{
-                            visibility: isScollEnable ? 'visible' : 'hidden',
+                            visibility: isScollEnable ? "visible" : "hidden"
                             // visibility: isScollEnable && !isScollBottom ? 'visible' : 'hidden',
-                        }}
-                    >
+                        }}>
                         <KeyboardArrowDownIcon />
                     </Stack>
                 </Stack>
@@ -208,8 +239,6 @@ const FormToolsProcessV2 = forwardRef<ProcessRef, ProcessProps>(
         );
     }
 );
-
-
 
 const formToolsV2 = new FormToolsButtonV2();
 export default formToolsV2;

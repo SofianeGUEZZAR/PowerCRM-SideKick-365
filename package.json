@@ -1,117 +1,62 @@
 {
     "name": "dynamics-sidekick",
-    "version": "1.1",
-    "private": true,
-    "dependencies": {
-        "@custom-react-hooks/all": "^1.5.1",
-        "@emotion/cache": "^11.14.0",
-        "@emotion/react": "^11.10.6",
-        "@emotion/styled": "^11.10.6",
-        "@hello-pangea/dnd": "^16.5.0",
-        "@loadable/component": "^5.15.3",
-        "@monaco-editor/react": "^4.5.0",
-        "@mui/icons-material": "^5.11.11",
-        "@mui/lab": "^6.0.0-beta.23",
-        "@mui/material": "^6.1.8",
-        "@mui/styled-engine-sc": "^5.11.11",
-        "@mui/styles": "^5.11.12",
-        "@mui/types": "^7.4.7",
-        "@mui/x-data-grid": "^7.24.0",
-        "@mui/x-date-pickers": "^7.9.0",
-        "@uiw/react-json-view": "^2.0.0-alpha.27",
-        "autonumeric": "^4.6.2",
-        "clsx": "^1.2.1",
-        "csstype": "^3.1.3",
-        "dayjs": "^1.11.7",
-        "material-ui-confirm": "^3.0.9",
-        "material-ui-popup-state": "^5.0.4",
-        "moment": "^2.29.4",
-        "monaco-editor": "^0.37.1",
-        "notistack": "^3.0.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-hotkeys-hook": "^4.4.0",
-        "react-icons": "^4.8.0",
-        "react-in-viewport": "^1.0.0-alpha.30",
-        "react-scripts": "^5.0.1",
-        "react-textfit": "^1.1.1",
-        "react-virtualized-auto-sizer": "^1.0.20",
-        "react-virtuoso": "^4.12.0",
-        "react-window": "^1.8.9",
-        "ts-key-enum": "^2.0.12",
-        "usehooks-ts": "^3.1.0",
-        "uuid": "^11.0.5"
-    },
+    "displayName": "Dynamics SideKick",
+    "version": "1.2",
+    "description": "A basic Plasmo extension.",
+    "author": "Plasmo Corp. <foss@plasmo.com>",
     "scripts": {
-        "start": "craco start",
-        "build": "craco build",
-        "build:chrome": "cross-env REACT_APP_TARGET=chrome craco build",
-        "build:firefox": "cross-env REACT_APP_TARGET=firefox craco build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "commit": "commit"
+        "dev": "plasmo dev",
+        "build": "plasmo build",
+        "package": "plasmo package"
     },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "plugin:jsx-a11y/recommended"
-        ],
-        "plugins": [
-            "jsx-a11y"
-        ],
-        "rules": {
-            "@typescript-eslint/no-unused-vars": "off"
-        }
+    "overrides": {
+        "@parcel/watcher": "2.1.0"
     },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
+    "@parcel/resolver-default": {
+        "packageExports": true
+    },
+    "dependencies": {
+        "@custom-react-hooks/all": "^2.0.8",
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.1",
+        "@hello-pangea/dnd": "^18.0.1",
+        "@monaco-editor/react": "^4.7.0",
+        "@mui/icons-material": "^7.3.4",
+        "@mui/lab": "7.0.1-beta.18",
+        "@mui/material": "^7.3.4",
+        "@mui/styles": "^6.4.8",
+        "@mui/x-data-grid": "^8.13.1",
+        "@mui/x-date-pickers": "^8.12.0",
+        "@uiw/react-json-view": "2.0.0-alpha.39",
+        "autonumeric": "^4.10.9",
+        "clsx": "^2.1.1",
+        "dayjs": "^1.11.18",
+        "material-ui-confirm": "^4.0.0",
+        "monaco-editor": "^0.54.0",
+        "notistack": "^3.0.2",
+        "plasmo": "0.90.5",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-hotkeys-hook": "^5.1.0",
+        "react-virtuoso": "^4.14.1",
+        "usehooks-ts": "^3.1.1",
+        "uuid": "^13.0.0"
     },
     "devDependencies": {
-        "@commitlint/cli": "^17.4.4",
-        "@commitlint/config-conventional": "^17.4.4",
-        "@commitlint/prompt-cli": "^17.4.4",
-        "@craco/craco": "^7.0.0",
-        "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
-        "@testing-library/jest-dom": "^5.16.5",
-        "@testing-library/react": "^14.0.0",
-        "@testing-library/user-event": "^14.4.3",
-        "@types/chrome": "^0.0.220",
-        "@types/jest": "^29.4.0",
-        "@types/node": "^18.14.6",
-        "@types/react": "^18.2.37",
-        "@types/react-beautiful-dnd": "^13.1.8",
-        "@types/react-dom": "^18.0.11",
+        "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+        "@types/chrome": "0.0.258",
+        "@types/node": "20.11.5",
+        "@types/react": "18.2.48",
+        "@types/react-dom": "18.2.18",
         "@types/react-textfit": "^1.1.4",
-        "@types/react-window": "^1.8.8",
-        "@types/xrm": "file:types/xrm",
-        "@wixc3/react-board": "2.3.0",
-        "babel-plugin-import": "^1.13.6",
-        "copy-webpack-plugin": "^13.0.0",
-        "cross-env": "^7.0.3",
-        "customize-cra": "^1.0.0",
-        "fork-ts-checker-webpack-plugin": "^8.0.0",
-        "husky": "^8.0.3",
-        "react-app-rewired": "^2.2.1",
-        "react-scripts": "^5.0.1",
-        "sass": "^1.86.3",
-        "simple-progress-webpack-plugin": "^2.0.0",
-        "speed-measure-webpack-plugin": "^1.5.0",
-        "standard-version": "^9.5.0",
-        "ts-loader": "^9.4.2",
-        "tslib": "^2.8.1",
-        "typescript": "^4.9.5",
-        "webpack-bundle-analyzer": "^4.10.2",
-        "webpack-stats-plugin": "^1.1.3",
-        "worker-loader": "^3.0.8",
-        "yarn-upgrade-all": "^0.7.2"
+        "@types/xrm": "^9.0.87",
+        "crypto-browserify": "^3.12.1",
+        "prettier": "3.2.4",
+        "typescript": "5.3.3"
+    },
+    "manifest": {
+        "host_permissions": [
+            "*://*/*"
+        ]
     }
 }

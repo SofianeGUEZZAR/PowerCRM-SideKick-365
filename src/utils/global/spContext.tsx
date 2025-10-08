@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, SetStateAction, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, type PropsWithChildren } from "react";
 import { useBoolean } from "usehooks-ts";
 import { noOperation } from "./common";
 import { Env } from "./var";

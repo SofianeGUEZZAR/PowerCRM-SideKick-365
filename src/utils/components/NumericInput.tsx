@@ -1,6 +1,6 @@
 import type { TextFieldProps } from '@mui/material';
 import { TextField } from '@mui/material';
-import AutoNumeric, { Options } from 'autonumeric';
+import AutoNumeric, { type Options } from 'autonumeric';
 import { useEffect, useRef, useState } from 'react';
 
 export interface HTMLNumericElement

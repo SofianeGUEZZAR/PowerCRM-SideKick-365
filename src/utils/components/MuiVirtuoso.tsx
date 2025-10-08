@@ -1,6 +1,6 @@
 import { Fab } from '@mui/material';
 import React, { useRef, useState } from 'react';
-import { Virtuoso, VirtuosoHandle, VirtuosoProps } from 'react-virtuoso';
+import { Virtuoso, type VirtuosoHandle, type VirtuosoProps } from 'react-virtuoso';
 
 import UpIcon from '@mui/icons-material/KeyboardArrowUp';
 

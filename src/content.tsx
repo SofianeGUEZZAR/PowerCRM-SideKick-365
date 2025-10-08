@@ -1,6 +1,29 @@
-import { MESSAGE_SOURCE_Content, MESSAGE_SOURCE_WebPage } from "./utils/global/var";
+import type { PlasmoCSConfig } from "plasmo";
+import ReactDOM from "react-dom";
+import { MainScreen } from "~processes/main";
 
-const allowedScripts = ['/uclient/scripts/cdnEndpointCheck.js', '/uclient/scripts/MicrosoftAjax.js'];
+import { ProcessButton } from "~utils/global/.processClass";
+import { waitForElm } from "~utils/global/common";
+import {
+    DRAWER_CONTAINER_ID,
+    MESSAGE_SOURCE_Content,
+    MESSAGE_SOURCE_WebPage
+} from "~utils/global/var";
+import XrmObserver from "~utils/global/XrmObserver";
+
+
+import { unstable_ClassNameGenerator as ClassNameGenerator } from '@mui/material/className';
+import { PROJECT_PREFIX } from './utils/global/var';
+
+export const config: PlasmoCSConfig = {
+    matches: ["*://*/*"],
+    world: "MAIN"
+};
+
+const searchedScripts = [
+    "/uclient/scripts/cdnEndpointCheck.js",
+    "/uclient/scripts/MicrosoftAjax.js"
+];
 
 // window.onload = async () => {
 //     const isCRMD365 = Array.from(document.scripts).some(
@@ -22,9 +45,9 @@ var injectScript = function (file: string): void {
         console.log("Script " + file + " removed");
         existingScript.parentElement?.removeChild(existingScript);
     }
-    var scriptTag = document.createElement('script');
-    scriptTag.setAttribute('type', 'text/javascript');
-    scriptTag.setAttribute('src', file);
+    var scriptTag = document.createElement("script");
+    scriptTag.setAttribute("type", "text/javascript");
+    scriptTag.setAttribute("src", file);
     document.body.appendChild(scriptTag);
 };
 
@@ -41,30 +64,62 @@ function SaveData(data: string, id: string): void {
     document.body.appendChild(imageElement);
 }
 
-setTimeout(async () => {
-    const isCRMD365 = Array.from(document.scripts).some(
-        (script) =>
-            allowedScripts.some(src => script.src.indexOf(src) !== -1)
+function initExtension() {
+    waitForElm(document, "#mainContent", { infiniteWait: true }).then(
+        (mainNode) => {
+            const drawerContainer = document.createElement("div");
+            drawerContainer.setAttribute(
+                "id",
+                ProcessButton.prefixId + DRAWER_CONTAINER_ID
+            );
+            mainNode?.append(drawerContainer);
+
+            ReactDOM.render(<MainScreen />, drawerContainer);
+        }
     );
-    console.log('This page is CRM:', isCRMD365);
+
+    new XrmObserver();
+}
+
+setTimeout(async () => {
+    const isCRMD365 = Array.from(document.scripts).some((script) =>
+        searchedScripts.some((src) => script.src.indexOf(src) !== -1)
+    );
+    console.log("This page is CRM:", isCRMD365);
     if (isCRMD365) {
-        injectScript(chrome.runtime.getURL(`static/js/${fileName}.js`));
-        SaveData(chrome.runtime.getURL(""), "extensionURL");
+        // injectScript(chrome.runtime.getURL(`static/js/${fileName}.js`));
+        // SaveData(chrome.runtime.getURL(""), "extensionURL");
+
+        if (window.top && window.top.window === window) {
+            var loading = setInterval(() => {
+                if (!!window.top.Xrm) {
+                    clearInterval(loading);
+                    initExtension();
+                }
+            }, 1000);
+        }
     }
 }, 2000);
 
-window.addEventListener('message', (event) => {
+window.addEventListener("message", (event) => {
     if (event.source !== window) return;
     if (event.data.source !== MESSAGE_SOURCE_WebPage) return;
 
     const messageId = event.data.id;
-    
-    chrome.runtime.sendMessage({ type: event.data.type, data: event.data.data },
+
+    chrome.runtime.sendMessage(
+        { type: event.data.type, data: event.data.data },
         function (response: any) {
-            window.postMessage({ id: messageId, source: MESSAGE_SOURCE_Content, response }, '*');
+            window.postMessage(
+                { id: messageId, source: MESSAGE_SOURCE_Content, response },
+                "*"
+            );
         }
     );
 });
 
+ClassNameGenerator.configure(
+    (componentName) => `${PROJECT_PREFIX}${componentName.replace('Mui', '')}`,
+);
 
-export { }
+export default <></>;

@@ -1,20 +1,20 @@
+import { ProcessButton } from "../utils/global/.processClass";
+import { type StorageConfiguration } from "../utils/types/StorageConfiguration";
+import allFields from "./allFields/main";
+import commandDebugger from "./commandDebugger/main";
+import dirtyFields from "./dirtyFields/main";
+import entitiesList from "./entitiesList/main";
+import formToolsV2 from "./formToolsv2/main";
+import impersonation from "./impersonation/main";
+import metadataBrowser from "./metadataBrowser/main";
+import navigation from "./navigation/main";
+import optionSetTable from "./optionSetTable/main";
+import pluginTraceLogsExplorer from "./pluginTraceLogsExplorer/main";
+import relatedRecords from "./relatedRecords/main";
+import createConfiguration from "./setConfiguration/main";
+import updateRecord from "./updateRecord/main";
+import webResourceEditor from "./webResourceEditor/main";
 
-import { ProcessButton } from '../utils/global/.processClass';
-import { StorageConfiguration } from '../utils/types/StorageConfiguration';
-import impersonation from './impersonation/main';
-import createConfiguration from './setConfiguration/main';
-import updateRecord from './updateRecord/main';
-import webResourceEditor from './webResourceEditor/main';
-import allFields from './allFields/main';
-import relatedRecords from './relatedRecords/main';
-import commandDebugger from './commandDebugger/main';
-import dirtyFields from './dirtyFields/main';
-import navigation from './navigation/main';
-import pluginTraceLogsExplorer from './pluginTraceLogsExplorer/main';
-import optionSetTable from './optionSetTable/main';
-import entitiesList from './entitiesList/main';
-import metadataBrowser from './metadataBrowser/main';
-import formToolsV2 from './formToolsv2/main';
 // import ExtensionTarget from '../utils/types/ExtensionTarget';
 
 // const TARGET = process.env.REACT_APP_TARGET;
@@ -34,22 +34,22 @@ const Processes: ProcessButton[] = [
     metadataBrowser,
     navigation,
     commandDebugger,
-    createConfiguration,
+    createConfiguration
 ];
 
-export const defaultProcessesList: StorageConfiguration[] = Processes.map(p => {
-    return {
-        id: p.id,
-        startOnLoad: false,
-        hidden: false,
-        expand: false,
-        options: null,
+export const defaultProcessesList: StorageConfiguration[] = Processes.map(
+    (p) => {
+        return {
+            id: p.id,
+            startOnLoad: false,
+            hidden: false,
+            expand: false,
+            options: null
+        };
     }
-});
-
+);
 
 export default Processes;
-
 
 //* Workflow Activities Explorer
 //* pluginTrace: add filtering on step name (maybe add an accordeon navigation bar containing all filtering options)

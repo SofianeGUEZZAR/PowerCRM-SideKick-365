@@ -1,14 +1,14 @@
 import { Stack, ThemeProvider, createTheme } from "@mui/material";
 import CodeEditorHeader, { ChangeLanguage, ContextualMenuAction, DiffEditorAction } from './components/Header';
 import CodeEditorWindow from './components/Window';
-import { CodeEditorProps, CodeEditorFile, CodeEditorDirectory, CodeEditorCommon, Type, CodeEditorForwardRef } from './utils/types';
+import { type CodeEditorProps, type CodeEditorFile, type CodeEditorDirectory, type CodeEditorCommon, Type, type CodeEditorForwardRef } from './utils/types';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { editor } from 'monaco-editor';
 import FileTree from "./components/FileTree";
 import { getDirectories, getFiles, getLanguageByExtension } from "./utils/fileManagement";
 import { ConfirmProvider, useConfirm } from "material-ui-confirm";
 import React from "react";
-import { EditorLanguage } from "monaco-editor/esm/metadata";
+import type { EditorLanguage } from "monaco-editor/esm/metadata";
 
 const lightTheme = createTheme({
     palette: {

@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import { Textfit } from "react-textfit";
+// import { Textfit } from "react-textfit";
 
 
 interface DirectNavigationButtonProps {
@@ -31,9 +31,9 @@ export default function DirectNavigationButton(props: DirectNavigationButtonProp
                 }}
             >
                 <Box width='calc(100% - 20px)'>
-                    <Textfit mode='single'>
+                    {/* <Textfit mode='single'> */}
                         {label}
-                    </Textfit>
+                    {/* </Textfit> */}
                 </Box>
             </Button>
         </Tooltip>

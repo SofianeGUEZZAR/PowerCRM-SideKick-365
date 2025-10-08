@@ -1,22 +1,22 @@
-import { Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Stack, SvgIconTypeMap, Tooltip, Typography, Button, AppBar, Toolbar, Box, FormControl, Select, SelectChangeEvent } from '@mui/material';
-import { CodeEditorHeaderProps, CodeEditorTabProps, EditorActionProps, editorLanguageArray } from "../utils/types";
+import { Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Stack, type SvgIconTypeMap, Tooltip, Typography, Button, AppBar, Toolbar, Box, FormControl, Select, type SelectChangeEvent } from '@mui/material';
+import { type CodeEditorHeaderProps, type CodeEditorTabProps, type EditorActionProps, editorLanguageArray } from "../utils/types";
 import CloseIcon from '@mui/icons-material/Close';
 import { useHover } from "usehooks-ts";
-import { PropsWithChildren, useRef, useState } from "react";
+import { type PropsWithChildren, useRef, useState } from "react";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import MenuIcon from '@mui/icons-material/Menu';
 import CompareIcon from '@mui/icons-material/Compare';
 import SaveIcon from '@mui/icons-material/Save';
 import PublishIcon from '@mui/icons-material/Publish';
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
-import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { Key } from 'ts-key-enum';
+import type { OverridableComponent } from "@mui/material/OverridableComponent";
 import { useHotkeys } from 'react-hotkeys-hook';
 import React from 'react';
-import { EditorLanguage } from 'monaco-editor/esm/metadata';
+import type { EditorLanguage } from 'monaco-editor/esm/metadata';
 import { capitalizeFirstLetter } from '../../../global/common';
 import { getIcon } from '../utils/icon';
 import { getExtensionByLanguage } from '../utils/fileManagement';
+import { Key } from '~utils/global/KeyEnum';
 
 
 function CodeEditorHeader(props: CodeEditorHeaderProps & PropsWithChildren) {

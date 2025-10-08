@@ -1,52 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "es2017",
-    "lib": [
-      "dom",
-      "es2022",
-      "esnext",
-      "dom.iterable",
-      "esnext.array"
-    ],
-    // "lib": [
-    //   "es6",
-    //   "dom",
-    //   "ESNext"
-    //   // "dom.iterable",
-    //   // "esnext",
-    //   // "ESNext.Array"
-    // ],
-    "allowJs": false,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "incremental": true,
-    "jsx": "react-jsx",
-    "declaration": true,
-    "typeRoots": [
-      "node_modules/@types",
-      "types"
-    ],
-    "noFallthroughCasesInSwitch": true,
-    "skipDefaultLibCheck": true,
-    "skipLibCheck":true,
-    "removeComments": true,
-    "sourceMap": false,
-    "importHelpers": true,
-  },
-  "include": [
-    "src", 
-  ],
-  "exclude": [
-    "node_modules", 
-    "archives/*",
-    "types/*",
-    "**/.*/"
-  ]
+    "extends": "plasmo/templates/tsconfig.base",
+    "exclude": ["node_modules"],
+    "include": [".plasmo/index.d.ts", "./**/*.ts", "./**/*.tsx"],
+    "compilerOptions": {
+        "paths": {
+            "~*": ["./src/*"]
+        },
+        "baseUrl": "."
+    }
 }

@@ -1,12 +1,11 @@
 import { useState, forwardRef, useCallback, useMemo } from "react";
 import clsx from "clsx";
-import { makeStyles } from "@mui/styles";
-import { useSnackbar, SnackbarContent, CustomContentProps } from "notistack";
+import { useSnackbar, SnackbarContent, type CustomContentProps } from "notistack";
 import Collapse from "@mui/material/Collapse";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Alert, { AlertColor } from "@mui/material/Alert";
+import Alert, { type AlertColor } from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
@@ -16,6 +15,7 @@ import React from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { PROJECT_PREFIX } from "../global/var";
 import { AlertTitle } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 
 

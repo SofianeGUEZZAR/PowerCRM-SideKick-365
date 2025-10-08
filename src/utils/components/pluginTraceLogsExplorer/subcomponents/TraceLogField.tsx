@@ -1,4 +1,4 @@
-import Grid2 from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -11,7 +11,7 @@ function TraceLogField(props: TraceLogFieldProps) {
     const { label, value } = props;
 
     return (
-        <Grid2 size={{ xs: 4 }}>
+        <Grid size={{ xs: 4 }}>
             <Stack direction='row' gap={1} alignItems='center'>
                 <Typography width='60%'>
                     {label}:
@@ -28,7 +28,7 @@ function TraceLogField(props: TraceLogFieldProps) {
                     })}
                 />
             </Stack>
-        </Grid2>
+        </Grid>
     );
 }
 

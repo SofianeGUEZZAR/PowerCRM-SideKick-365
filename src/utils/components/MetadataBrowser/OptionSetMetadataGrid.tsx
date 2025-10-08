@@ -13,7 +13,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import ObjectListGrid from './ObjectListGrid';
 import { MetadataContext } from './MetadataContextProvider';
 import { metadataGrid_valueToLabel } from './valueGetter';
-import { ExploreGrid } from './types';
+import type { ExploreGrid } from './types';
 import { MSType } from '../../types/requestsType';
 
 
