@@ -1,4 +1,4 @@
-import { Button, Stack, Theme } from "@mui/material"
+import { Button, Stack, type Theme } from "@mui/material"
 import React from "react"
 import EntitySelector from "./EntitySelector"
 import RecordSelector from "./RecordSelector"

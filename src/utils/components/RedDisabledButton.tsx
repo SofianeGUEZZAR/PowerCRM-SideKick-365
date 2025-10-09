@@ -1,4 +1,4 @@
-import { Box, Button, ButtonProps, SxProps, Theme } from "@mui/material";
+import { Box, Button, type ButtonProps, type SxProps, type Theme } from "@mui/material";
 import React from "react";
 import BlockIcon from '@mui/icons-material/Block';
 

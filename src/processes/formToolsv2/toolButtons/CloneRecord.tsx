@@ -1,8 +1,7 @@
-import { Tooltip, Button } from '@mui/material';
 import { useContext } from 'react';
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { IToolButtonStandard, ToolButton } from '../ToolButton';
+import { type IToolButtonStandard, ToolButton } from '../ToolButton';
 import { FormToolContext } from '../context';
 
 function CloneRecord(props: IToolButtonStandard) {

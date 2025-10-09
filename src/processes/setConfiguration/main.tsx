@@ -10,18 +10,18 @@ import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
-import { ProcessProps, ProcessButton, ProcessRef } from '../../utils/global/.processClass';
+import { type ProcessProps, ProcessButton, type ProcessRef } from '../../utils/global/.processClass';
 
 import Processes, { defaultProcessesList } from '../.list';
 import { MessageType } from '../../utils/types/Message';
 import { debugLog } from '../../utils/global/common';
-import { StorageConfiguration } from '../../utils/types/StorageConfiguration';
-import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd';
+import type { StorageConfiguration } from '../../utils/types/StorageConfiguration';
+import { DragDropContext, Draggable, type DropResult, Droppable } from '@hello-pangea/dnd';
 import { STORAGE_ForegroundPanes, STORAGE_ListName } from '../../utils/global/var';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Alert from '@mui/material/Alert';
 import Paper from '@mui/material/Paper';
-import Tooltip, { TooltipProps } from '@mui/material/Tooltip';
+import Tooltip, { type TooltipProps } from '@mui/material/Tooltip';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import MessageManager from '../../utils/global/MessageManager';
 

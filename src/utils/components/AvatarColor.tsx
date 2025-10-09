@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { SxProps, Theme } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material";
 
 
 function stringToColor(string: string) {

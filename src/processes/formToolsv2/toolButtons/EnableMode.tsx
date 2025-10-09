@@ -1,6 +1,6 @@
 
 import { useContext, useEffect, useMemo } from "react";
-import { FormControlState, IToolButtonControlled, ToolButton } from "../ToolButton";
+import { type FormControlState, type IToolButtonControlled, ToolButton } from "../ToolButton";
 
 import VpnKeyOffOutlinedIcon from '@mui/icons-material/VpnKeyOffOutlined';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';

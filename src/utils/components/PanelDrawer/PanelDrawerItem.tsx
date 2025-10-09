@@ -1,5 +1,5 @@
 import { Drawer } from "@mui/material";
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import { ProcessButton } from "../../global/.processClass";
 
 interface PanelDrawerItemProps {

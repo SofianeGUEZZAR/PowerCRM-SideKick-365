@@ -4,7 +4,7 @@ import { Portal } from '@mui/material';
 import BookIcon from '@mui/icons-material/Book';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import { LogicalNameTypography } from '../../../utils/components/LogicalNameTypography';
-import { IToolButtonControlled, ToolButton } from '../ToolButton';
+import { type IToolButtonControlled, ToolButton } from '../ToolButton';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { FormToolContext } from '../context';

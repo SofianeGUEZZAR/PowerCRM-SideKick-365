@@ -1,4 +1,4 @@
-import { Alert, paperClasses, Tooltip, TooltipProps } from "@mui/material";
+import { Alert, paperClasses, Tooltip, type TooltipProps } from "@mui/material";
 
 function TooltipInfo({ maxWidth, title, ...props }: TooltipProps & { maxWidth?: number | false }) {
     return (

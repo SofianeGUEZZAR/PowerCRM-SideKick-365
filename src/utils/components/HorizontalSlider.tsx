@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/material";
 

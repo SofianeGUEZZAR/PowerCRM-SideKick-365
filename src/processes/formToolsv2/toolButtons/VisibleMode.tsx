@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo } from "react";
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import { FormControlState, IToolButtonControlled, ToolButton } from "../ToolButton";
+import { type FormControlState, type IToolButtonControlled, ToolButton } from "../ToolButton";
 import { FormToolContext } from "../context";
 
 type VisibleModeStateType = FormControlState<boolean>;

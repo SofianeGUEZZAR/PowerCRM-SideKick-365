@@ -1,5 +1,5 @@
-import { Button, ButtonProps, LinearProgress, Typography } from "@mui/material";
-import React, { PropsWithChildren } from "react";
+import { Button, type ButtonProps, LinearProgress, Typography } from "@mui/material";
+import React, { type PropsWithChildren } from "react";
 
 
 interface ButtonLinearProgressProps {

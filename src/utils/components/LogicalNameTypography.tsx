@@ -1,4 +1,4 @@
-import { Stack, styled, Tooltip, TooltipProps, Typography } from '@mui/material';
+import { Stack, styled, Tooltip, type TooltipProps, Typography } from '@mui/material';
 import React, {  } from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import useCopyWithSnack from '../hooks/use/useCopyWithSnack';

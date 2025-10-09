@@ -1,9 +1,8 @@
+import { manageImpersonation } from "~processes/impersonation/background";
+import { setExtensionConfiguration, getExtensionConfiguration } from "~processes/setConfiguration/background";
+import { getSessionRules } from "~utils/global/DeclarativeNetRequestManager";
+import { MessageType } from "~utils/types/Message";
 
-import {  manageImpersonation } from "./processes/impersonation/background";
-import { getExtensionConfiguration, setExtensionConfiguration } from "./processes/setConfiguration/background";
-// import { debuggerAttached, disableScriptOverride, enableScriptOverride as enableScriptOverriding, getScriptOverride as getScriptOverriding } from "./processes/webResourceEditor/background";
-import { getSessionRules } from "./utils/global/DeclarativeNetRequestManager";
-import { MessageType } from "./utils/types/Message";
 
 chrome.runtime.onMessageExternal.addListener(messagesStation);
 chrome.runtime.onMessage.addListener(messagesStation);

@@ -1,4 +1,4 @@
-import { styled, Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
+import { styled, Tooltip, tooltipClasses, type TooltipProps } from "@mui/material";
 import React from "react";
 
 export const NoMaxWidthTooltip: React.ComponentType<TooltipProps> = styled(({ className, ...props }: TooltipProps) => (

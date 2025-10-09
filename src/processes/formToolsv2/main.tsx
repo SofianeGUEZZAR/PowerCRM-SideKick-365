@@ -37,7 +37,7 @@ import VisibleMode from "./toolButtons/VisibleMode";
 
 class FormToolsButtonV2 extends ProcessButton {
     constructor() {
-        super("formtoolsv2", "Form Tools", <HandymanIcon />, 56);
+        super("formtoolsv2", "Form Tools", () => HandymanIcon, 56);
         this.process = FormToolsProcessV2;
         this.description = (
             <>

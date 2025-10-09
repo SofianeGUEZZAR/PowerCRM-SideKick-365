@@ -1,4 +1,4 @@
-import { Typography, TypographyProps } from "@mui/material";
+import { Typography, type TypographyProps } from "@mui/material";
 import { useCopyToClipboard } from "usehooks-ts";
 import { useCallback, useState } from "react";
 import React from "react";

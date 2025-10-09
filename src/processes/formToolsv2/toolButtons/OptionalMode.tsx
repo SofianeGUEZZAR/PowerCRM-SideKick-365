@@ -1,6 +1,6 @@
 
 import { useContext, useEffect, useMemo } from "react";
-import { FormControlState, IToolButtonControlled, ToolButton } from "../ToolButton";
+import { type FormControlState, type IToolButtonControlled, ToolButton } from "../ToolButton";
 
 import CloudOffIcon from '@mui/icons-material/CloudOff';
 import CloudIcon from '@mui/icons-material/Cloud';

@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Property } from 'csstype';
+import { type Property } from 'csstype';
 import { styled } from "@mui/material";
 
 enum Location {

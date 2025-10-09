@@ -1,4 +1,4 @@
-import { TooltipProps, Tooltip, tooltipClasses, styled } from "@mui/material";
+import { type TooltipProps, Tooltip, tooltipClasses, styled } from "@mui/material";
 import React from "react";
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (

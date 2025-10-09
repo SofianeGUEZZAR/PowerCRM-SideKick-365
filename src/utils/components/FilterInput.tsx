@@ -1,10 +1,9 @@
 import { FormControl, IconButton, InputAdornment, TextField } from "@mui/material"
-import { ChangeEvent, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { type ChangeEvent, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ClearIcon from '@mui/icons-material/Clear';
 import React from "react";
 import { useDebounceValue } from "usehooks-ts";
-import { useDebounce } from "@custom-react-hooks/all";
 
 type AttributeFilterInputProps = {
     returnFilterInput: (str: string) => void,

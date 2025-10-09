@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
-import { IToolButtonStandard, ToolButton } from '../ToolButton';
+import { type IToolButtonStandard, ToolButton } from '../ToolButton';
 import { FormToolContext } from '../context';
 
 

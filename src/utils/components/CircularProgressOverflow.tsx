@@ -1,6 +1,6 @@
-import { Theme, ThemeProvider } from '@emotion/react';
-import { CircularProgress, CircularProgressProps, Container, createTheme, styled } from '@mui/material';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import { type Theme, ThemeProvider } from '@emotion/react';
+import { CircularProgress, type CircularProgressProps, Container, createTheme, styled } from '@mui/material';
+import React, { type MouseEventHandler, useEffect, useState } from 'react';
 
 const CircularProgressOverflowTheme = createTheme({
     components: {

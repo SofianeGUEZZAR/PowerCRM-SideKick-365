@@ -88,20 +88,20 @@ export function waitForElmList<T extends HTMLElement>(selector: string) {
     });
 }
 
-// export function GetData(id: string): string {
-//     var data = document.getElementById(id);
-//     return data?.getAttribute("data") ?? '';
-// }
+export function GetData(id: string): string {
+    var data = document.getElementById(id);
+    return data?.getAttribute("data") ?? '';
+}
 
-// export function GetExtensionId(): string {
-//     var extensionUrl = GetData("extensionURL");
-//     return extensionUrl.split('/')[2];
-// }
+export function GetExtensionId(): string {
+    var extensionUrl = GetData("extensionUrl");
+    return extensionUrl.split('/')[2];
+}
 
-// export function GetUrl(url: string): string {
-//     var extensionUrl = GetData("extensionURL");
-//     return extensionUrl + url;
-// }
+export function GetUrl(url: string): string {
+    var extensionUrl = GetData("extensionUrl");
+    return extensionUrl + url;
+}
 
 export function formatId(guid: string) {
     return guid?.replace('{', '').replace('}', '');

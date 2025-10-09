@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import TabUnselectedIcon from '@mui/icons-material/TabUnselected';
-import { IToolButtonStandard, ToolButton } from '../ToolButton';
+import { type IToolButtonStandard, ToolButton } from '../ToolButton';
 import { FormToolContext } from '../context';
 
 

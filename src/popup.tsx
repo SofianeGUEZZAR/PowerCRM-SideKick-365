@@ -1,6 +1,4 @@
 
-// import '../utils/global/extensions';
-
 import { Container,  Stack,  Alert,  Typography,  Button } from "@mui/material";
 import { useCallback } from "react";
 import { defaultProcessesList } from "~processes/.list";

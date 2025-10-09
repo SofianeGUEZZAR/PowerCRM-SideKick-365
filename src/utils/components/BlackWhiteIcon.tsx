@@ -1,5 +1,5 @@
-import { SvgIconComponent } from "@mui/icons-material";
-import { SvgIconProps } from "@mui/material/SvgIcon";
+import type { SvgIconComponent } from "@mui/icons-material";
+import type { SvgIconProps } from "@mui/material/SvgIcon";
 
 
 interface BlackWhiteIconProps {

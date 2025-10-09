@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@custom-react-hooks/all": "^2.0.8",
+        "@emotion/cache": "^11.14.0",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
         "@hello-pangea/dnd": "^18.0.1",
@@ -19,14 +20,16 @@
         "@mui/lab": "7.0.1-beta.18",
         "@mui/material": "^7.3.4",
         "@mui/styles": "^6.4.8",
-        "@mui/x-data-grid": "^8.13.1",
+        "@mui/x-data-grid": "^7.24.0",
         "@mui/x-date-pickers": "^8.12.0",
         "@uiw/react-json-view": "2.0.0-alpha.39",
         "autonumeric": "^4.10.9",
         "clsx": "^2.1.1",
+        "csstype": "^3.1.3",
         "dayjs": "^1.11.18",
         "material-ui-confirm": "^4.0.0",
         "monaco-editor": "^0.54.0",
+        "next": "^15.5.4",
         "notistack": "^3.0.2",
         "plasmo": "0.90.5",
         "react": "18.2.0",
@@ -38,6 +41,8 @@
     },
     "devDependencies": {
         "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+        "@mui/types": "^7.4.7",
+        "@plasmohq/parcel-resolver": "^0.14.2",
         "@types/chrome": "0.0.258",
         "@types/node": "20.11.5",
         "@types/react": "18.2.48",
@@ -51,6 +56,10 @@
     "manifest": {
         "host_permissions": [
             "*://*/*"
+        ],
+        "permissions": [
+            "storage",
+            "declarativeNetRequest"
         ]
     }
 }

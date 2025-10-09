@@ -7,7 +7,7 @@ import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import { LogicalNameTypography } from '../../../utils/components/LogicalNameTypography';
 import { setStyle } from '../../../utils/global/common';
-import { IToolButtonControlled, ToolButton } from '../ToolButton';
+import { type IToolButtonControlled, ToolButton } from '../ToolButton';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { FormToolContext } from '../context';

@@ -1,11 +1,10 @@
-import { Tooltip, Button } from '@mui/material';
 import React, { useContext, useEffect } from 'react';
 
 import { useBoolean } from 'usehooks-ts';
 import { setStyle } from '../../../utils/global/common';
 import BlurOffOutlinedIcon from '@mui/icons-material/BlurOffOutlined';
 import BlurOnIcon from '@mui/icons-material/BlurOn';
-import { IToolButtonStandard, ToolButton } from '../ToolButton';
+import { type IToolButtonStandard, ToolButton } from '../ToolButton';
 import { FormToolContext } from '../context';
 
 function BlurFields(props: IToolButtonStandard) {
