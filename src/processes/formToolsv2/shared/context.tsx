@@ -1,8 +1,9 @@
 import { createContext, type PropsWithChildren } from "react";
-import { noOperation } from "../../utils/global/common";
-import { useFormContextDocument } from "../../utils/hooks/use/useFormContextDocument";
-import { useXrmUpdated } from "../../utils/hooks/use/useXrmUpdated";
-import type { FormContext, FormDocument } from "../../utils/types/FormContext";
+import { noOperation } from "~utils/global/common";
+import { useFormContextDocument } from "~utils/hooks/use/useFormContextDocument";
+import { useXrmUpdated } from "~utils/hooks/use/useXrmUpdated";
+import type { FormContext, FormDocument } from "~utils/types/FormContext";
+
 
 
 interface IFormToolContext {

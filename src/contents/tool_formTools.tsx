@@ -1,12 +1,12 @@
 import type { PlasmoCSConfig } from "plasmo";
+
+import FormToolsV2Process from "~processes/formToolsv2/tool";
 import { buildGetRootContainer } from "~utils/global/toolContentAbstract";
 
-import FormToolsV2Button from "~processes/formToolsv2/main";
-
 export const config: PlasmoCSConfig = {
-        matches: ["*://*/*"],
-        world: "MAIN"
-    };
-export const getRootContainer = buildGetRootContainer(FormToolsV2Button);
+    matches: ["*://*/*"],
+    world: "MAIN"
+};
+export const getRootContainer = buildGetRootContainer(FormToolsV2Process);
 
 export default () => null;

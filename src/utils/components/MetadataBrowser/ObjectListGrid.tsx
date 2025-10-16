@@ -761,127 +761,127 @@ function ObjectListGrid(props: ObjectListGridProps & ObjectListDataGridProps) {
                             : defaultColumns
                     }
                     rows={rows}
-                    // rowHeight={rowHeight ?? 32}
-                    // autosizeOptions={autoSizeOption}
-                    // loading={loading}
-                    // slots={{
-                    //     noResultsOverlay: CustomNoResultsOverlay,
-                    //     noRowsOverlay: CustomNoRowsOverlay,
-                    //     toolbar: CustomToolbar,
-                    //     pagination: CustomPagination,
-                    //     columnMenu: CustomColumnMenu,
-                    //     loadingOverlay: CustomLoadingOverlay
-                    // }}
-                    // slotProps={{
-                    //     toolbar: {
-                    //         sx: { zoom: 1 / zoom },
-                    //         showQuickFilter: showQuickFilter,
-                    //         zoom,
-                    //         setZoom,
-                    //         exportFileName: columnNameText
-                    //     },
-                    //     footer: { sx: { zoom: 1 / zoom } },
-                    //     loadingOverlay: {
-                    //         variant: "circular-progress",
-                    //         noRowsVariant: "circular-progress",
-                    //         whatIsLoading: "Metadatas"
-                    //     } as any,
-                    //     columnsManagement: { toggleAllMode: "filteredOnly" }
-                    // }}
-                    // initialState={{
-                    //     pagination: { paginationModel: { pageSize: -1 } }
-                    // }}
-                    // sx={(theme) => ({
-                    //     height: fullHeight
-                    //         ? "100%"
-                    //         : typeof gridHeight === "string" &&
-                    //             gridHeight.endsWith("%")
-                    //           ? gridHeight
-                    //           : `calc(${gridHeight} / ${zoom})`,
-                    //     zoom: zoom,
-                    //     ...(autoRowHeight
-                    //         ? {
-                    //               [`&.${PROJECT_PREFIX}DataGrid-root--densityCompact .${PROJECT_PREFIX}DataGrid-cell`]:
-                    //                   {
-                    //                       py: 1
-                    //                   },
-                    //               [`&.${PROJECT_PREFIX}DataGrid-root--densityStandard .${PROJECT_PREFIX}DataGrid-cell`]:
-                    //                   {
-                    //                       py: "15px"
-                    //                   },
-                    //               [`&.${PROJECT_PREFIX}DataGrid-root--densityComfortable .${PROJECT_PREFIX}DataGrid-cell`]:
-                    //                   {
-                    //                       py: "22px"
-                    //                   }
-                    //           }
-                    //         : {}),
+                    rowHeight={rowHeight ?? 32}
+                    autosizeOptions={autoSizeOption}
+                    loading={loading}
+                    slots={{
+                        noResultsOverlay: CustomNoResultsOverlay,
+                        noRowsOverlay: CustomNoRowsOverlay,
+                        toolbar: CustomToolbar,
+                        pagination: CustomPagination,
+                        columnMenu: CustomColumnMenu,
+                        loadingOverlay: CustomLoadingOverlay
+                    }}
+                    slotProps={{
+                        toolbar: {
+                            sx: { zoom: 1 / zoom },
+                            showQuickFilter: showQuickFilter,
+                            zoom,
+                            setZoom,
+                            exportFileName: columnNameText
+                        },
+                        footer: { sx: { zoom: 1 / zoom } },
+                        loadingOverlay: {
+                            variant: "circular-progress",
+                            noRowsVariant: "circular-progress",
+                            whatIsLoading: "Metadatas"
+                        } as any,
+                        columnsManagement: { toggleAllMode: "filteredOnly" }
+                    }}
+                    initialState={{
+                        pagination: { paginationModel: { pageSize: -1 } }
+                    }}
+                    sx={(theme) => ({
+                        height: fullHeight
+                            ? "100%"
+                            : typeof gridHeight === "string" &&
+                                gridHeight.endsWith("%")
+                              ? gridHeight
+                              : `calc(${gridHeight} / ${zoom})`,
+                        zoom: zoom,
+                        ...(autoRowHeight
+                            ? {
+                                  [`&.${PROJECT_PREFIX}DataGrid-root--densityCompact .${PROJECT_PREFIX}DataGrid-cell`]:
+                                      {
+                                          py: 1
+                                      },
+                                  [`&.${PROJECT_PREFIX}DataGrid-root--densityStandard .${PROJECT_PREFIX}DataGrid-cell`]:
+                                      {
+                                          py: "15px"
+                                      },
+                                  [`&.${PROJECT_PREFIX}DataGrid-root--densityComfortable .${PROJECT_PREFIX}DataGrid-cell`]:
+                                      {
+                                          py: "22px"
+                                      }
+                              }
+                            : {}),
 
-                    //     border: 0,
-                    //     color: "rgba(255,255,255,0.85)",
-                    //     fontFamily: [
-                    //         "-apple-system",
-                    //         "BlinkMacSystemFont",
-                    //         '"Segoe UI"',
-                    //         "Roboto",
-                    //         '"Helvetica Neue"',
-                    //         "Arial",
-                    //         "sans-serif",
-                    //         '"Apple Color Emoji"',
-                    //         '"Segoe UI Emoji"',
-                    //         '"Segoe UI Symbol"'
-                    //     ].join(","),
-                    //     WebkitFontSmoothing: "auto",
-                    //     letterSpacing: "normal",
-                    //     [`& .${PROJECT_PREFIX}DataGrid-columnsContainer`]: {
-                    //         backgroundColor: "#1d1d1d",
-                    //         ...theme.applyStyles("light", {
-                    //             backgroundColor: "#fafafa"
-                    //         })
-                    //     },
-                    //     [`& .${PROJECT_PREFIX}DataGrid-iconSeparator`]: {
-                    //         transform: "scaleY(2)"
-                    //     },
-                    //     [`& .${PROJECT_PREFIX}DataGrid-columnHeader, .${PROJECT_PREFIX}DataGrid-cell`]: {
-                    //         borderRight: "1px solid #303030",
-                    //         ...theme.applyStyles("light", {
-                    //             borderRightColor: "#f0f0f0"
-                    //         })
-                    //     },
-                    //     [`& .${PROJECT_PREFIX}DataGrid-columnsContainer, .${PROJECT_PREFIX}DataGrid-cell`]: {
-                    //         borderBottom: "1px solid #303030",
-                    //         ...theme.applyStyles("light", {
-                    //             borderBottomColor: "#f0f0f0"
-                    //         })
-                    //     },
-                    //     [`& .${PROJECT_PREFIX}DataGrid-cell`]: {
-                    //         color: "rgba(255,255,255,0.65)",
-                    //         ...theme.applyStyles("light", {
-                    //             color: "rgba(0,0,0,.85)"
-                    //         })
-                    //     },
-                    //     [`& .${PROJECT_PREFIX}PaginationItem-root`]: {
-                    //         borderRadius: 0
-                    //     },
-                    //     ...theme.applyStyles("light", {
-                    //         color: "rgba(0,0,0,.85)"
-                    //     })
-                    // })}
-                    // pageSizeOptions={[{ value: -1, label: "All" }]}
-                    // columnVisibilityModel={columnVisibilityModel}
-                    // onColumnVisibilityModelChange={(newModel) =>
-                    //     setColumnVisibilityModel(newModel)
-                    // }
-                    // getRowHeight={
-                    //     autoRowHeight ? () => "auto" : props.getRowHeight
-                    // }
-                    // getEstimatedRowHeight={
-                    //     autoRowHeight ? () => 100 : props.getEstimatedRowHeight
-                    // }
-                    // onRowSelectionModelChange={(newRowSelectionModel) => {
-                    //     setRowSelectionModel(newRowSelectionModel);
-                    // }}
-                    // rowSelectionModel={rowSelectionModel}
-                    // {...gridProps}
+                        border: 0,
+                        color: "rgba(255,255,255,0.85)",
+                        fontFamily: [
+                            "-apple-system",
+                            "BlinkMacSystemFont",
+                            '"Segoe UI"',
+                            "Roboto",
+                            '"Helvetica Neue"',
+                            "Arial",
+                            "sans-serif",
+                            '"Apple Color Emoji"',
+                            '"Segoe UI Emoji"',
+                            '"Segoe UI Symbol"'
+                        ].join(","),
+                        WebkitFontSmoothing: "auto",
+                        letterSpacing: "normal",
+                        [`& .${PROJECT_PREFIX}DataGrid-columnsContainer`]: {
+                            backgroundColor: "#1d1d1d",
+                            ...theme.applyStyles("light", {
+                                backgroundColor: "#fafafa"
+                            })
+                        },
+                        [`& .${PROJECT_PREFIX}DataGrid-iconSeparator`]: {
+                            transform: "scaleY(2)"
+                        },
+                        [`& .${PROJECT_PREFIX}DataGrid-columnHeader, .${PROJECT_PREFIX}DataGrid-cell`]: {
+                            borderRight: "1px solid #303030",
+                            ...theme.applyStyles("light", {
+                                borderRightColor: "#f0f0f0"
+                            })
+                        },
+                        [`& .${PROJECT_PREFIX}DataGrid-columnsContainer, .${PROJECT_PREFIX}DataGrid-cell`]: {
+                            borderBottom: "1px solid #303030",
+                            ...theme.applyStyles("light", {
+                                borderBottomColor: "#f0f0f0"
+                            })
+                        },
+                        [`& .${PROJECT_PREFIX}DataGrid-cell`]: {
+                            color: "rgba(255,255,255,0.65)",
+                            ...theme.applyStyles("light", {
+                                color: "rgba(0,0,0,.85)"
+                            })
+                        },
+                        [`& .${PROJECT_PREFIX}PaginationItem-root`]: {
+                            borderRadius: 0
+                        },
+                        ...theme.applyStyles("light", {
+                            color: "rgba(0,0,0,.85)"
+                        })
+                    })}
+                    pageSizeOptions={[{ value: -1, label: "All" }]}
+                    columnVisibilityModel={columnVisibilityModel}
+                    onColumnVisibilityModelChange={(newModel) =>
+                        setColumnVisibilityModel(newModel)
+                    }
+                    getRowHeight={
+                        autoRowHeight ? () => "auto" : props.getRowHeight
+                    }
+                    getEstimatedRowHeight={
+                        autoRowHeight ? () => 100 : props.getEstimatedRowHeight
+                    }
+                    onRowSelectionModelChange={(newRowSelectionModel) => {
+                        setRowSelectionModel(newRowSelectionModel);
+                    }}
+                    rowSelectionModel={rowSelectionModel}
+                    {...gridProps}
                 />
             </Paper>
         </Box>

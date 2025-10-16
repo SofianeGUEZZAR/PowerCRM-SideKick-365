@@ -22,7 +22,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { type StorageConfiguration } from "~/utils/types/StorageConfiguration";
 import { WandMainIcon } from "~icons/WandMainIcon";
-import { useEffectOnce } from "~utils/hooks/use/useEffectOnce";
 
 import packageJson from "../../package.json";
 import { KoFiIcon } from "../icons/BuyMeACoffee";
@@ -30,20 +29,19 @@ import BlackWhiteIconButton from "../utils/components/BlackWhiteIconButton";
 import DetailsSnackbar from "../utils/components/DetailsSnackbar";
 import OpenOptionsButton from "../utils/components/OpenOptionsButton";
 import PanelDrawerItem from "../utils/components/PanelDrawer/PanelDrawerItem";
-import { ProcessButton } from "../utils/global/.processClass";
 import { debugLog, getBridgeEventName, isArraysEquals, setStyle } from "../utils/global/common";
 import MessageManager from "../utils/global/MessageManager";
 import SpDevToolsContextProvider, { useSpDevTools } from "../utils/global/spContext";
 import {
     APPLICATION_NAME,
-    BRIDGE_SUFFIX,
     MAIN_MENU_ID,
     PROJECT_PREFIX,
     STORAGE_ForegroundPanes,
     STORAGE_ListName
 } from "../utils/global/var";
 import { MessageType } from "../utils/types/Message";
-import { defaultProcessesList, getToolInstance } from "./.list";
+import { defaultToolList, getToolButton } from "./buttonList";
+import type { ToolPanelButton } from "~utils/global/.toolPanelButton";
 
 export const MainScreen: React.FunctionComponent = () => {
     return (
@@ -72,7 +70,7 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
 
     const [processesList, setProcessesList] = useState<StorageConfiguration[]>([]);
     const [openedProcesses, setOpenedProcesses] = useState<{
-        [processId: string]: ProcessButton;
+        [processId: string]: ToolPanelButton;
     }>({});
     const [openedProcessesBadge, setOpenedProcessesBadge] = useState<{
         [processId: string]: React.ReactNode | null;
@@ -88,7 +86,7 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                 response &&
                 isArraysEquals(
                     response.map((t) => t.id),
-                    defaultProcessesList.map((t) => t.id)
+                    defaultToolList.map((t) => t.id)
                 )
             ) {
                 setProcessesList(response);
@@ -96,9 +94,9 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
             } else {
                 MessageManager.sendMessage(MessageType.SETCONFIGURATION, {
                     key: STORAGE_ListName,
-                    configurations: defaultProcessesList
+                    configurations: defaultToolList
                 });
-                setProcessesList(defaultProcessesList);
+                setProcessesList(defaultToolList);
             }
         });
 
@@ -149,7 +147,7 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
             .filter((processid) => processid.startOnLoad)
             .sort((processA, processB) => processA.startOnPosition! - processB.startOnPosition!)
             .forEach((processid, index) => {
-                const process = getToolInstance(processid.id);
+                const process = getToolButton(processid.id);
                 if (!process) return;
                 setOpenedProcesses((prev) => ({
                     ...prev,
@@ -169,9 +167,9 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
         setPanelOpenedId((prev) => (prev !== processid ? processid : null));
     };
 
-    const openProcess = useCallback((process: ProcessButton) => {
+    const openProcess = useCallback((process: ToolPanelButton) => {
         setOpenedProcesses((prev) => {
-            const alreadyOpenedProcess: ProcessButton | undefined = prev[process.prefixedId];
+            const alreadyOpenedProcess: ToolPanelButton | undefined = prev[process.prefixedId];
             if (!alreadyOpenedProcess) {
                 togglePanelDrawer(process.prefixedId);
                 setOpenedProcessesBadge((prevBadge) => ({
@@ -187,11 +185,11 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
 
     const closeProcess = useCallback((processId: string) => {
         setOpenedProcesses((prev) => {
-            const processToCloseIndex: ProcessButton | undefined = prev[processId];
+            const processToCloseIndex: ToolPanelButton | undefined = prev[processId];
             if (!processToCloseIndex) {
                 return prev;
             }
-            processToCloseIndex.onProcessClose();
+            // processToCloseIndex.onProcessClose();
             setPanelOpenedId(null);
             setOpenedProcessesBadge((prevBadges) => {
                 const { [processId]: _, ...copyBadge } = prevBadges;
@@ -206,8 +204,8 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
         () =>
             processesList
                 ?.filter((process) => !process.hidden)
-                .map((value, index) => {
-                    const toolButton = getToolInstance(value.id);
+                .map((process, index) => {
+                    const toolButton = getToolButton(process.id);
                     if (!toolButton) return null;
                     if (toolButton.openable) {
                         return toolButton.getOpeningButton(openProcess);
@@ -524,7 +522,7 @@ function MainScreenFooter() {
 }
 
 interface DrawerToolProps {
-    process: ProcessButton;
+    process: ToolPanelButton;
     setOpenedProcessesBadge: (
         value: React.SetStateAction<{
             [processid: string]: React.ReactNode | null;

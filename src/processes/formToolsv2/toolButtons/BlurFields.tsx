@@ -4,8 +4,8 @@ import { useBoolean } from 'usehooks-ts';
 import { setStyle } from '../../../utils/global/common';
 import BlurOffOutlinedIcon from '@mui/icons-material/BlurOffOutlined';
 import BlurOnIcon from '@mui/icons-material/BlurOn';
-import { type IToolButtonStandard, ToolButton } from '../ToolButton';
-import { FormToolContext } from '../context';
+import { type IToolButtonStandard, FormToolButton } from '../shared/FormToolButton';
+import { FormToolContext } from '../shared/context';
 
 function BlurFields(props: IToolButtonStandard) {
     
@@ -24,7 +24,7 @@ function BlurFields(props: IToolButtonStandard) {
     }, [blurEnabled, formDocument]);
 
     return (
-        <ToolButton
+        <FormToolButton
             controlled={false}
             icon={blurEnabled ? <BlurOnIcon /> : <BlurOffOutlinedIcon />}
             tooltip='Blur Data'

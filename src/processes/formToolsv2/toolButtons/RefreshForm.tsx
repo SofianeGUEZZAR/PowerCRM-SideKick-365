@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
 import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
-import { type IToolButtonStandard, ToolButton } from '../ToolButton';
-import { FormToolContext } from '../context';
+import { type IToolButtonStandard, FormToolButton } from '../shared/FormToolButton';
+import { FormToolContext } from '../shared/context';
 
 
 function RefreshForm(props: IToolButtonStandard) {
@@ -13,7 +13,7 @@ function RefreshForm(props: IToolButtonStandard) {
     }, [formContext]);
 
     return (
-        <ToolButton
+        <FormToolButton
             controlled={false}
             icon={<ViewQuiltIcon />}
             tooltip='Refresh Form Data'

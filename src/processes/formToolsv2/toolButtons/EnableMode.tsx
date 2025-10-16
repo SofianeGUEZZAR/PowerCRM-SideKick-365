@@ -1,10 +1,10 @@
 
 import { useContext, useEffect, useMemo } from "react";
-import { type FormControlState, type IToolButtonControlled, ToolButton } from "../ToolButton";
+import { type FormControlState, type IToolButtonControlled, FormToolButton } from "../shared/FormToolButton";
 
 import VpnKeyOffOutlinedIcon from '@mui/icons-material/VpnKeyOffOutlined';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import { FormToolContext } from "../context";
+import { FormToolContext } from '../shared/context';
 
 
 type EnableModeStateType = FormControlState<boolean>;
@@ -51,7 +51,7 @@ export function EnableMode(props: IToolButtonControlled) {
 
 
     return (
-        <ToolButton
+        <FormToolButton
             controlled={true}
             icon={enableModeEnable ? <VpnKeyIcon /> : <VpnKeyOffOutlinedIcon />}
             tooltip='Enable Mode'

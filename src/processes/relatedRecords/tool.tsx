@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import ShareIcon from "@mui/icons-material/Share";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -60,34 +59,16 @@ const theme = createTheme({
     }
 });
 
-class RelatedRecordsButton extends ProcessButton {
+class RelatedRecordsProcess extends ProcessButton {
+    static id = "relatedRecords";
     constructor() {
-        super("relatedRecords", "Related Records", () => ShareIcon, 450);
-        this.process = RelatedRecordsProcess;
-        this.description = (
-            <>
-                <Typography>
-                    <i>Explore entity relationships and related records.</i>
-                </Typography>
-                <Typography>
-                    This tool displays <b>all relationships associated</b> with
-                    the selected entity. It also lists <b>related records</b>{" "}
-                    for the selected record.
-                </Typography>
-                <Typography>
-                    <u>
-                        To view a record in detail, click on it to open a dialog
-                    </u>
-                    . Alternatively, you can access a contextual menu{" "}
-                    <i>(right-click)</i> for other opening options.
-                </Typography>
-            </>
-        );
+        super("relatedRecords");
+        this.process = RelatedRecords;
     }
 }
 
-const RelatedRecordsProcess = forwardRef<ProcessRef, ProcessProps>(
-    function RelatedRecordsProcess(props: ProcessProps, ref) {
+const RelatedRecords = forwardRef<ProcessRef, ProcessProps>(
+    function RelatedRecords(props: ProcessProps, ref) {
         const {
             entityName: currentEntityName,
             recordId: currentRecordId,
@@ -929,5 +910,5 @@ const RelatedRecordsItem = React.memo((props: RelatedRecordsItemProps) => {
     );
 });
 
-// const relatedRecords = new RelatedRecordsButton();
-export default RelatedRecordsButton;
+
+export default RelatedRecordsProcess;

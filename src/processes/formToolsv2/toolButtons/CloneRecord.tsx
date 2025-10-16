@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { type IToolButtonStandard, ToolButton } from '../ToolButton';
-import { FormToolContext } from '../context';
+import { type IToolButtonStandard, FormToolButton } from '../shared/FormToolButton';
+import { FormToolContext } from '../shared/context';
 
 function CloneRecord(props: IToolButtonStandard) {
 
@@ -27,7 +27,7 @@ function CloneRecord(props: IToolButtonStandard) {
     }
 
     return (
-        <ToolButton
+        <FormToolButton
             controlled={false}
             icon={<FileCopyIcon />}
             tooltip='Clone Record'

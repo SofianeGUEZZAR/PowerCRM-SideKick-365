@@ -14,10 +14,7 @@ import { forwardRef, useContext, useMemo, useRef } from "react";
 
 import { ProcessButton, type ProcessProps, type ProcessRef } from "../../utils/global/.processClass";
 import { useSpDevTools } from "../../utils/global/spContext";
-import FormToolContextProvider, { FormToolContext } from "./context";
-import { ToggableToolButtonContainer, ToolButtonContainer } from "./ToolButtonContainer";
 import BlurFields from "./toolButtons/BlurFields";
-// import ShowOptionSetInFields from './toolButtons/ShowOptionSetInFields';
 import CloneRecord from "./toolButtons/CloneRecord";
 import { EnableMode } from "./toolButtons/EnableMode";
 import FillFields from "./toolButtons/FillFields";
@@ -27,28 +24,14 @@ import RefreshRibbon from "./toolButtons/RefreshRibbon";
 import ShowFieldLabel from "./toolButtons/ShowFieldLabel";
 import ShowTabLabel from "./toolButtons/ShowTabLabel";
 import VisibleMode from "./toolButtons/VisibleMode";
+import FormToolContextProvider, { FormToolContext } from "./shared/context";
+import { FormToolButtonContainer, ToggableToolButtonContainer } from "./shared/FormToolButtonContainer";
 
-class FormToolsV2Button extends ProcessButton {
+class FormToolsV2Process extends ProcessButton {
     static id = "formtoolsv2";
     constructor() {
-        super("formtoolsv2", "Form Tools", () => HandymanIcon, 56);
+        super("formtoolsv2");
         this.process = FormToolsProcessV2;
-        this.description = (
-            <>
-                <Typography>
-                    <i>Randomize, visualize, and master your data.</i>
-                </Typography>
-                <Typography>This tool provide functionnalities used on records form.</Typography>
-                <Typography>
-                    You will be able to <b>display logical names</b>, <b>manage field controls</b>, refresh data,{" "}
-                    <b>fill fields</b> with random data, <b>clone your records</b> and{" "}
-                    <b>blur sensitive informations</b>.
-                </Typography>
-                <Typography>
-                    <u>Some buttons are reversible</u>: it can be activated or deactivated without refreshing the page.
-                </Typography>
-            </>
-        );
     }
 
     reStyleSidePane(
@@ -172,9 +155,9 @@ const FormToolsProcessV2 = forwardRef<ProcessRef, ProcessProps>(function FormToo
                             toolList={[OptionalMode, EnableMode, VisibleMode]}
                         />
 
-                        <ToolButtonContainer title="Refresh" toolList={[RefreshRibbon, RefreshForm]} />
+                        <FormToolButtonContainer title="Refresh" toolList={[RefreshRibbon, RefreshForm]} />
 
-                        <ToolButtonContainer
+                        <FormToolButtonContainer
                             toolList={[
                                 // ShowOptionSetInFields,
                                 FillFields,
@@ -200,4 +183,4 @@ const FormToolsProcessV2 = forwardRef<ProcessRef, ProcessProps>(function FormToo
 });
 
 // const formToolsV2 = new FormToolsButtonV2();
-export default FormToolsV2Button;
+export default FormToolsV2Process;

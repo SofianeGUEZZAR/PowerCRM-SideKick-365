@@ -34,36 +34,11 @@ import { useFormContextDocument } from "../../utils/hooks/use/useFormContextDocu
 import { RetrieveAllAttributes } from "../../utils/hooks/XrmApi/RetrieveAllAttributes";
 import type { FormContext } from "../../utils/types/FormContext";
 
-class DirtyFieldsButton extends ProcessButton {
+class DirtyFieldsProcess extends ProcessButton {
+    static id = "dirtyfields";
     constructor() {
-        super("dirtyfields", "Dirty Attributes", () => DirtyLensIcon, 350);
+        super("dirtyfields");
         this.process = DirtyFieldsButtonProcess;
-        this.description = (
-            <>
-                <Typography>
-                    <i>
-                        See your unsaved changes at a glance, and easily
-                        navigate to them with a click.
-                    </i>
-                </Typography>
-                <Typography>
-                    This tool <b>displays the fields that have been changed</b>{" "}
-                    but not yet saved.
-                </Typography>
-                <Typography>
-                    By clicking on the box, you can trigger the focus of the
-                    fields on the form. This can even be on a different tab.
-                </Typography>
-                <Typography>
-                    You can also enable an option to display a{" "}
-                    <span style={{ outline: "2px dashed #ff2500" }}>
-                        red box around
-                    </span>{" "}
-                    the field controls on the form, making them visually stand
-                    out.
-                </Typography>
-            </>
-        );
     }
 }
 
@@ -363,4 +338,4 @@ function ValueDisplay(props: ValueDisplayProps) {
 }
 
 // const dirtyFields = new DirtyFieldsButton();
-export default DirtyFieldsButton;
+export default DirtyFieldsProcess;

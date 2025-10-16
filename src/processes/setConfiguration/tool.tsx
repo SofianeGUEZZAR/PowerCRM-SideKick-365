@@ -22,27 +22,13 @@ import MessageManager from "../../utils/global/MessageManager";
 import { STORAGE_ForegroundPanes, STORAGE_ListName } from "../../utils/global/var";
 import { MessageType } from "../../utils/types/Message";
 import type { StorageConfiguration } from "../../utils/types/StorageConfiguration";
-import { defaultProcessesList, ProcessesInstance } from "../.list";
+import { defaultToolList, getToolButton, ToolPanelButtonList } from "~processes/buttonList";
 
-class SetConfigurationButton extends ProcessButton {
+class SetConfigurationProcess extends ProcessButton {
+    static id = "createconfiguration";
     constructor() {
-        super("createconfiguration", "Configuration Manager", () => SettingsIcon, 320);
-        this.process = SetConfigurationProcess;
-        this.description = (
-            <>
-                <Typography>
-                    <i>Configure your SidePanel Tools experience.</i>
-                </Typography>
-                <Typography>
-                    This tool lets you select which tools <b>automatically open</b> when a page loads. You can also
-                    specify a tool to be <b>expanded by default</b>.
-                </Typography>
-                <Typography>
-                    A <i>"foreground"</i> option is available to <u>disable automatic width adjustments</u> of the main
-                    Dynamics screen.
-                </Typography>
-            </>
-        );
+        super("createconfiguration");
+        this.process = SetConfiguration;
     }
 }
 
@@ -56,7 +42,10 @@ interface ProcessItemProps {
 function ProcessItem(props: ProcessItemProps) {
     const { index, process } = props;
 
-    const processButton = useMemo(() => ProcessesInstance.find((processButton) => processButton.prefixedId === process.id), [process]);
+    const processButton = useMemo(
+        () => getToolButton(process.id),
+        [process]
+    );
 
     return processButton?.openable ? (
         <Draggable draggableId={process.id} index={index} key={process.id + "draggable"}>
@@ -177,11 +166,11 @@ function sortProcessesByStartOnPosition(processA: StorageConfiguration, processB
         : 0;
 }
 
-const SetConfigurationProcess = forwardRef<ProcessRef, ProcessProps>(function SetConfigurationProcess(
+const SetConfiguration = forwardRef<ProcessRef, ProcessProps>(function SetConfigurationProcess(
     props: ProcessProps,
     ref
 ) {
-    const [processesList, setProcessesList] = useState<StorageConfiguration[]>(defaultProcessesList);
+    const [processesList, setProcessesList] = useState<StorageConfiguration[]>(defaultToolList);
     const [configurationSaved, setConfigurationSaved] = useState<boolean>(false);
 
     const [isForegroundPanes, setIsForegroundPanes] = useState<boolean>(false);
@@ -201,7 +190,7 @@ const SetConfigurationProcess = forwardRef<ProcessRef, ProcessProps>(function Se
     }, []);
 
     const createConfiguration = useCallback(() => {
-        const processConfigurations: StorageConfiguration[] = ProcessesInstance.map((process) => {
+        const processConfigurations: StorageConfiguration[] = ToolPanelButtonList.map((process) => {
             const opened = processesList.find((c) => c.id === process.prefixedId);
             if (opened) {
                 return opened;
@@ -246,7 +235,7 @@ const SetConfigurationProcess = forwardRef<ProcessRef, ProcessProps>(function Se
 
     const closedProcesses = useMemo(
         () =>
-            ProcessesInstance.map((processButton) =>
+            ToolPanelButtonList.map((processButton) =>
                 processesList.find((process) => !process.startOnLoad && process.id === processButton.prefixedId)
             ).filter((p): p is StorageConfiguration => !!p),
         [processesList]
@@ -377,9 +366,10 @@ const SetConfigurationProcess = forwardRef<ProcessRef, ProcessProps>(function Se
                             return newProcessList;
                         });
                     }}
-                    options={ProcessesInstance.map(
+                    options={ToolPanelButtonList.map(
                         (processButton) =>
-                            processButton.isPanelProcess && openedProcesses.find((p) => p.id === processButton.prefixedId)
+                            processButton.isPanelProcess &&
+                            openedProcesses.find((p) => p.id === processButton.prefixedId)
                     ).filter((p): p is StorageConfiguration => !!p)}
                     renderInput={(params) => (
                         <TextField
@@ -391,7 +381,7 @@ const SetConfigurationProcess = forwardRef<ProcessRef, ProcessProps>(function Se
                                     endAdornment: (
                                         <>
                                             {
-                                                ProcessesInstance.find(
+                                                ToolPanelButtonList.find(
                                                     (processButton) =>
                                                         processButton.menuButtonName === params.inputProps.value
                                                 )?.menuButtonIcon
@@ -404,11 +394,13 @@ const SetConfigurationProcess = forwardRef<ProcessRef, ProcessProps>(function Se
                         />
                     )}
                     getOptionLabel={(option) =>
-                        ProcessesInstance.find((processButton) => processButton.prefixedId === option.id)?.menuButtonName ??
-                        "Name not found"
+                        ToolPanelButtonList.find((processButton) => processButton.prefixedId === option.id)
+                            ?.menuButtonName ?? "Name not found"
                     }
                     renderOption={(props, option, state) => {
-                        const processButton = ProcessesInstance.find((processButton) => processButton.prefixedId === option.id);
+                        const processButton = ToolPanelButtonList.find(
+                            (processButton) => processButton.prefixedId === option.id
+                        );
                         return (
                             <Stack
                                 key={`expandedToolOption_${processButton.prefixedId}`}
@@ -492,4 +484,4 @@ function HelpInfo(props: Omit<TooltipProps, "slotProps">) {
 }
 
 // const createConfiguration = new SetConfigurationButton();
-export default SetConfigurationButton;
+export default SetConfigurationProcess;

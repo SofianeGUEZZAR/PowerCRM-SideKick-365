@@ -1,35 +1,24 @@
-// Import statements
-import { useUpdateEffect } from "@custom-react-hooks/all";
-// Icon imports
 import DeleteIcon from "@mui/icons-material/Delete";
 import RestoreIcon from "@mui/icons-material/Restore";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import SettingsIcon from "@mui/icons-material/Settings";
-import SyncIcon from "@mui/icons-material/Sync";
-// Material UI imports
-import {
-    Autocomplete,
-    Box,
-    ButtonGroup,
-    createFilterOptions,
-    createTheme,
-    lighten,
-    List,
-    ListItem,
-    ListItemText,
-    TextField,
-    ThemeProvider,
-    Tooltip
-} from "@mui/material";
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import { createTheme, lighten } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import ThemeProvider from "@mui/styles/ThemeProvider";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-// Date picker imports
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useSnackbar } from "notistack";
 import React, {
@@ -47,12 +36,9 @@ import DropDownButton from "../../utils/components/DropDownButton";
 import { NoMaxWidthTooltip } from "../../utils/components/NoMaxWidthTooltip";
 import RecordSearchBar from "../../utils/components/RecordSearchBar";
 import SplitDropDownButtonGroup from "../../utils/components/SplitDropDownButtonGroup";
-// Component imports
 import { ProcessButton, type ProcessProps, type ProcessRef } from "../../utils/global/.processClass";
-// Common functions and types
 import { debugLog, formatId, type StringKeys } from "../../utils/global/common";
 import { useSpDevTools } from "../../utils/global/spContext";
-// Xrm API hooks
 import { useDictionnary } from "../../utils/hooks/use/useDictionnary";
 import { useFormContextDocument } from "../../utils/hooks/use/useFormContextDocument";
 import { useXrmUpdated } from "../../utils/hooks/use/useXrmUpdated";
@@ -76,11 +62,13 @@ import {
     StringNode,
     type AttributeProps
 } from "./nodes";
+import { useUpdateEffect } from "@custom-react-hooks/all";
 
-class UpdateRecordButton extends ProcessButton {
+class UpdateRecordProcess extends ProcessButton {
+    static id = "updaterecord";
     constructor() {
-        super("updaterecord", "Create / Update Record", () => SyncIcon, 500);
-        this.process = UpdateRecordProcess;
+        super("updaterecord");
+        this.process = UpdateRecord;
         this.processContainer = (props) => {
             return (
                 <ThemeProvider theme={theme}>
@@ -88,33 +76,6 @@ class UpdateRecordButton extends ProcessButton {
                 </ThemeProvider>
             );
         };
-        this.description = (
-            <>
-                <Typography>
-                    <i>Save time and effort with creates and updates.</i>
-                </Typography>
-                <Typography>
-                    With this tool, you can <b>update any field of any record</b> on your environment. You can even
-                    update <b>multiple records at once</b> for bulk updates.
-                </Typography>
-                <Typography>
-                    <i>
-                        The default record loaded is the currently opened record. You can select different entity and
-                        records using the input fields at the top.
-                    </i>
-                </Typography>
-                <Typography>
-                    To update a field, select it from the dropdown menu. Then, enter a new value in the corresponding
-                    input field. You can always restore the original value if needed.
-                </Typography>
-                <Typography>To remove a field from the update list, click the trash bin icon.</Typography>
-                <Typography>
-                    <b>Each field type has a matching input type</b>, such as a text box for text fields or a date
-                    picker for date fields. <b>Input fields have an icon that you can click</b> to open a tool that
-                    helps with data entry.
-                </Typography>
-            </>
-        );
     }
 }
 
@@ -187,7 +148,7 @@ const theme = createTheme({
 
 type AvailableModes = "update" | "create";
 
-const UpdateRecordProcess = forwardRef<ProcessRef, ProcessProps>(function UpdateRecordProcess(
+const UpdateRecord = forwardRef<ProcessRef, ProcessProps>(function UpdateRecord(
     _props: ProcessProps,
     _ref
 ) {
@@ -1075,4 +1036,4 @@ function SelectAttribute(props: SelectAttributeProps) {
 }
 
 // const updateRecord = new UpdateRecordButton();
-export default UpdateRecordButton;
+export default UpdateRecordProcess;

@@ -2,8 +2,8 @@ import { useContext, useEffect, useMemo } from "react";
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import { type FormControlState, type IToolButtonControlled, ToolButton } from "../ToolButton";
-import { FormToolContext } from "../context";
+import { type FormControlState, type IToolButtonControlled, FormToolButton } from "../shared/FormToolButton";
+import { FormToolContext } from '../shared/context';
 
 type VisibleModeStateType = FormControlState<boolean>;
 function VisibleMode(props: IToolButtonControlled) {
@@ -96,7 +96,7 @@ function VisibleMode(props: IToolButtonControlled) {
 
 
     return (
-        <ToolButton
+        <FormToolButton
             controlled={true}
             icon={visibleModeEnable ? <VisibilityIcon /> : <VisibilityOffOutlinedIcon />}
             tooltip='Visible Mode'

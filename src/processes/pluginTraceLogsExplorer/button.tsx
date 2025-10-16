@@ -1,15 +1,11 @@
-import React, { forwardRef } from 'react';
-import { type ProcessProps, ProcessButton, type ProcessRef } from '../../utils/global/.processClass';
+import React from 'react';
 
 import EventNoteIcon from '@mui/icons-material/EventNote';
-import PluginTraceLogsPane from '../../utils/components/pluginTraceLogsExplorer/main';
-import { TraceLogController, TraceLogsAPI } from '../../utils/components/pluginTraceLogsExplorer/subcomponents/contexts';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { List, Typography } from '@mui/material';
+import { ToolPanelButton } from '~utils/global/.toolPanelButton';
 
 
-class PluginTraceLogsExplorerButton extends ProcessButton {
+class PluginTraceLogsExplorerButton extends ToolPanelButton {
     static id = "pluginlogsexplorer";
     constructor() {
         super(
@@ -18,7 +14,6 @@ class PluginTraceLogsExplorerButton extends ProcessButton {
             () => EventNoteIcon,
             450
         );
-        this.process = PluginTraceLogsExplorerButtonProcess;
         this.description = <>
             <Typography><i>Tired of sifting through cluttered and unoptimized log lists?</i></Typography>
             <Typography>The Plugin Trace Logs Explorer provides a streamlined way to <b>view and analyze logs for plugins and custom workflows</b>:</Typography>
@@ -30,23 +25,6 @@ class PluginTraceLogsExplorerButton extends ProcessButton {
         </>
     }
 }
-
-const PluginTraceLogsExplorerButtonProcess = forwardRef<ProcessRef, ProcessProps>(
-    function PluginTraceLogsExplorerButtonProcess(props: ProcessProps, ref) {
-
-        return (
-            <TraceLogController>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <TraceLogsAPI maxFetchingRecord={15}>
-                        <PluginTraceLogsPane processId={props.id} setBadge={props.setBadge} />
-                    </TraceLogsAPI>
-                </LocalizationProvider>
-            </TraceLogController>
-
-        )
-    }
-);
-
 
 // const pluginTraceLogsExplorer = new PluginTraceLogsExplorerButton();
 export default PluginTraceLogsExplorerButton;

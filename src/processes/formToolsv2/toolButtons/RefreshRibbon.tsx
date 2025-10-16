@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
 import TabUnselectedIcon from '@mui/icons-material/TabUnselected';
-import { type IToolButtonStandard, ToolButton } from '../ToolButton';
-import { FormToolContext } from '../context';
+import { type IToolButtonStandard, FormToolButton } from '../shared/FormToolButton';
+import { FormToolContext } from '../shared/context';
 
 
 function RefreshRibbon(props: IToolButtonStandard) {
@@ -13,7 +13,7 @@ function RefreshRibbon(props: IToolButtonStandard) {
     }, [formContext]);
 
     return (
-        <ToolButton
+        <FormToolButton
             controlled={false}
             icon={<TabUnselectedIcon />}
             tooltip='Refresh Ribbon'

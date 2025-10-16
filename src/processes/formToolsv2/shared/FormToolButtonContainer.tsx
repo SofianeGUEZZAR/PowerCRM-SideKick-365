@@ -8,12 +8,10 @@ import {
     useState,
     type PropsWithChildren
 } from "react";
+import ComponentContainer, { type ComponentContainerProps } from "~utils/components/ComponentContainer";
+import { useStateArray } from "~utils/hooks/use/useStateArray";
+import type { IToolButtonStandard, IToolButtonControlled } from "./FormToolButton";
 
-import ComponentContainer, {
-    type ComponentContainerProps
-} from "../../utils/components/ComponentContainer";
-import { useStateArray } from "../../utils/hooks/use/useStateArray";
-import type { IToolButtonControlled, IToolButtonStandard } from "./ToolButton";
 
 function ToolButtonContainerContent(
     props: ComponentContainerProps & PropsWithChildren
@@ -33,7 +31,7 @@ interface IToolButtonContainer {
     title?: string;
     toolList: ((props: IToolButtonStandard) => JSX.Element)[];
 }
-export function ToolButtonContainer(props: IToolButtonContainer) {
+export function FormToolButtonContainer(props: IToolButtonContainer) {
     const { title, toolList } = props;
 
     return (

@@ -7,8 +7,8 @@ import {
     type Dispatch,
     type SetStateAction
 } from "react";
-
 import { FormToolContext } from "./context";
+
 
 type ToolButtonStandardIdentifier = { controlled: false };
 type ToolButtonControlledIdentifier = { controlled: true };
@@ -31,7 +31,7 @@ export type IToolButton = {
     controlled: boolean;
 } & (IToolButtonStandardWithClick | Omit<IToolButtonControlled, "enabled">);
 
-export const ToolButton = forwardRef<any, IToolButton>((props, ref) => {
+export const FormToolButton = forwardRef<any, IToolButton>((props, ref) => {
     const { controlled } = props;
 
     if (controlled) {

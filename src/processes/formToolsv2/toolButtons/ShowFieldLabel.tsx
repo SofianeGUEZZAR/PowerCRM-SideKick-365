@@ -7,10 +7,10 @@ import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import { LogicalNameTypography } from '../../../utils/components/LogicalNameTypography';
 import { setStyle } from '../../../utils/global/common';
-import { type IToolButtonControlled, ToolButton } from '../ToolButton';
+import { type IToolButtonControlled, FormToolButton } from '../shared/FormToolButton';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { FormToolContext } from '../context';
+import { FormToolContext } from '../shared/context';
 
 
 function ShowFieldLabel(props: IToolButtonControlled) {
@@ -179,7 +179,7 @@ function ShowFieldLabel(props: IToolButtonControlled) {
     });
 
     return (<>
-        <ToolButton
+        <FormToolButton
             controlled={true}
             icon={labelDisplayed ? <TurnedInIcon /> : <TurnedInNotIcon />}
             tooltip='Show Fields & Grids Control LogicalNames'

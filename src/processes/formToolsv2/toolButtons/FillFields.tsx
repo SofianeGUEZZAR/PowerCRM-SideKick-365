@@ -13,8 +13,8 @@ import { useBoolean } from "usehooks-ts";
 import { debugLog } from "../../../utils/global/common";
 import { getRandomValue } from "../../../utils/global/fieldsValueManagement";
 import { RetrieveAttributesMetaData } from "../../../utils/hooks/XrmApi/RetrieveAttributesMetaData";
-import { FormToolContext } from "../context";
-import { type IToolButtonStandard, ToolButton } from "../ToolButton";
+import { FormToolContext } from '../shared/context';
+import { type IToolButtonStandard, FormToolButton } from "../shared/FormToolButton";
 
 const excludedFields = ["statecode", "statuscode"];
 
@@ -275,7 +275,7 @@ function FillFields(props: IToolButtonStandard) {
 
     return (
         <>
-            <ToolButton
+            <FormToolButton
                 ref={anchorRef}
                 controlled={false}
                 icon={

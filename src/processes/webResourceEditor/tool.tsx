@@ -47,36 +47,15 @@ import type { ScriptOverrideContent } from "../../utils/types/ScriptOverride";
 
 const separationOfUrlAndFileName = "webresources/";
 
-class WebResourceEditor extends ProcessButton {
+class WebResourceEditorProcess extends ProcessButton {
+    static id = "webresourceeditor";
     constructor() {
-        super("webresourceeditor", "WebResources Editor", () => CodeIcon, 350);
-        this.process = WebResourceEditorProcess;
-        this.description = (
-            <>
-                <Typography>
-                    <i>Edit, test, and publish - all within your browser!</i>
-                </Typography>
-                <Typography>
-                    This tool adds an <b>editor directly to your browser</b>, allowing you to modify web resources with
-                    ease. No more tedious updates and publishing.
-                </Typography>
-                <Typography>Here are the key features:</Typography>
-                <List sx={{ listStyleType: "disc", ml: 3, pt: 0 }}>
-                    <Typography component="li">
-                        <b>Edit</b>: <u>Modify any loaded file</u> on the current page using the <i>Monaco Editor</i>,
-                        the same robust code editor that powers <i>VS Code</i>.
-                    </Typography>
-                    <Typography component="li">
-                        <b>Publish</b>: Once you're satisfied with your modifications, <u>publish the files</u> to make
-                        them permanent.
-                    </Typography>
-                </List>
-            </>
-        );
+        super("webresourceeditor");
+        this.process = WebResourceEditor;
     }
 }
 
-const WebResourceEditorProcess = forwardRef<ProcessRef, ProcessProps>(function WebRessourceEditorProcess(
+const WebResourceEditor = forwardRef<ProcessRef, ProcessProps>(function WebRessourceEditorProcess(
     props: ProcessProps,
     ref
 ) {
@@ -643,5 +622,5 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-// const webResourceEditor = new WebResourceEditor();
-export default WebResourceEditor;
+
+export default WebResourceEditorProcess;

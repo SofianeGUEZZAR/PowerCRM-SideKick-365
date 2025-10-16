@@ -1,12 +1,12 @@
 import type { PlasmoCSConfig } from "plasmo";
+import NavigationProcess from "~processes/navigation/tool";
 
-import PluginTraceLogsExplorerProcess from "~processes/pluginTraceLogsExplorer/tool";
 import { buildGetRootContainer } from "~utils/global/toolContentAbstract";
 
 export const config: PlasmoCSConfig = {
     matches: ["*://*/*"],
     world: "MAIN"
 };
-export const getRootContainer = buildGetRootContainer(PluginTraceLogsExplorerProcess);
+export const getRootContainer = buildGetRootContainer(NavigationProcess);
 
 export default () => null;

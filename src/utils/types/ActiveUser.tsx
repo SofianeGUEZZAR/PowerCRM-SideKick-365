@@ -1,4 +1,4 @@
-import { SecurityRole, TeamsSecurityRole } from "./SecurityRole"
+import type { SecurityRole, TeamsSecurityRole } from "./SecurityRole"
 
 export interface ActiveUser {
     systemuserid: string

@@ -4,10 +4,10 @@ import { Portal } from '@mui/material';
 import BookIcon from '@mui/icons-material/Book';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import { LogicalNameTypography } from '../../../utils/components/LogicalNameTypography';
-import { type IToolButtonControlled, ToolButton } from '../ToolButton';
+import { type IToolButtonControlled, FormToolButton } from '../shared/FormToolButton';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { FormToolContext } from '../context';
+import { FormToolContext } from '../shared/context';
 
 function ShowTabLabel(props: IToolButtonControlled) {
 
@@ -146,7 +146,7 @@ function ShowTabLabel(props: IToolButtonControlled) {
 
     return (
         <>
-            <ToolButton
+            <FormToolButton
                 controlled={true}
                 icon={labelDisplayed ? <BookIcon /> : <BookOutlinedIcon />}
                 tooltip='Show Tabs & Sections Control LogicalNames'

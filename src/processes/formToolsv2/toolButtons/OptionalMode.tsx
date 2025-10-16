@@ -1,10 +1,10 @@
 
 import { useContext, useEffect, useMemo } from "react";
-import { type FormControlState, type IToolButtonControlled, ToolButton } from "../ToolButton";
+import { type FormControlState, type IToolButtonControlled, FormToolButton } from "../shared/FormToolButton";
 
 import CloudOffIcon from '@mui/icons-material/CloudOff';
 import CloudIcon from '@mui/icons-material/Cloud';
-import { FormToolContext } from "../context";
+import { FormToolContext } from '../shared/context';
 
 type OptionalModeStateType = FormControlState<Xrm.Attributes.RequirementLevel>;
 export function OptionalMode(props: IToolButtonControlled) {
@@ -52,7 +52,7 @@ export function OptionalMode(props: IToolButtonControlled) {
 
 
     return (
-        <ToolButton
+        <FormToolButton
             controlled={true}
             icon={optionalModeEnable ? <CloudIcon /> : <CloudOffIcon />}
             tooltip='Optional Mode'
