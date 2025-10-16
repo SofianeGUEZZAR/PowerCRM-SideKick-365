@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from "react";
-import { IPluginTraceLogControllerContext, ITraceLogsAPI, PluginTraceLog, SdkMessageProcessingStep, SdkMessageProcessingStepImage } from "../type";
+import type { IPluginTraceLogControllerContext, ITraceLogsAPI, PluginTraceLog, SdkMessageProcessingStep, SdkMessageProcessingStepImage } from "../type";
 import { debugLog, noOperation } from "../../../global/common";
 import { RetrieveRecordsByFilter } from "../../../hooks/XrmApi/RetrieveRecordsByFilter";
 import { useDictionnary } from "../../../hooks/use/useDictionnary";

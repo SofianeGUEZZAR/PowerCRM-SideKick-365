@@ -1074,5 +1074,5 @@ function SelectAttribute(props: SelectAttributeProps) {
     );
 }
 
-const updateRecord = new UpdateRecordButton();
-export default updateRecord;
+// const updateRecord = new UpdateRecordButton();
+export default UpdateRecordButton;

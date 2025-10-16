@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { ProcessProps, ProcessButton, ProcessRef } from '../../utils/global/.processClass';
+import { type ProcessProps, ProcessButton, type ProcessRef } from '../../utils/global/.processClass';
 
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import PluginTraceLogsPane from '../../utils/components/pluginTraceLogsExplorer/main';
@@ -10,11 +10,12 @@ import { List, Typography } from '@mui/material';
 
 
 class PluginTraceLogsExplorerButton extends ProcessButton {
+    static id = "pluginlogsexplorer";
     constructor() {
         super(
             'pluginlogsexplorer',
             'Plugin Trace Logs Explorer',
-            <EventNoteIcon />,
+            () => EventNoteIcon,
             450
         );
         this.process = PluginTraceLogsExplorerButtonProcess;
@@ -47,5 +48,5 @@ const PluginTraceLogsExplorerButtonProcess = forwardRef<ProcessRef, ProcessProps
 );
 
 
-const pluginTraceLogsExplorer = new PluginTraceLogsExplorerButton();
-export default pluginTraceLogsExplorer;
+// const pluginTraceLogsExplorer = new PluginTraceLogsExplorerButton();
+export default PluginTraceLogsExplorerButton;

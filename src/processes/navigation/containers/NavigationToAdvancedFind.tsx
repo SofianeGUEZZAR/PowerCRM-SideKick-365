@@ -1,6 +1,6 @@
 
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { NavigationButton } from '../../../utils/types/NavigationButton';
+import type { NavigationButton } from '../../../utils/types/NavigationButton';
 import DirectNavigationButton from '../components/NavigationButton';
 
 function AdvancedFind(props: NavigationButton) {

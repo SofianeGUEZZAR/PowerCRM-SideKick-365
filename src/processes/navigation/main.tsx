@@ -1,7 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import { forwardRef, useMemo } from 'react';
-import { ProcessProps, ProcessButton, ProcessRef } from '../../utils/global/.processClass';
+import { type ProcessProps, ProcessButton, type ProcessRef } from '../../utils/global/.processClass';
 
 import MapIcon from '@mui/icons-material/Map';
 
@@ -21,7 +21,7 @@ class NavigationButton extends ProcessButton {
         super(
             'navigation',
             'Navigation',
-            <MapIcon />,
+            () => MapIcon,
             175
         );
         this.process = NavigationProcess;
@@ -101,5 +101,5 @@ const NavigationProcess = forwardRef<ProcessRef, ProcessProps>(
 
 
 
-const navigation = new NavigationButton();
-export default navigation;
+// const navigation = new NavigationButton();
+export default NavigationButton;

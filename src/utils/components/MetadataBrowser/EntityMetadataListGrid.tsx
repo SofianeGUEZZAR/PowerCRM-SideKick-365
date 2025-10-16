@@ -1,4 +1,4 @@
-import { GridActionsCellItem, GridActionsCellItemProps } from '@mui/x-data-grid';
+import { GridActionsCellItem, type GridActionsCellItemProps } from '@mui/x-data-grid';
 import ObjectListGrid from './ObjectListGrid';
 import { metadataGrid_valueToBoolean, metadataGrid_valueToLabel } from './valueGetter';
 import Box from '@mui/material/Box';
@@ -19,7 +19,7 @@ import ManyToManyRelationshipMetadateGrid from './ManyToManyRelationshipMetadate
 import CloseIcon from '@mui/icons-material/Close';
 import { Transition } from './StyledDataGrid';
 import OptionSetMetadataGridSelector from './OptionSetMetadataGrid';
-import { ExploreGrid } from './types';
+import type { ExploreGrid } from './types';
 
 
 interface ExploreMenuDialogButtonItemProps {

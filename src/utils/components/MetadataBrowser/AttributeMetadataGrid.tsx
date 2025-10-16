@@ -1,7 +1,7 @@
 
 import ObjectListGrid from './ObjectListGrid';
 import { metadataGrid_valueToBoolean, metadataGrid_valueToLabel, metadataGrid_valueToValue } from './valueGetter';
-import { ExploreGrid } from './types';
+import type { ExploreGrid } from './types';
 import { useContext, useEffect } from 'react';
 import { MetadataContext } from './MetadataContextProvider';
 

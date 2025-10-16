@@ -43,7 +43,7 @@ import { MSType } from "../../utils/types/requestsType";
 
 class OptionSetTableButton extends ProcessButton {
     constructor() {
-        super("optionsettable", "Option Set Tables", <StyleIcon />, 400);
+        super("optionsettable", "Option Set Tables", () => StyleIcon, 400);
         this.process = OptionSetTableProcess;
         this.description = (
             <>
@@ -671,5 +671,5 @@ function CopyTableCell(props: CopyTableCellProps & TableCellProps) {
     );
 }
 
-const optionSetTable = new OptionSetTableButton();
-export default optionSetTable;
+// const optionSetTable = new OptionSetTableButton();
+export default OptionSetTableButton;

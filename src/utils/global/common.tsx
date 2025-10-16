@@ -1,4 +1,4 @@
-import { Env } from './var';
+import { BRIDGE_SUFFIX, Env } from './var';
 
 
 export function setStyle(_document: Document, stylesheetid: string, style: { [querySelector: string]: string[] }) {
@@ -235,3 +235,8 @@ export const noOperation = () => {
 export type StringKeys<T> = {
     [K in keyof T]: T[K] extends string ? K : never;
 }[keyof T];
+
+
+export function getBridgeEventName(toolId:string) {
+    return `${toolId}:${BRIDGE_SUFFIX}`
+}

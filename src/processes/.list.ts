@@ -1,55 +1,74 @@
 import { ProcessButton } from "../utils/global/.processClass";
 import { type StorageConfiguration } from "../utils/types/StorageConfiguration";
+
 import formToolsV2 from "./formToolsv2/main";
 import updateRecord from "./updateRecord/main";
-// import allFields from "./allFields/main";
-// import commandDebugger from "./commandDebugger/main";
-// import dirtyFields from "./dirtyFields/main";
-// import entitiesList from "./entitiesList/main";
-// import impersonation from "./impersonation/main";
-// import metadataBrowser from "./metadataBrowser/main";
-// import navigation from "./navigation/main";
-// import optionSetTable from "./optionSetTable/main";
-// import pluginTraceLogsExplorer from "./pluginTraceLogsExplorer/main";
-// import relatedRecords from "./relatedRecords/main";
-// import createConfiguration from "./setConfiguration/main";
-// import webResourceEditor from "./webResourceEditor/main";
+import allFields from "./allFields/main";
+import optionSetTable from "./optionSetTable/main";
+import dirtyFields from "./dirtyFields/main";
+import relatedRecords from "./relatedRecords/main";
+import entitiesList from "./entitiesList/main";
+import impersonation from "./impersonation/main";
+import webResourceEditor from "./webResourceEditor/main";
+import pluginTraceLogsExplorer from "./pluginTraceLogsExplorer/main";
+import metadataBrowser from "./metadataBrowser/main";
+import navigation from "./navigation/main";
+import commandDebugger from "./commandDebugger/main";
+import createConfiguration from "./setConfiguration/main";
 
 // import ExtensionTarget from '../utils/types/ExtensionTarget';
 
 // const TARGET = process.env.REACT_APP_TARGET;
 
-const Processes: ProcessButton[] = [
+export const Processes: (typeof ProcessButton)[] = [
     formToolsV2,
     updateRecord,
-    // allFields,
-    // optionSetTable,
-    // dirtyFields,
-    // relatedRecords,
-    // entitiesList,
-    // impersonation,
-    // // ...(TARGET === ExtensionTarget.Chrome ? [webResourceEditor] : []),
-    // webResourceEditor,
-    // pluginTraceLogsExplorer,
-    // metadataBrowser,
-    // navigation,
-    // commandDebugger,
-    // createConfiguration
+    allFields,
+    optionSetTable,
+    dirtyFields,
+    relatedRecords,
+    entitiesList,
+    impersonation,
+    // ...(TARGET === ExtensionTarget.Chrome ? [webResourceEditor] : []),
+    webResourceEditor,
+    pluginTraceLogsExplorer,
+    metadataBrowser,
+    navigation,
+    commandDebugger,
+    createConfiguration
 ];
 
-export const defaultProcessesList: StorageConfiguration[] = Processes.map(
-    (p) => {
-        return {
-            id: p.id,
-            startOnLoad: false,
-            hidden: false,
-            expand: false,
-            options: null
-        };
-    }
-);
+export function getToolInstance(id: string): ProcessButton | null {
+    return ProcessesInstance.find((tool) => tool.prefixedId === ProcessButton.prefixId + id);
+}
 
-export default Processes;
+export const ProcessesInstance: ProcessButton[] = [
+    new formToolsV2(),
+    new updateRecord(),
+    new allFields(),
+    new optionSetTable(),
+    new dirtyFields(),
+    new relatedRecords(),
+    new entitiesList(),
+    new impersonation(),
+    // ...(TARGET === ExtensionTarget.Chrome ? [webResourceEditor] : []),
+    new webResourceEditor(),
+    new pluginTraceLogsExplorer(),
+    new metadataBrowser(),
+    new navigation(),
+    new commandDebugger(),
+    new createConfiguration()
+];
+
+export const defaultProcessesList: StorageConfiguration[] = Processes.map((tool) => {
+    return {
+        id: tool.id,
+        startOnLoad: false,
+        hidden: false,
+        expand: false,
+        options: null
+    };
+});
 
 //* Workflow Activities Explorer
 //* pluginTrace: add filtering on step name (maybe add an accordeon navigation bar containing all filtering options)

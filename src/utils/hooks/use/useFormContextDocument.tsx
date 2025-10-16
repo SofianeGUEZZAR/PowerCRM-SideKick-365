@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useXrmUpdated } from "./useXrmUpdated";
-import { FormContext, FormDocument } from "../../types/FormContext";
+import type { FormContext, FormDocument } from "../../types/FormContext";
 import XrmObserver from "../../global/XrmObserver";
 import { debugError, debugLog, waitForElm } from "../../global/common";
 import { useDOMUpdated } from "./useDOMUpdated";

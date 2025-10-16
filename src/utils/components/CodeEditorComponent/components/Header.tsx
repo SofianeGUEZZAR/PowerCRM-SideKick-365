@@ -1,47 +1,77 @@
-import { Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Stack, type SvgIconTypeMap, Tooltip, Typography, Button, AppBar, Toolbar, Box, FormControl, Select, type SelectChangeEvent } from '@mui/material';
-import { type CodeEditorHeaderProps, type CodeEditorTabProps, type EditorActionProps, editorLanguageArray } from "../utils/types";
-import CloseIcon from '@mui/icons-material/Close';
-import { useHover } from "usehooks-ts";
-import { type PropsWithChildren, useRef, useState } from "react";
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import MenuIcon from '@mui/icons-material/Menu';
-import CompareIcon from '@mui/icons-material/Compare';
-import SaveIcon from '@mui/icons-material/Save';
-import PublishIcon from '@mui/icons-material/Publish';
-import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import CloseIcon from "@mui/icons-material/Close";
+import CompareIcon from "@mui/icons-material/Compare";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
+import MenuIcon from "@mui/icons-material/Menu";
+import PublishIcon from "@mui/icons-material/Publish";
+import SaveIcon from "@mui/icons-material/Save";
+import {
+    AppBar,
+    Box,
+    Button,
+    Divider,
+    FormControl,
+    IconButton,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    MenuList,
+    Select,
+    Stack,
+    Toolbar,
+    Tooltip,
+    Typography,
+    type SelectChangeEvent,
+    type SvgIconTypeMap
+} from "@mui/material";
 import type { OverridableComponent } from "@mui/material/OverridableComponent";
-import { useHotkeys } from 'react-hotkeys-hook';
-import React from 'react';
-import type { EditorLanguage } from 'monaco-editor/esm/metadata';
-import { capitalizeFirstLetter } from '../../../global/common';
-import { getIcon } from '../utils/icon';
-import { getExtensionByLanguage } from '../utils/fileManagement';
-import { Key } from '~utils/global/KeyEnum';
+import type { EditorLanguage } from "monaco-editor/esm/metadata";
+import React, { useRef, useState, type PropsWithChildren } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+import { useHover } from "usehooks-ts";
 
+import { Key } from "~utils/global/KeyEnum";
+
+import { capitalizeFirstLetter } from "../../../global/common";
+import { getExtensionByLanguage } from "../utils/fileManagement";
+import { getIcon } from "../utils/icon";
+import {
+    editorLanguageArray,
+    type CodeEditorHeaderProps,
+    type CodeEditorTabProps,
+    type EditorActionProps
+} from "../utils/types";
 
 function CodeEditorHeader(props: CodeEditorHeaderProps & PropsWithChildren) {
-    const { files, selectedFile, onSelect: onSelectedFileChanged, onFileClose, onClose, theme, fileTreeWidth, fileTreeZoom } = props;
+    const {
+        files,
+        selectedFile,
+        onSelect: onSelectedFileChanged,
+        onFileClose,
+        onClose,
+        theme,
+        fileTreeWidth,
+        fileTreeZoom
+    } = props;
 
     return (
-        <AppBar sx={{ position: 'static' }}>
-            <Toolbar style={{
-                height: '45px',
-                minHeight: 'unset'
-            }}>
-                <Box sx={{
-                    width: fileTreeWidth ? `calc(${fileTreeWidth * (fileTreeZoom ?? 1) + 'px'} - 25px)` : 'auto',
-                    flexShrink: 0
+        <AppBar sx={{ position: "static" }}>
+            <Toolbar
+                style={{
+                    height: "45px",
+                    minHeight: "unset"
                 }}>
-                    {onClose &&
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={onClose}
-                            aria-label="close"
-                        >
+                <Box
+                    sx={{
+                        width: fileTreeWidth ? `calc(${fileTreeWidth * (fileTreeZoom ?? 1) + "px"} - 25px)` : "auto",
+                        flexShrink: 0
+                    }}>
+                    {onClose && (
+                        <IconButton edge="start" color="inherit" onClick={onClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
-                    }
+                    )}
                 </Box>
                 <TabsList
                     files={files}
@@ -50,13 +80,7 @@ function CodeEditorHeader(props: CodeEditorHeaderProps & PropsWithChildren) {
                     onFileClose={onFileClose}
                     theme={theme}
                 />
-                {props.children &&
-                    <Stack
-                        direction='row'
-                    >
-                        {props.children}
-                    </Stack>
-                }
+                {props.children && <Stack direction="row">{props.children}</Stack>}
             </Toolbar>
         </AppBar>
     );
@@ -67,133 +91,140 @@ function TabsList(props: CodeEditorHeaderProps) {
 
     return (
         <Stack
-            direction='row'
-            overflow='hidden'
-            width='-webkit-fill-available'
+            direction="row"
+            overflow="hidden"
+            width="-webkit-fill-available"
             flexShrink={1}
-            spacing='1px'
-            onWheel={(e) => { e.currentTarget.scrollLeft += e.deltaY / 2 }}
-        >
-            {
-                files?.map((file, index) => {
-                    return (
-                        <Tab
-                            key={file.id + index}
-                            file={file}
-                            index={index}
-                            selected={file.id === selectedFile?.id}
-                            unsaved={file.previousContent !== file.modifiedContent}
-                            onSelect={onSelect ?? (() => { })}
-                            onClose={onFileClose ?? (() => { })}
-                            theme={theme}
-                        />
-                    );
-                })
-            }
+            spacing="1px"
+            onWheel={(e) => {
+                e.currentTarget.scrollLeft += e.deltaY / 2;
+            }}>
+            {files?.map((file, index) => {
+                return (
+                    <Tab
+                        key={file.id + index}
+                        file={file}
+                        index={index}
+                        selected={file.id === selectedFile?.id}
+                        unsaved={file.previousContent !== file.modifiedContent}
+                        onSelect={onSelect ?? (() => {})}
+                        onClose={onFileClose ?? (() => {})}
+                        theme={theme}
+                    />
+                );
+            })}
         </Stack>
     );
 }
 
 const darkTabs = {
-    backgroundSelected: 'rgb(30, 30, 30)',
-    backgroundNotSelected: 'rgb(45, 45, 45)',
-    colorSelected: 'rgb(255, 255, 255)',
-    colorNotSelected: 'rgba(255, 255, 255, 0.5)',
-    colorInvisible: 'rgba(255, 255, 255, 0)',
-    border: '1px solid rgb(37, 37, 38)'
-}
+    backgroundSelected: "rgb(30, 30, 30)",
+    backgroundNotSelected: "rgb(45, 45, 45)",
+    colorSelected: "rgb(255, 255, 255)",
+    colorNotSelected: "rgba(255, 255, 255, 0.5)",
+    colorInvisible: "rgba(255, 255, 255, 0)",
+    border: "1px solid rgb(37, 37, 38)"
+};
 const lightTabs = {
-    backgroundSelected: 'rgb(255, 255, 255)',
-    backgroundNotSelected: 'rgb(236, 236, 236)',
-    colorSelected: 'rgb(0, 0, 0)',
-    colorNotSelected: 'rgba(0, 0, 0, 0.5)',
-    colorInvisible: 'rgba(0, 0, 0, 0)',
-    border: '1px solid rgb(243, 243, 243)'
-}
+    backgroundSelected: "rgb(255, 255, 255)",
+    backgroundNotSelected: "rgb(236, 236, 236)",
+    colorSelected: "rgb(0, 0, 0)",
+    colorNotSelected: "rgba(0, 0, 0, 0.5)",
+    colorInvisible: "rgba(0, 0, 0, 0)",
+    border: "1px solid rgb(243, 243, 243)"
+};
 function Tab(props: CodeEditorTabProps) {
     const { file, selected, unsaved, onSelect, onClose, theme } = props;
 
     const tabRef = useRef<HTMLDivElement>(null);
     const isHover = useHover(tabRef);
 
-    const tabsColor = theme === 'vs-dark' ? darkTabs : lightTabs;
+    const tabsColor = theme === "vs-dark" ? darkTabs : lightTabs;
 
     const handleSelect = () => {
         onSelect(file);
-    }
+    };
 
     const handleClose = (event: MouseEvent | React.MouseEvent<Element, MouseEvent>) => {
         onClose(file);
         event.stopPropagation();
-    }
+    };
 
     return (
         <Stack
             ref={tabRef}
-            direction='row'
-            alignItems='center'
-            paddingLeft='15px'
-            paddingRight='5px'
-            height='35px'
+            direction="row"
+            alignItems="center"
+            paddingLeft="15px"
+            paddingRight="5px"
+            height="35px"
             spacing={0.5}
             onClick={handleSelect}
             sx={{
                 backgroundColor: selected ? tabsColor.backgroundSelected : tabsColor.backgroundNotSelected,
                 color: selected ? tabsColor.colorSelected : tabsColor.colorNotSelected,
                 borderRight: tabsColor.border,
-                cursor: 'pointer',
-                userSelect: 'none',
-            }}
-        >
-            <Typography variant='body2'>{file.name}</Typography>
+                cursor: "pointer",
+                userSelect: "none"
+            }}>
+            <Typography variant="body2">{file.name}</Typography>
             <Button
                 onClick={(e: React.MouseEvent<Element, MouseEvent>) => handleClose(e)}
-                size='small'
+                size="small"
                 sx={{
-                    width: '25px',
-                    height: '25px',
-                    minWidth: 'unset',
-                    color: selected ? tabsColor.colorSelected : isHover ? tabsColor.colorNotSelected : tabsColor.colorInvisible,
-                    '&:hover': {
-                        backgroundColor: 'rgb(255 255 255 / 20%)'
+                    width: "25px",
+                    height: "25px",
+                    minWidth: "unset",
+                    color: selected
+                        ? tabsColor.colorSelected
+                        : isHover
+                          ? tabsColor.colorNotSelected
+                          : tabsColor.colorInvisible,
+                    "&:hover": {
+                        backgroundColor: "rgb(255 255 255 / 20%)"
                     }
-                }}
-            >
-                {
-                    unsaved && !isHover ?
-                        <FiberManualRecordIcon fontSize='small' sx={{ color: selected ? tabsColor.colorSelected : tabsColor.colorNotSelected, zoom: 0.7 }} />
-                        :
-                        <CloseIcon fontSize='small' />
-                }
+                }}>
+                {unsaved && !isHover ? (
+                    <FiberManualRecordIcon
+                        fontSize="small"
+                        sx={{ color: selected ? tabsColor.colorSelected : tabsColor.colorNotSelected, zoom: 0.7 }}
+                    />
+                ) : (
+                    <CloseIcon fontSize="small" />
+                )}
             </Button>
         </Stack>
     );
 }
 
-export function ChangeLanguage(props: EditorActionProps & { currentLanguage?: EditorLanguage | null, overrideLanguage: ((newLanguage: EditorLanguage | 'text') => void) }) {
+export function ChangeLanguage(
+    props: EditorActionProps & {
+        currentLanguage?: EditorLanguage | null;
+        overrideLanguage: (newLanguage: EditorLanguage | "text") => void;
+    }
+) {
     const { onClick, currentLanguage, overrideLanguage } = props;
 
-    const handleOnChange = (event: SelectChangeEvent<EditorLanguage | 'text'>, child: React.ReactNode) => {
-        overrideLanguage(event.target.value as EditorLanguage | 'text');
-    }
+    const handleOnChange = (event: SelectChangeEvent<EditorLanguage | "text">, child: React.ReactNode) => {
+        overrideLanguage(event.target.value as EditorLanguage | "text");
+    };
 
     return (
-        <FormControl sx={{ m: 1, width: '180px' }} size="small">
-            <Select
-                defaultValue='text'
-                value={currentLanguage ?? 'text'}
-                onChange={handleOnChange}
-                onClick={onClick}
-            >
-                <MenuItem value={'text'}>Text</MenuItem>
-                {
-                    editorLanguageArray.map(l => {
-                        const extension = getExtensionByLanguage(l);
-                        let icon = null;
-                        if (extension) icon = getIcon(extension, '');
-                        return <MenuItem value={l}>{icon} {capitalizeFirstLetter(l)}</MenuItem>;
-                    })
-                }
+        <FormControl sx={{ m: 1, width: "180px" }} size="small">
+            <Select defaultValue="text" value={currentLanguage ?? "text"} onChange={handleOnChange} onClick={onClick}>
+                <MenuItem key={"text_language"} value={"text"}>
+                    Text
+                </MenuItem>
+                {editorLanguageArray.map((l) => {
+                    const extension = getExtensionByLanguage(l);
+                    let icon = null;
+                    if (extension) icon = getIcon(extension, "");
+                    return (
+                        <MenuItem key={`${l}language`} value={l}>
+                            {icon} {capitalizeFirstLetter(l)}
+                        </MenuItem>
+                    );
+                })}
             </Select>
         </FormControl>
     );
@@ -203,39 +234,56 @@ export function DiffEditorAction(props: EditorActionProps) {
     const { onClick } = props;
 
     return (
-        <Tooltip title='Switch to diff screen'>
+        <Tooltip title="Switch to diff screen">
             <IconButton onClick={onClick}>
-                <CompareIcon fontSize='small' />
+                <CompareIcon fontSize="small" />
             </IconButton>
         </Tooltip>
-    )
+    );
 }
 
 export function ContextualMenuAction(props: EditorActionProps & { actions: { [key: string]: () => void } }) {
     const { onClick, actions } = props;
 
-    useHotkeys(`${Key.Control}+s`, (e: any) => {
-        actions.Save?.();
-    }, {
-        preventDefault: true,
-        enabled: true
-    });
+    useHotkeys(
+        `${Key.Control}+s`,
+        (e: any) => {
+            actions.Save?.();
+        },
+        {
+            preventDefault: true,
+            enabled: true
+        }
+    );
 
-    useHotkeys(`${Key.Alt}+${Key.Shift}+f`, (e: any) => {
-        actions.Format?.()
-    }, {
-        preventDefault: true,
-        enabled: true
-    });
+    useHotkeys(
+        `${Key.Alt}+${Key.Shift}+f`,
+        (e: any) => {
+            actions.Format?.();
+        },
+        {
+            preventDefault: true,
+            enabled: true
+        }
+    );
 
-    useHotkeys(`${Key.Control}+${Key.Shift}+p`, (e: any) => {
-        actions.Publish?.()
-    }, {
-        preventDefault: true,
-        enabled: true
-    });
+    useHotkeys(
+        `${Key.Control}+${Key.Shift}+p`,
+        (e: any) => {
+            actions.Publish?.();
+        },
+        {
+            preventDefault: true,
+            enabled: true
+        }
+    );
 
-    const MenuItemCustom = (props: { Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>, text: string, shortCut?: string, onClick?: () => void }) => {
+    const MenuItemCustom = (props: {
+        Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+        text: string;
+        shortCut?: string;
+        onClick?: () => void;
+    }) => {
         const { Icon, text, shortCut, onClick } = props;
         return (
             <MenuItem onClick={onClick}>
@@ -243,14 +291,14 @@ export function ContextualMenuAction(props: EditorActionProps & { actions: { [ke
                     <Icon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>{text}</ListItemText>
-                {shortCut &&
-                    <Typography variant="body2" color="text.secondary" paddingLeft={'10px'}>
+                {shortCut && (
+                    <Typography variant="body2" color="text.secondary" paddingLeft={"10px"}>
                         {shortCut}
                     </Typography>
-                }
+                )}
             </MenuItem>
-        )
-    }
+        );
+    };
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -261,22 +309,22 @@ export function ContextualMenuAction(props: EditorActionProps & { actions: { [ke
         setAnchorEl(null);
     };
 
-    return (<>
-        <Tooltip title='Contextual Menu'>
-            <IconButton onClick={handleClick}>
-                <MenuIcon fontSize='small' />
-            </IconButton>
-        </Tooltip>
-        <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-                'aria-labelledby': 'basic-button',
-            }}
-        >
-            <MenuList dense>
-                {/* <MenuItemCustom
+    return (
+        <>
+            <Tooltip title="Contextual Menu">
+                <IconButton onClick={handleClick}>
+                    <MenuIcon fontSize="small" />
+                </IconButton>
+            </Tooltip>
+            <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                    "aria-labelledby": "basic-button"
+                }}>
+                <MenuList dense>
+                    {/* <MenuItemCustom
                     Icon={NoteAddIcon}
                     text='Add File'
                     shortCut='Ctrl + N'
@@ -286,33 +334,29 @@ export function ContextualMenuAction(props: EditorActionProps & { actions: { [ke
                     text='Add Folder'
                     shortCut='Ctrl + Shift + M'
                     onClick={actions.AddFolder} /> */}
-                <MenuItemCustom
-                    Icon={SaveIcon}
-                    text='Save'
-                    shortCut='Ctrl + S'
-                    onClick={actions.Save} />
+                    <MenuItemCustom Icon={SaveIcon} text="Save" shortCut="Ctrl + S" onClick={actions.Save} />
 
-                <Divider />
+                    <Divider />
 
-                <MenuItemCustom
-                    Icon={FormatAlignLeftIcon}
-                    text='Format Document'
-                    shortCut='Alt + Shift + F'
-                    onClick={actions.Format} />
+                    <MenuItemCustom
+                        Icon={FormatAlignLeftIcon}
+                        text="Format Document"
+                        shortCut="Alt + Shift + F"
+                        onClick={actions.Format}
+                    />
 
-                <Divider />
+                    <Divider />
 
-                <MenuItemCustom
-                    Icon={PublishIcon}
-                    text='Publish Changes'
-                    shortCut='Ctrl + Shift + P'
-                    onClick={actions.Publish} />
-                    
-            </MenuList>
-        </Menu>
-    </>
-    )
+                    <MenuItemCustom
+                        Icon={PublishIcon}
+                        text="Publish Changes"
+                        shortCut="Ctrl + Shift + P"
+                        onClick={actions.Publish}
+                    />
+                </MenuList>
+            </Menu>
+        </>
+    );
 }
-
 
 export default CodeEditorHeader;

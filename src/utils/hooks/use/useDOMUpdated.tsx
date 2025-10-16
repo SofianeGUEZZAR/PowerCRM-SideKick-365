@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DOMObserver from "../../global/DOMObserver";
 import { debugLog } from "../../global/common";
-import { FormDocument } from "../../types/FormContext";
+import type { FormDocument } from "../../types/FormContext";
 
 const DELAY = 1500;
 

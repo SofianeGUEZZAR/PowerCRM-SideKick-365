@@ -11,7 +11,7 @@ class CommandDebugger extends ProcessButton {
         super(
             'ribbondebugenabler',
             () => new URL(window.location.href).searchParams.get('ribbondebug') === 'true' ? 'Turn off Command Checker' : 'Turn on Command Checker',
-            () => <TroubleshootIcon />,
+            () => TroubleshootIcon,
             1,
             false
         );
@@ -51,5 +51,5 @@ class CommandDebugger extends ProcessButton {
 
 
 
-const commandDebugger = new CommandDebugger();
-export default commandDebugger;
+// const commandDebugger = new CommandDebugger();
+export default CommandDebugger;

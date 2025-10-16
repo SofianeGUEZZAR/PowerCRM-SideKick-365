@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 
 import ComponentContainer from '../../../utils/components/ComponentContainer';
 import { PowerAppsIcon } from '../icons';
-import { NavigationButton } from '../../../utils/types/NavigationButton';
+import type { NavigationButton } from '../../../utils/types/NavigationButton';
 import { RetrieveFirstRecordInterval } from '../../../utils/hooks/XrmApi/RetrieveFirstRecordInterval';
 import RedDisabledButton from '../../../utils/components/RedDisabledButton';
 import D365RibbonHomePageIcon from '../../../utils/components/D365RibbonHomePageIcon';

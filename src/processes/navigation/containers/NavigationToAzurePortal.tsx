@@ -1,6 +1,6 @@
 
 import { AzurePortalIcon, EntraIcon, Microsoft365AdminCenterIcon } from '../icons';
-import { NavigationButton } from '../../../utils/types/NavigationButton';
+import type { NavigationButton } from '../../../utils/types/NavigationButton';
 import DirectNavigationButton from '../components/NavigationButton';
 
 function AzurePortal(props: NavigationButton) {

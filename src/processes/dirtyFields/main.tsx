@@ -36,7 +36,7 @@ import type { FormContext } from "../../utils/types/FormContext";
 
 class DirtyFieldsButton extends ProcessButton {
     constructor() {
-        super("dirtyfields", "Dirty Attributes", <DirtyLensIcon />, 350);
+        super("dirtyfields", "Dirty Attributes", () => DirtyLensIcon, 350);
         this.process = DirtyFieldsButtonProcess;
         this.description = (
             <>
@@ -362,5 +362,5 @@ function ValueDisplay(props: ValueDisplayProps) {
     );
 }
 
-const dirtyFields = new DirtyFieldsButton();
-export default dirtyFields;
+// const dirtyFields = new DirtyFieldsButton();
+export default DirtyFieldsButton;

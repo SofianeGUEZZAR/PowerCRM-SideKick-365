@@ -1,6 +1,6 @@
 
 import { PowerEnvironmentIcon } from '../icons';
-import { NavigationButton } from '../../../utils/types/NavigationButton';
+import type { NavigationButton } from '../../../utils/types/NavigationButton';
 import DirectNavigationButton from '../components/NavigationButton';
 
 function PowerAdmin(props: NavigationButton) {

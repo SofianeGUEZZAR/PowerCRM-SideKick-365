@@ -4,13 +4,25 @@ import CloseIcon from "@mui/icons-material/Close";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import StarIcon from "@mui/icons-material/Star";
-import { Badge, Box, Button, Divider, Drawer, IconButton, Paper, StyledEngineProvider, Tooltip, Typography } from "@mui/material";
+import {
+    Badge,
+    Box,
+    Button,
+    Divider,
+    Drawer,
+    IconButton,
+    Paper,
+    StyledEngineProvider,
+    Tooltip,
+    Typography
+} from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { type StorageConfiguration } from "~/utils/types/StorageConfiguration";
 import { WandMainIcon } from "~icons/WandMainIcon";
+import { useEffectOnce } from "~utils/hooks/use/useEffectOnce";
 
 import packageJson from "../../package.json";
 import { KoFiIcon } from "../icons/BuyMeACoffee";
@@ -19,12 +31,19 @@ import DetailsSnackbar from "../utils/components/DetailsSnackbar";
 import OpenOptionsButton from "../utils/components/OpenOptionsButton";
 import PanelDrawerItem from "../utils/components/PanelDrawer/PanelDrawerItem";
 import { ProcessButton } from "../utils/global/.processClass";
-import { debugLog, GetExtensionId, isArraysEquals, setStyle } from "../utils/global/common";
+import { debugLog, getBridgeEventName, isArraysEquals, setStyle } from "../utils/global/common";
 import MessageManager from "../utils/global/MessageManager";
 import SpDevToolsContextProvider, { useSpDevTools } from "../utils/global/spContext";
-import { APPLICATION_NAME, MAIN_MENU_ID, PROJECT_PREFIX, STORAGE_ForegroundPanes, STORAGE_ListName } from "../utils/global/var";
+import {
+    APPLICATION_NAME,
+    BRIDGE_SUFFIX,
+    MAIN_MENU_ID,
+    PROJECT_PREFIX,
+    STORAGE_ForegroundPanes,
+    STORAGE_ListName
+} from "../utils/global/var";
 import { MessageType } from "../utils/types/Message";
-import Processes, { defaultProcessesList } from "./.list";
+import { defaultProcessesList, getToolInstance } from "./.list";
 
 export const MainScreen: React.FunctionComponent = () => {
     return (
@@ -107,7 +126,9 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
             setStyle(document, "resizedynamicsmainscreen", {
                 "#ApplicationShell > *:not(*:first-child)": [`width: calc(100% - ${dynamicsmainscreenWidth}px)`],
                 // "#mainContent > *:first-child": [`width: calc(100% - ${dynamicsmainscreenWidth}px)`],
-                "[id^=DialogContainer]": [`width: calc(100% - ${DRAWER_BUTTON_CONTAINER_WIDTH}px - ${dynamicsmainscreenWidth}px)`],
+                "[id^=DialogContainer]": [
+                    `width: calc(100% - ${DRAWER_BUTTON_CONTAINER_WIDTH}px - ${dynamicsmainscreenWidth}px)`
+                ],
                 "[id*=__flyoutRootNode] > div > div": ["z-index: 1200"]
             });
         };
@@ -128,18 +149,18 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
             .filter((processid) => processid.startOnLoad)
             .sort((processA, processB) => processA.startOnPosition! - processB.startOnPosition!)
             .forEach((processid, index) => {
-                const process = Processes.find((p) => p.id === processid.id);
+                const process = getToolInstance(processid.id);
                 if (!process) return;
                 setOpenedProcesses((prev) => ({
                     ...prev,
-                    [process.id]: process
+                    [process.prefixedId]: process
                 }));
                 setOpenedProcessesBadge((prevBadge) => ({
                     ...prevBadge,
-                    [process.id]: null
+                    [process.prefixedId]: null
                 }));
                 if (processid.expand) {
-                    setPanelOpenedId(process.id);
+                    setPanelOpenedId(process.prefixedId);
                 }
             });
     }, [processesList]);
@@ -150,16 +171,16 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
 
     const openProcess = useCallback((process: ProcessButton) => {
         setOpenedProcesses((prev) => {
-            const alreadyOpenedProcess: ProcessButton | undefined = prev[process.id];
+            const alreadyOpenedProcess: ProcessButton | undefined = prev[process.prefixedId];
             if (!alreadyOpenedProcess) {
-                togglePanelDrawer(process.id);
+                togglePanelDrawer(process.prefixedId);
                 setOpenedProcessesBadge((prevBadge) => ({
                     ...prevBadge,
-                    [process.id]: null
+                    [process.prefixedId]: null
                 }));
-                return { ...prev, [process.id]: process };
+                return { ...prev, [process.prefixedId]: process };
             }
-            togglePanelDrawer(alreadyOpenedProcess.id);
+            togglePanelDrawer(alreadyOpenedProcess.prefixedId);
             return prev;
         });
     }, []);
@@ -186,7 +207,7 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
             processesList
                 ?.filter((process) => !process.hidden)
                 .map((value, index) => {
-                    const toolButton = Processes.find((p) => p.id === value.id);
+                    const toolButton = getToolInstance(value.id);
                     if (!toolButton) return null;
                     if (toolButton.openable) {
                         return toolButton.getOpeningButton(openProcess);
@@ -202,7 +223,10 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
             return;
         }
 
-        if (result.destination.index === result.source.index && result.destination.droppableId === result.source.droppableId) {
+        if (
+            result.destination.index === result.source.index &&
+            result.destination.droppableId === result.source.droppableId
+        ) {
             return;
         }
 
@@ -238,7 +262,11 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                 }}
                 variant="permanent">
                 <Stack direction="column">
-                    <Tooltip title={<Typography variant="h6">{APPLICATION_NAME}</Typography>} placement="left" arrow disableInteractive>
+                    <Tooltip
+                        title={<Typography variant="h6">{APPLICATION_NAME}</Typography>}
+                        placement="left"
+                        arrow
+                        disableInteractive>
                         <Button
                             key={`${MAIN_MENU_ID}-processButton`}
                             onClick={() => togglePanelDrawer(MAIN_MENU_ID)}
@@ -257,16 +285,22 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                     <DragDropContext onDragEnd={onDragEnd}>
                         <Droppable droppableId={MAIN_MENU_ID + "droppable"} key={MAIN_MENU_ID + "droppable"}>
                             {(providerDroppable) => (
-                                <Stack direction="column" ref={providerDroppable.innerRef} {...providerDroppable.droppableProps}>
+                                <Stack
+                                    direction="column"
+                                    ref={providerDroppable.innerRef}
+                                    {...providerDroppable.droppableProps}>
                                     {Object.values(openedProcesses).map((process, index) => {
-                                        const badgeValue = openedProcessesBadge[process.id];
+                                        const badgeValue = openedProcessesBadge[process.prefixedId];
                                         const hasBadge = badgeValue !== null;
 
                                         return (
-                                            <Draggable draggableId={process.id} index={index} key={process.id + "draggable"}>
+                                            <Draggable
+                                                draggableId={process.prefixedId}
+                                                index={index}
+                                                key={process.prefixedId + "draggable"}>
                                                 {(providerDraggable) => (
                                                     <Box
-                                                        key={process.id + "-maincontentbox"}
+                                                        key={process.prefixedId + "-maincontentbox"}
                                                         ref={providerDraggable.innerRef}
                                                         {...providerDraggable.draggableProps}
                                                         {...providerDraggable.dragHandleProps}
@@ -274,18 +308,33 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                                                         sx={{
                                                             aspectRatio: "1/1"
                                                         }}>
-                                                        <Tooltip title={<Typography variant="h6">{process.panelButtonName}</Typography>} placement="left" arrow disableInteractive>
+                                                        <Tooltip
+                                                            title={
+                                                                <Typography variant="h6">
+                                                                    {process.panelButtonName}
+                                                                </Typography>
+                                                            }
+                                                            placement="left"
+                                                            arrow
+                                                            disableInteractive>
                                                             <Button
-                                                                key={`${process.id}-processButton`}
-                                                                variant={panelOpenedId === process.id ? "contained" : "text"}
-                                                                onClick={() => togglePanelDrawer(process.id)}
+                                                                key={`${process.prefixedId}-processButton`}
+                                                                variant={
+                                                                    panelOpenedId === process.prefixedId
+                                                                        ? "contained"
+                                                                        : "text"
+                                                                }
+                                                                onClick={() => togglePanelDrawer(process.prefixedId)}
                                                                 fullWidth
                                                                 sx={{
                                                                     minWidth: "unset",
                                                                     aspectRatio: "1 / 1",
                                                                     borderRadius: 0,
                                                                     boxShadow: "unset",
-                                                                    color: panelOpenedId === process.id ? "white" : "black"
+                                                                    color:
+                                                                        panelOpenedId === process.prefixedId
+                                                                            ? "white"
+                                                                            : "black"
                                                                 }}>
                                                                 {hasBadge ? (
                                                                     <Badge
@@ -323,15 +372,23 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
                         {APPLICATION_NAME}
                     </Typography>
 
-                    <Stack spacing={0.5} width="-webkit-fill-available" padding="10px" pb="5px" height="calc(100% - 63px)" justifyContent="space-between">
+                    <Stack
+                        spacing={0.5}
+                        width="-webkit-fill-available"
+                        padding="10px"
+                        pb="5px"
+                        height="calc(100% - 63px)"
+                        justifyContent="space-between">
                         <Stack spacing={0.5} width="-webkit-fill-available" overflow="auto">
                             {toolsButton.length > 0 && toolsButton.every((t) => t) ? (
                                 toolsButton
                             ) : (
                                 <>
                                     <Typography>
-                                        It seems there was a problem retrieving the tools list. Try resetting the tools list by clicking on the extensions button (
-                                        <ExtensionIcon fontSize="inherit" />) in your browser toolbar and opening the extension, which will show you the options.
+                                        It seems there was a problem retrieving the tools list. Try resetting the tools
+                                        list by clicking on the extensions button (
+                                        <ExtensionIcon fontSize="inherit" />) in your browser toolbar and opening the
+                                        extension, which will show you the options.
                                     </Typography>
                                     <OpenOptionsButton variant="contained" />
                                 </>
@@ -346,7 +403,15 @@ const MainScreenCustomPanel: React.FunctionComponent = () => {
             {Object.values(openedProcesses)
                 .filter((process) => process.isPanelProcess)
                 .map((process) => {
-                    return <DrawerTool key={`${process.id}-drawertool`} closeProcess={closeProcess} panelOpenedId={panelOpenedId} process={process} setOpenedProcessesBadge={setOpenedProcessesBadge} />;
+                    return (
+                        <DrawerTool
+                            key={`${process.prefixedId}-drawertool`}
+                            closeProcess={closeProcess}
+                            panelOpenedId={panelOpenedId}
+                            process={process}
+                            setOpenedProcessesBadge={setOpenedProcessesBadge}
+                        />
+                    );
                 })}
         </>
     );
@@ -409,7 +474,10 @@ function MainScreenFooter() {
                             </BlackWhiteIconButton>
                         </a>
                     </Tooltip>
-                    <Tooltip title={<Typography fontFamily="'Cookie',cursive">Buy me a Ko-fi</Typography>} arrow disableInteractive>
+                    <Tooltip
+                        title={<Typography fontFamily="'Cookie',cursive">Buy me a Ko-fi</Typography>}
+                        arrow
+                        disableInteractive>
                         <a href="https://ko-fi.com/sofianeguezzar" target="_blank" rel="noreferrer">
                             <BlackWhiteIconButton size="small" color="#0388a6">
                                 <KoFiIcon fontSize="inherit" sx={{ height: "15px" }} />
@@ -431,14 +499,22 @@ function MainScreenFooter() {
                         </a>
                     </Tooltip>
                     <Tooltip title={<Typography>Report an issue</Typography>} arrow disableInteractive>
-                        <a href="https://github.com/Chisyeuf/d365-sidepanel-dev-tools/issues/new" target="_blank" rel="noreferrer">
+                        <a
+                            href="https://github.com/Chisyeuf/d365-sidepanel-dev-tools/issues/new"
+                            target="_blank"
+                            rel="noreferrer">
                             <BlackWhiteIconButton size="small" color="#df5050">
                                 <BugReportIcon fontSize="inherit" />
                             </BlackWhiteIconButton>
                         </a>
                     </Tooltip>
                     <Divider orientation="vertical" flexItem />
-                    <Typography variant="caption" color="grey" textAlign="end" sx={{ userSelect: "none" }} onClick={handleHiddenAction}>
+                    <Typography
+                        variant="caption"
+                        color="grey"
+                        textAlign="end"
+                        sx={{ userSelect: "none" }}
+                        onClick={handleHiddenAction}>
                         v{packageJson.version}
                     </Typography>
                 </Stack>
@@ -466,12 +542,28 @@ function DrawerTool(props: DrawerToolProps) {
         (content: React.ReactNode | null) => {
             setOpenedProcessesBadge((prevBadge) => {
                 const copyBadge = { ...prevBadge };
-                copyBadge[process.id] = content;
+                copyBadge[process.prefixedId] = content;
                 return copyBadge;
             });
         },
         [setOpenedProcessesBadge, process]
     );
+    
+    useEffect(() => {
+        const eventName = getBridgeEventName(process.prefixedId);
+
+        const callback = (e: Event) => {
+            const { badgeContent } = (e as CustomEvent).detail;
+            if (badgeContent) {
+                setBadgeInner(badgeContent)
+            }
+        };
+
+        window.addEventListener(eventName, callback, false);
+
+        return () => window.removeEventListener(eventName, callback, false);
+    }, [setBadgeInner]);
+
 
     const width = useMemo(() => {
         if (typeof process.width === "string") {
@@ -486,9 +578,16 @@ function DrawerTool(props: DrawerToolProps) {
     }, [process.width]);
 
     return (
-        <PanelDrawerItem key={`${process.id}-processPanel`} width={width} open={panelOpenedId === process.id}>
+        <PanelDrawerItem
+            key={`${process.prefixedId}-processPanel`}
+            width={width}
+            open={panelOpenedId === process.prefixedId}>
             <Stack direction="column" width="100%" height="100%">
-                <Stack direction={verticalTitle ? "column-reverse" : "row"} padding={"15px 15px 5px 15px"} justifyContent="space-between" sx={{ userSelect: "none" }}>
+                <Stack
+                    direction={verticalTitle ? "column-reverse" : "row"}
+                    padding={"15px 15px 5px 15px"}
+                    justifyContent="space-between"
+                    sx={{ userSelect: "none" }}>
                     <Typography
                         variant="h5"
                         sx={{
@@ -496,13 +595,13 @@ function DrawerTool(props: DrawerToolProps) {
                         }}>
                         {process.menuButtonName}
                     </Typography>
-                    <IconButton onClick={() => closeProcess(process.id)}>
+                    <IconButton onClick={() => closeProcess(process.prefixedId)}>
                         <CloseIcon />
                     </IconButton>
                 </Stack>
 
-                <Stack flex="1 1 auto" minHeight={0}>
-                    {process.getProcess(setBadgeInner)}
+                <Stack id={process.prefixedId} flex="1 1 auto" minHeight={0}>
+                    {/* {process.getProcess(setBadgeInner)} */}
                 </Stack>
             </Stack>
         </PanelDrawerItem>

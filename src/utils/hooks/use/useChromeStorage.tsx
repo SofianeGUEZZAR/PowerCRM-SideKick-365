@@ -1,15 +1,15 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
-import { debugLog } from '../../global/common';
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-export function useChromeStorage<T>(key: string, defaultData: T): [T | null, (data: T) => void] {
+import { debugLog } from "../../global/common";
 
+export function useChromeStorage<T>(key: string, defaultData?: T): [T | null, (data: T) => void] {
     const [data, setData] = useState<T | null>(null);
 
     const set = (data: T) => {
-        let dataUpdate: { [key: string]: any } = {}
-        dataUpdate[key] = data
+        let dataUpdate: { [key: string]: any } = {};
+        dataUpdate[key] = data;
         chrome.storage.sync.set(dataUpdate);
-    }
+    };
 
     useEffect(() => {
         async function getData() {
@@ -17,14 +17,13 @@ export function useChromeStorage<T>(key: string, defaultData: T): [T | null, (da
             debugLog(key, dataStored);
             if (dataStored && dataStored[key]) {
                 setData(dataStored[key]);
-            }
-            else {
+            } else if (defaultData !== undefined) {
                 setData(defaultData);
             }
         }
         setData(null);
         getData();
-    }, [defaultData, key])
+    }, [defaultData, key]);
 
     return [data, set];
 }

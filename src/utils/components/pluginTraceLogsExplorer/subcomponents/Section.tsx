@@ -1,6 +1,6 @@
-import { Theme } from "@emotion/react";
-import { SxProps, Stack, Typography, Divider, Paper, createTheme, styled, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
-import { PropsWithChildren, useState } from "react";
+import type { Theme } from "@emotion/react";
+import { type SxProps, Stack, Typography, Divider, Paper, createTheme, styled, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import type { PropsWithChildren } from "react";
 import { useBoolean } from "usehooks-ts";
 
 import ExpandLess from '@mui/icons-material/ExpandLess';

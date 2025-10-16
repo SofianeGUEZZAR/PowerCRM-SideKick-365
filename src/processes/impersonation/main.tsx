@@ -13,7 +13,7 @@ import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
-import { ProcessProps, ProcessButton, ProcessRef } from '../../utils/global/.processClass';
+import { type ProcessProps, ProcessButton, type ProcessRef } from '../../utils/global/.processClass';
 
 import { debugLog } from '../../utils/global/common';
 
@@ -25,12 +25,12 @@ import SecurityIcon from '@mui/icons-material/Security';
 import { RetrieveSecurityRole } from '../../utils/hooks/XrmApi/RetrieveSecurityRole';
 import { useStateCallback } from '../../utils/hooks/use/useStateCallback';
 import { MessageType } from '../../utils/types/Message';
-import { ActiveUser } from '../../utils/types/ActiveUser';
-import { SecurityRole, TeamsSecurityRole } from '../../utils/types/SecurityRole';
+import type { ActiveUser } from '../../utils/types/ActiveUser';
+import type { SecurityRole, TeamsSecurityRole } from '../../utils/types/SecurityRole';
 import PestControlIcon from '@mui/icons-material/PestControl';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import AvatarColor from '../../utils/components/AvatarColor';
-import { ProviderContext } from 'notistack';
+import type { ProviderContext } from 'notistack';
 import { NoMaxWidthTooltip } from '../../utils/components/NoMaxWidthTooltip';
 import MuiVirtuoso from '../../utils/components/MuiVirtuoso';
 import { useSpDevTools } from '../../utils/global/spContext';
@@ -45,7 +45,7 @@ class ImpersonationButton extends ProcessButton {
         super(
             'impersonate',
             'Impersonation',
-            <PersonSearchIcon />,
+            () => PersonSearchIcon,
             350
         );
         this.process = ImpersonationProcess;
@@ -502,5 +502,5 @@ const RolesDisplayList = React.memo((props: RolesDisplayListProps) => {
     )
 });
 
-const impersonation = new ImpersonationButton();
-export default impersonation;
+// const impersonation = new ImpersonationButton();
+export default ImpersonationButton;

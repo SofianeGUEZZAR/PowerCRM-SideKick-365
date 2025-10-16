@@ -43,7 +43,7 @@ import { RetrieveAllAttributes } from "../../utils/hooks/XrmApi/RetrieveAllAttri
 
 class AllFieldsButton extends ProcessButton {
     constructor() {
-        super("allfields", "All Attributes", <FormatListBulletedIcon />, 450);
+        super("allfields", "All Attributes", () => FormatListBulletedIcon, 450);
         this.process = AllFieldsButtonProcess;
         this.description = (
             <>
@@ -756,5 +756,5 @@ const AttributeListItemValue = React.memo(
     }
 );
 
-const allFields = new AllFieldsButton();
-export default allFields;
+// const allFields = new AllFieldsButton();
+export default AllFieldsButton;

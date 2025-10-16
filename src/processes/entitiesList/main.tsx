@@ -5,7 +5,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import React, { forwardRef, useCallback, useMemo, useState } from 'react';
-import { ProcessProps, ProcessButton, ProcessRef } from '../../utils/global/.processClass';
+import { type ProcessProps, ProcessButton, type ProcessRef } from '../../utils/global/.processClass';
 import { RetrieveEntities } from '../../utils/hooks/XrmApi/RetrieveEntities';
 import FilterInput from '../../utils/components/FilterInput';
 import TableViewIcon from '@mui/icons-material/TableView';
@@ -19,7 +19,7 @@ class EntityListButton extends ProcessButton {
         super(
             'entitiesList',
             'Entities List',
-            <TableViewIcon />,
+            () => TableViewIcon,
             300
         );
         this.process = EntityListProcess;
@@ -96,5 +96,5 @@ const EntityListProcess = forwardRef<ProcessRef, ProcessProps>(
     }
 );
 
-const entitiesList = new EntityListButton();
-export default entitiesList;
+// const entitiesList = new EntityListButton();
+export default EntityListButton;

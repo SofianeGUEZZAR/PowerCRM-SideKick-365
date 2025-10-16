@@ -1,5 +1,5 @@
 
-import { NavigationButton } from '../../../utils/types/NavigationButton';
+import type { NavigationButton } from '../../../utils/types/NavigationButton';
 import D365NavBarIcon from '../../../utils/components/D365NavBarIcon';
 import DirectNavigationButton from '../components/NavigationButton';
 

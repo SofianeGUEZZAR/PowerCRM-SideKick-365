@@ -1,5 +1,5 @@
-import { CodeEditorCommon, CodeEditorDirectory, CodeEditorFile, FileTreeProps, MonacoTheme } from "../utils/types";
-import { Box, Stack, styled, SvgIcon, SvgIconProps } from "@mui/material";
+import type { CodeEditorCommon, CodeEditorDirectory, CodeEditorFile, FileTreeProps, MonacoTheme } from "../utils/types";
+import { Stack, styled } from "@mui/material";
 
 import { useMemo, useState } from "react";
 import React from "react";

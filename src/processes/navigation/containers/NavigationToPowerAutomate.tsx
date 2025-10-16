@@ -1,5 +1,5 @@
 
-import { NavigationButton } from '../../../utils/types/NavigationButton';
+import type { NavigationButton } from '../../../utils/types/NavigationButton';
 import { PowerAutomateIcon } from '../icons';
 import DirectNavigationButton from '../components/NavigationButton';
 

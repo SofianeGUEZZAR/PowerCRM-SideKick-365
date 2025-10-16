@@ -1,4 +1,4 @@
-import { EditorLanguage } from 'monaco-editor/esm/metadata';
+import type { EditorLanguage } from 'monaco-editor/esm/metadata';
 
 export type MonacoTheme =
     | 'vs-dark'

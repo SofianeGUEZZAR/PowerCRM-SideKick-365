@@ -1,8 +1,11 @@
 
-import { Container,  Stack,  Alert,  Typography,  Button } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { useCallback } from "react";
-import { defaultProcessesList } from "~processes/.list";
-import { debugLog } from "~utils/global/common";
+// import { defaultProcessesList } from "~processes/.list";
 import { STORAGE_ListName, STORAGE_DontShowInfo } from "~utils/global/var";
 import { useChromeStorage } from "~utils/hooks/use/useChromeStorage";
 import { MessageType } from "~utils/types/Message";
@@ -11,7 +14,7 @@ import type { StorageConfiguration } from "~utils/types/StorageConfiguration";
 
 const OptionsScreen: React.FunctionComponent = () => {
 
-    const [processesList, setProcessList] = useChromeStorage<StorageConfiguration[]>(STORAGE_ListName, defaultProcessesList);
+    const [processesList, setProcessList] = useChromeStorage<StorageConfiguration[]>(STORAGE_ListName);
 
 
     const resetImpersonate = useCallback(() => {
@@ -33,7 +36,7 @@ const OptionsScreen: React.FunctionComponent = () => {
 
 
     const resetProcessList = useCallback(() => {
-        setProcessList(defaultProcessesList);
+        setProcessList(null);
     }, [setProcessList]);
 
 

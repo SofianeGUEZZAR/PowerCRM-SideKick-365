@@ -1,4 +1,4 @@
-import { ObjectListGridProps } from "./ObjectListGrid";
+import type { ObjectListGridProps } from "./ObjectListGrid";
 
 export interface ExploreGrid {
     entityName: string;

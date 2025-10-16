@@ -1,16 +1,12 @@
 import { unstable_ClassNameGenerator as ClassNameGenerator } from "@mui/material/className";
 import type { PlasmoCSConfig } from "plasmo";
-import ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
 
 import { MainScreen } from "~processes/main";
 import { ProcessButton } from "~utils/global/.processClass";
 import { waitForElm } from "~utils/global/common";
 import {
-    DRAWER_CONTAINER_ID,
-    MESSAGE_SOURCE_Content,
-    MESSAGE_SOURCE_WebPage
-} from "~utils/global/var";
+    DRAWER_CONTAINER_ID} from "~utils/global/var";
 import XrmObserver from "~utils/global/XrmObserver";
 
 import { PROJECT_PREFIX } from "~utils/global/var";

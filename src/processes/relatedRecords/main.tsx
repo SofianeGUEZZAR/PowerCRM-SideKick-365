@@ -62,7 +62,7 @@ const theme = createTheme({
 
 class RelatedRecordsButton extends ProcessButton {
     constructor() {
-        super("relatedRecords", "Related Records", <ShareIcon />, 450);
+        super("relatedRecords", "Related Records", () => ShareIcon, 450);
         this.process = RelatedRecordsProcess;
         this.description = (
             <>
@@ -929,5 +929,5 @@ const RelatedRecordsItem = React.memo((props: RelatedRecordsItemProps) => {
     );
 });
 
-const relatedRecords = new RelatedRecordsButton();
-export default relatedRecords;
+// const relatedRecords = new RelatedRecordsButton();
+export default RelatedRecordsButton;

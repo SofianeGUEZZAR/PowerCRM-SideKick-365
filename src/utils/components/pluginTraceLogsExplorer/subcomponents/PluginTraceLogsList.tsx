@@ -11,10 +11,10 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import HorizontalSlider from '../../HorizontalSlider';
 import dayjs from 'dayjs';
 import { getCurrentDynamics365DateTimeFormat } from '../../../global/common';
-import { VirtuosoHandle } from 'react-virtuoso';
+import type { VirtuosoHandle } from 'react-virtuoso';
 import MuiVirtuoso from '../../MuiVirtuoso';
 import { useEffectOnce } from '../../../hooks/use/useEffectOnce';
-import { OperationType, PluginTraceLog, SdkMessageProcessingStep, SdkMessageProcessingStepImage } from '../type';
+import { OperationType, type PluginTraceLog, type SdkMessageProcessingStep, type SdkMessageProcessingStepImage } from '../type';
 import { TraceLogControllerContext, TraceLogsAPIContext } from './contexts';
 
 

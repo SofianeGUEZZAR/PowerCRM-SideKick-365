@@ -113,10 +113,7 @@ const PluginTraceLogsPane = React.memo((props: PluginTraceLogsPaneProps) => {
 
     useEffect(() => {
         const intervalID = setInterval(function () {
-            setDecount((prev) => {
-                const newValue = --prev;
-                return newValue;
-            });
+            setDecount(prev => prev - 1);
         }, 1000);
 
         return () => {

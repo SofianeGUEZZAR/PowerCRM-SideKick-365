@@ -1,5 +1,5 @@
 import { forwardRef, useState, } from 'react';
-import { ProcessProps, ProcessButton, ProcessRef } from '../../utils/global/.processClass';
+import { type ProcessProps, ProcessButton, type ProcessRef } from '../../utils/global/.processClass';
 
 import EntityMetadataListGrid from '../../utils/components/MetadataBrowser/EntityMetadataListGrid';
 import MetadataContextProvider from '../../utils/components/MetadataBrowser/MetadataContextProvider';
@@ -12,7 +12,7 @@ class MetadataBrowserButton extends ProcessButton {
         super(
             'metadatabrowser',
             'Metadata Browser',
-            <TuneIcon />,
+            () => TuneIcon,
             '100%'
         );
         this.process = MetadataBrowserProcess;
@@ -41,5 +41,5 @@ const MetadataBrowserProcess = forwardRef<ProcessRef, ProcessProps>(
 );
 
 
-const metadataBrowser = new MetadataBrowserButton();
-export default metadataBrowser;
+// const metadataBrowser = new MetadataBrowserButton();
+export default MetadataBrowserButton;
