@@ -1,5 +1,5 @@
 
-Dynamics SideKick
+PowerCRM SideKick 365
 ============================
 
 ## Summary
@@ -25,9 +25,13 @@ Dynamics SideKick
 
 # Introduction
 
-Dynamics SideKick provides a powerful set of utilities that can enhance your productivity. This chromium extension adds a panel to the right side of Dynamics 365 pages, giving you easy access to a variety of tools that can display useful informations or edit data. These tools are designed to be user-friendly and can be opened independently.
+PowerCRM SideKick 365 provides a set of utilities designed to enhance your productivity. This extension adds a panel to the right side of Microsoft Dynamics 365 pages, giving you easy access to a variety of tools for viewing information or editing data. Each tool is user-friendly and can be opened independently.
 
 A configuration tool is available to customize the extension's loading settings.
+
+> This open-source project is designed to enhance the user experience in Microsoft Dynamics 365.
+> It is an independent tool and is not affiliated with Microsoft Corporation.
+
 
 ![image](screenshots/jpg/0.OverallView.jpg)
 
@@ -260,9 +264,6 @@ Configure your SidePanel Tools experience.
 
 This tool lets you select which tools automatically open when a page loads. You can also specify a tool to be expanded by default.
 
-A "foreground" option is available to disable automatic width adjustments of the main Dynamics screen.
+A "foreground" option is available to disable automatic width adjustments of the main Microsoft Dynamics 365 screen.
 
 <img height="850px" width="10px">
-
-
-
